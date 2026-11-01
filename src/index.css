@@ -6,26 +6,26 @@
   --font-mono: 'Space Mono', ui-monospace, monospace;
   --font-hand: 'Caveat', 'Comic Sans MS', cursive;
 
-  --color-paper: #f2eee3;
-  --color-paper-light: #fbf9f4;
-  --color-paper-deep: #e6e0d1;
-  --color-ink: #141414;
-  --color-ink-muted: #4d4a44;
-  --color-ink-faint: #8b867b;
-  --color-tape: #efe2b0;
+  --container-stage: 87rem;
+
+  --color-canvas: #0a0a0b;
+  --color-surface: #121214;
+  --color-surface-raised: #1c1c1f;
+  --color-line: #3a3a41;
+  --color-fg: #f4f4f5;
+  --color-fg-muted: #b5b5bb;
+  --color-fg-faint: #6e6e76;
 
   --color-discord: #5865f2;
 
   --color-apex-400: #ff4d55;
   --color-apex-500: #e11d26;
-  --color-apex-600: #b8141c;
 
-  --shadow-hard-sm: 3px 3px 0 0 var(--color-ink);
-  --shadow-hard: 5px 5px 0 0 var(--color-ink);
-  --shadow-hard-lg: 9px 9px 0 0 var(--color-ink);
+  --shadow-hard-sm: 3px 3px 0 0 var(--color-line);
+  --shadow-hard: 5px 5px 0 0 var(--color-line);
+  --shadow-hard-lg: 9px 9px 0 0 var(--color-line);
   --shadow-hard-red: 9px 9px 0 0 var(--color-apex-500);
 
-  --animate-marquee: marquee 45s linear infinite;
   --animate-nudge: nudge 4s ease-in-out infinite;
   --animate-drift: drift 7s ease-in-out infinite;
 
@@ -43,19 +43,13 @@
     }
   }
 
-  @keyframes marquee {
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
   @keyframes nudge {
     0%,
     74%,
     100% {
       transform: none;
-      background-color: var(--color-paper-light);
-      color: var(--color-ink);
+      background-color: var(--color-surface);
+      color: var(--color-fg);
     }
     77% {
       transform: scale(1.05) rotate(-3deg);
@@ -89,7 +83,7 @@
   }
 
   body {
-    @apply bg-paper bg-paper-grain font-sans text-ink antialiased;
+    @apply bg-canvas font-sans text-fg antialiased;
   }
 
   ::selection {
@@ -110,14 +104,10 @@
   }
 }
 
-@utility bg-paper-grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.07 0 0 0 0 0.05 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 @utility bg-grid {
   background-image:
-    linear-gradient(to right, color-mix(in srgb, currentColor 8%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, currentColor 8%, transparent) 1px, transparent 1px);
+    linear-gradient(to right, color-mix(in srgb, currentColor 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, currentColor 5%, transparent) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 

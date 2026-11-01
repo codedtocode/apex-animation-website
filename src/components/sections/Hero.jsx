@@ -6,18 +6,18 @@ import { RobloxStudioIcon } from '@/components/ui/BrandIcons'
 import { Container } from '@/components/ui/Container'
 import { DownloadButton } from '@/components/ui/DownloadButton'
 import { ExternalLink } from '@/components/ui/ExternalLink'
-import { HandNote, SketchArrow, SketchCheck, Tape } from '@/components/ui/Sketch'
+import { HandNote, SketchArrow } from '@/components/ui/Sketch'
 import { StarRating } from '@/components/ui/StarRating'
 import { HERO_MEDIA } from '@/data/media'
-import { HERO_HIGHLIGHTS, LATEST_VERSION, LINKS, STATS } from '@/data/site'
-import mark from '@images/apexanimator-mono-512.png'
+import { LATEST_VERSION, LINKS, STATS } from '@/data/site'
+import mark from '@images/apexanimator-mono-branco-512.png'
 import apexTile from '@images/apexanimator-tile-1024.png'
 
 const HEADLINE_ICON_STYLE = 'mr-[0.18em] inline-block size-[0.84em] align-[-0.1em]'
 
 function FreeSticker() {
   return (
-    <span className="relative inline-block shrink-0 -rotate-2 border-[0.06em] border-ink bg-apex-500 px-[0.2em] pt-[0.04em] pb-[0.02em] text-white shadow-[0.09em_0.09em_0_var(--color-ink)]">
+    <span className="relative inline-block shrink-0 -rotate-2 rounded-[0.16em] border-[0.035em] border-line bg-apex-500 px-[0.2em] pt-[0.04em] pb-[0.02em] text-white shadow-[0.09em_0.09em_0_var(--color-line)]">
       for free
     </span>
   )
@@ -39,7 +39,7 @@ function Headline() {
       <span className="block">
         in{' '}
         <span className="whitespace-nowrap">
-          <RobloxStudioIcon className={`${HEADLINE_ICON_STYLE} text-ink`} />
+          <RobloxStudioIcon className={`${HEADLINE_ICON_STYLE} text-fg`} />
           Roblox
         </span>{' '}
         Studio
@@ -51,13 +51,7 @@ function Headline() {
       <span className="mt-[0.08em] block">
         with{' '}
         <span className="whitespace-nowrap">
-          <img
-            src={apexTile}
-            alt=""
-            width="1024"
-            height="1024"
-            className={`${HEADLINE_ICON_STYLE} rounded-[22%] border-[0.05em] border-ink`}
-          />
+          <img src={apexTile} alt="" width="1024" height="1024" className={`${HEADLINE_ICON_STYLE} rounded-[22%]`} />
           Apex
         </span>
       </span>
@@ -69,9 +63,9 @@ function LatestReleaseLink() {
   return (
     <ExternalLink
       href={LINKS.devforum}
-      className="group inline-flex items-center gap-2.5 self-start border-2 border-ink bg-paper-light py-1.5 pr-3 pl-1.5 text-sm font-semibold shadow-hard-sm transition hover:-translate-0.5 hover:shadow-[5px_5px_0_var(--color-apex-500)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+      className="group inline-flex items-center gap-2.5 self-start rounded-full border border-line bg-surface py-1.5 pr-3 pl-1.5 text-sm font-semibold shadow-hard-sm transition hover:-translate-0.5 hover:shadow-[5px_5px_0_var(--color-apex-500)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg"
     >
-      <span className="bg-apex-500 px-2 py-0.5 font-mono text-[11px] font-bold tracking-wider text-white uppercase">
+      <span className="rounded-full bg-apex-500 px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider text-white uppercase">
         Free
       </span>
       Version {LATEST_VERSION} is out. See what&rsquo;s new
@@ -82,9 +76,9 @@ function LatestReleaseLink() {
 
 function Stats() {
   return (
-    <dl className="grid grid-cols-2 border-2 border-ink bg-paper-light shadow-hard lg:w-md">
+    <dl className="grid grid-cols-2 overflow-hidden rounded-2xl border border-line bg-surface shadow-hard lg:w-md">
       <div className="flex flex-col gap-1 p-4 sm:p-5">
-        <dt className="order-last flex items-center gap-1.5 font-mono text-[11px] font-bold tracking-wider text-ink-muted uppercase">
+        <dt className="order-last flex items-center gap-1.5 font-mono text-[11px] font-bold tracking-wider text-fg-muted uppercase">
           <Download className="size-3.5" strokeWidth={2.5} />
           Downloads
         </dt>
@@ -92,8 +86,8 @@ function Stats() {
           {STATS.downloads}
         </dd>
       </div>
-      <div className="flex flex-col gap-1 border-l-2 border-ink p-4 sm:p-5">
-        <dt className="order-last flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] font-bold tracking-wider text-ink-muted uppercase">
+      <div className="flex flex-col gap-1 border-l border-line p-4 sm:p-5">
+        <dt className="order-last flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] font-bold tracking-wider text-fg-muted uppercase">
           <StarRating percent={STATS.ratingPercent} />
           Rating
         </dt>
@@ -117,13 +111,13 @@ function WavingDeveloper() {
 function WindowBar({ tone, children }) {
   return (
     <div
-      className={`flex items-center justify-between gap-3 border-b-[3px] border-ink px-3 py-2 font-mono text-[11px] font-bold tracking-wider uppercase ${tone}`}
+      className={`flex items-center justify-between gap-3 border-b border-line px-3 py-2 font-mono text-[11px] font-bold tracking-wider uppercase ${tone}`}
     >
       {children}
       <span aria-hidden="true" className="flex shrink-0 gap-1.5">
-        <span className="size-2.5 border-2 border-current" />
-        <span className="size-2.5 border-2 border-current" />
-        <span className="size-2.5 bg-current" />
+        <span className="size-2.5 rounded-full border border-current" />
+        <span className="size-2.5 rounded-full border border-current" />
+        <span className="size-2.5 rounded-full bg-current" />
       </span>
     </div>
   )
@@ -131,10 +125,8 @@ function WindowBar({ tone, children }) {
 
 function EditorWindow({ media }) {
   return (
-    <div className="relative border-[3px] border-ink bg-ink shadow-hard-lg">
-      <Tape className="-top-4 -left-3 -rotate-12 sm:-left-6" />
-      <Tape className="-top-3 -right-3 rotate-6 sm:-right-5" />
-      <WindowBar tone="bg-paper-light text-ink">
+    <div className="overflow-hidden rounded-2xl border border-line bg-canvas shadow-hard-lg">
+      <WindowBar tone="bg-surface text-fg">
         <span className="flex min-w-0 items-center gap-2">
           <img src={mark} alt="" width="14" height="14" className="size-3.5" />
           <span className="truncate">Apex Animator · Editor</span>
@@ -154,12 +146,12 @@ function EditorWindow({ media }) {
 
 function LiveCaptureWindow({ media }) {
   return (
-    <div className="border-[3px] border-ink bg-ink shadow-hard-red">
-      <WindowBar tone="bg-ink text-paper">
+    <div className="overflow-hidden rounded-2xl border border-line bg-canvas shadow-hard-red">
+      <WindowBar tone="bg-canvas text-fg">
         <span className="flex min-w-0 items-center gap-2">
           <span className="size-2.5 shrink-0 animate-pulse rounded-full bg-apex-500 motion-reduce:animate-none" />
           <span className="truncate">
-            Rec · Live capture <span className="text-paper/60">/ {media.title}</span>
+            Rec · Live capture <span className="text-fg-faint">/ {media.title}</span>
           </span>
         </span>
       </WindowBar>
@@ -187,7 +179,7 @@ function EditorPreview() {
   const { editor, demo } = HERO_MEDIA
 
   return (
-    <div className="relative mt-16 sm:mt-20 lg:mb-40">
+    <div className="relative mt-16 sm:mt-20 lg:mb-28">
       <figure className="relative lg:w-[80%]">
         <EditorWindow media={editor} />
       </figure>
@@ -200,38 +192,15 @@ function EditorPreview() {
   )
 }
 
-function Highlights() {
-  return (
-    <ul className="mt-14 grid border-2 border-ink bg-paper-light font-mono text-xs font-bold tracking-wider uppercase sm:grid-cols-3 lg:mt-4">
-      {HERO_HIGHLIGHTS.map((highlight) => (
-        <li
-          key={highlight}
-          className="flex items-center gap-3 border-ink px-4 py-3.5 not-last:border-b-2 sm:not-last:border-r-2 sm:not-last:border-b-0"
-        >
-          <span className="grid size-6 shrink-0 place-items-center border-2 border-ink bg-paper">
-            <SketchCheck className="size-5 text-apex-500" />
-          </span>
-          {highlight}
-        </li>
-      ))}
-    </ul>
-  )
-}
-
 export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-grid mask-[linear-gradient(to_bottom,black_40%,transparent)]"
-      />
-
       <Container className="relative">
         <Headline />
 
         <div className="mt-8 flex flex-col gap-8 sm:mt-10 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
           <div className="flex max-w-xl flex-col gap-6">
-            <p className="text-lg leading-relaxed text-ink-muted sm:text-xl">
+            <p className="text-lg leading-relaxed text-fg-muted sm:text-xl">
               Apex Animator is a free animation plugin with physics, live recording, dynamic rig parenting, face
               animation, IK/FK and much more. Free forever.
             </p>
@@ -242,7 +211,6 @@ export function Hero() {
         <DownloadButton className="mt-8 w-full sm:w-auto lg:hidden" />
 
         <EditorPreview />
-        <Highlights />
       </Container>
     </section>
   )

@@ -40,7 +40,7 @@ export function AutoVideo({ media }) {
         type="button"
         onClick={() => setPaused((isPaused) => !isPaused)}
         aria-label={paused ? `Play ${media.title}` : `Pause ${media.title}`}
-        className={`absolute right-2.5 bottom-2.5 grid size-8 place-items-center border-2 border-ink bg-paper text-ink transition hover:bg-apex-500 hover:text-white focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-paper ${
+        className={`absolute right-2.5 bottom-2.5 grid size-8 place-items-center rounded-lg border border-line bg-canvas text-fg transition hover:bg-apex-500 hover:text-white focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-fg ${
           paused ? '' : 'lg:opacity-0 lg:group-hover/video:opacity-100'
         }`}
       >

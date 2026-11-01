@@ -41,12 +41,12 @@ function TrackKey({ trackKey: { position, label, icon: Icon }, keyRef, tagRef })
       <span
         ref={keyRef}
         data-state="idle"
-        className="absolute top-1/2 left-0 block size-3.5 -translate-1/2 rotate-45 border-2 border-paper/40 bg-ink transition-[background-color,border-color,scale] duration-300 data-[state=highlighted]:scale-150 data-[state=highlighted]:border-apex-500 data-[state=highlighted]:bg-paper data-[state=passed]:border-apex-500 data-[state=passed]:bg-apex-500"
+        className="absolute top-1/2 left-0 block size-3.5 -translate-1/2 rotate-45 rounded-[3px] border border-fg/40 bg-surface transition-[background-color,border-color,scale] duration-300 data-[state=highlighted]:scale-150 data-[state=highlighted]:border-apex-500 data-[state=highlighted]:bg-fg data-[state=passed]:border-apex-500 data-[state=passed]:bg-apex-500"
       />
       <span
         ref={tagRef}
         data-visible="false"
-        className={`absolute bottom-[calc(100%+20px)] flex translate-y-1 items-center gap-1.5 border-2 border-paper bg-ink px-2 py-1 font-mono text-[11px] font-bold tracking-wider whitespace-nowrap uppercase opacity-0 shadow-[3px_3px_0_var(--color-apex-500)] transition duration-300 data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100 ${tagAlignment(position)}`}
+        className={`absolute bottom-[calc(100%+20px)] flex translate-y-1 items-center gap-1.5 rounded-full border border-fg/60 bg-canvas px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider whitespace-nowrap uppercase opacity-0 shadow-[3px_3px_0_var(--color-apex-500)] transition duration-300 data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100 ${tagAlignment(position)}`}
       >
         <Icon className="size-3.5 text-apex-400" />
         {label}
@@ -94,8 +94,8 @@ export function UpdateTrack() {
   return (
     <div ref={rootRef} aria-hidden="true" className="relative mx-4 pt-14 sm:mx-8">
       <div className="relative h-8">
-        <div className="absolute inset-x-0 top-3.5 h-1 bg-paper/15" />
-        <div ref={trailRef} className="absolute top-3.5 left-0 h-1 w-0 bg-apex-500" />
+        <div className="absolute inset-x-0 top-3.5 h-1 rounded-full bg-fg/15" />
+        <div ref={trailRef} className="absolute top-3.5 left-0 h-1 w-0 rounded-full bg-apex-500" />
         <Playhead ref={playheadRef} />
         {UPDATE_TRACK_KEYS.map((trackKey, index) => (
           <TrackKey

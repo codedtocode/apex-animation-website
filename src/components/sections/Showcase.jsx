@@ -8,7 +8,7 @@ import { Marked } from '@/components/ui/Sketch'
 import { SHOWCASE_ROWS } from '@/data/media'
 
 const CORNER_BADGE_STYLE =
-  'absolute top-2.5 right-2.5 grid size-8 place-items-center border-2 border-ink bg-paper text-ink transition hover:bg-apex-500 hover:text-white lg:opacity-0 lg:group-hover:opacity-100'
+  'absolute top-2.5 right-2.5 grid size-8 place-items-center rounded-lg border border-line bg-canvas text-fg transition hover:bg-apex-500 hover:text-white lg:opacity-0 lg:group-hover:opacity-100'
 
 const NUMBERED_ROWS = SHOWCASE_ROWS.reduce(
   ({ rows, count }, row) => ({
@@ -32,7 +32,7 @@ function ShowcaseMedia({ media, onExpand }) {
           type="button"
           onClick={expand}
           aria-label={label}
-          className={`${CORNER_BADGE_STYLE} focus-visible:outline-2 focus-visible:outline-paper lg:focus-visible:opacity-100`}
+          className={`${CORNER_BADGE_STYLE} focus-visible:outline-2 focus-visible:outline-fg lg:focus-visible:opacity-100`}
         >
           <Expand className="size-3.5" strokeWidth={2.5} />
         </button>
@@ -45,7 +45,7 @@ function ShowcaseMedia({ media, onExpand }) {
       type="button"
       onClick={expand}
       aria-label={label}
-      className="block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-paper"
+      className="block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-fg"
     >
       <img
         src={media.src}
@@ -68,13 +68,13 @@ function ShowcaseItem({ media, figure, onExpand }) {
       style={{ '--grow': media.width / media.height }}
       className="reveal group flex min-w-0 flex-col lg:grow-(--grow) lg:basis-0"
     >
-      <div className="relative overflow-hidden bg-ink shadow-[8px_8px_0_var(--color-ink)] outline-[3px] outline-ink transition duration-200 group-hover:-translate-1 group-hover:shadow-[12px_12px_0_var(--color-ink)] motion-reduce:group-hover:translate-0">
+      <div className="relative overflow-hidden rounded-2xl bg-canvas shadow-hard outline outline-line transition duration-200 group-hover:-translate-1 group-hover:shadow-hard-lg motion-reduce:group-hover:translate-0">
         <ShowcaseMedia media={media} onExpand={onExpand} />
       </div>
       <figcaption className="mt-4">
-        <p className="font-mono text-[11px] font-bold tracking-wider text-apex-600 uppercase">{figureLabel(figure)}</p>
+        <p className="font-mono text-[11px] font-bold tracking-wider text-apex-400 uppercase">{figureLabel(figure)}</p>
         <h3 className="mt-1 font-display text-lg font-extrabold font-stretch-semi-expanded">{media.title}</h3>
-        <p className="mt-1 text-sm leading-relaxed text-ink-muted">{media.description}</p>
+        <p className="mt-1 text-sm leading-relaxed text-fg-muted">{media.description}</p>
       </figcaption>
     </figure>
   )

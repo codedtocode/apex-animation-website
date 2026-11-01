@@ -65,15 +65,6 @@ export function Marked({ children }) {
   )
 }
 
-export function Tape({ className = '' }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`pointer-events-none absolute z-10 h-7 w-28 bg-tape/80 shadow-[0_1px_2px_rgba(0,0,0,0.15)] [clip-path:polygon(0_8%,4%_0,9%_10%,14%_0,100%_0,96%_12%,100%_24%,96%_38%,100%_52%,96%_66%,100%_80%,96%_92%,100%_100%,6%_100%,0_88%,4%_76%,0_62%,4%_48%,0_34%,4%_20%)] ${className}`}
-    />
-  )
-}
-
 export function HandNote({ className = '', children }) {
-  return <p className={`font-hand text-2xl leading-none font-semibold text-apex-500 ${className}`}>{children}</p>
+  return <p className={`font-hand text-2xl leading-none font-semibold text-apex-400 ${className}`}>{children}</p>
 }

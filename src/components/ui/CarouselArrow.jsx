@@ -15,10 +15,10 @@ export function CarouselArrow({ direction, hidden, onClick, controls, className 
       disabled={hidden}
       aria-label={label}
       aria-controls={controls}
-      className={`group absolute top-1/2 z-10 grid h-10 w-12 -translate-y-1/2 place-items-center transition focus-visible:outline-2 focus-visible:outline-ink disabled:pointer-events-none disabled:opacity-0 lg:h-14 lg:w-16 ${nudge} ${className}`}
+      className={`group absolute top-1/2 z-10 grid h-10 w-12 -translate-y-1/2 place-items-center transition focus-visible:outline-2 focus-visible:outline-fg disabled:pointer-events-none disabled:opacity-0 lg:h-14 lg:w-16 ${nudge} ${className}`}
     >
       <span className={`relative block size-full ${flip}`}>
-        <SketchArrow shape="straight" strokeWidth={4.5} className="absolute inset-0 translate-0.75 text-ink" />
+        <SketchArrow shape="straight" strokeWidth={4.5} className="absolute inset-0 translate-0.75 text-line" />
         <SketchArrow
           shape="straight"
           strokeWidth={4.5}

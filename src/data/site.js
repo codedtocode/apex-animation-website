@@ -25,5 +25,3 @@ export const COMMUNITY_LINKS = [
   { label: 'Discord', href: LINKS.discord },
   { label: 'DevForum', href: LINKS.devforum },
 ]
-
-export const HERO_HIGHLIGHTS = ['R6, R15 & custom rigs', 'Team Create ready', 'Imports Moon exports']

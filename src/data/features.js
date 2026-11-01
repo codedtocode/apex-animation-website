@@ -155,24 +155,6 @@ export const FEATURES = [
   },
 ]
 
-export const MARQUEE_ITEMS = [
-  'Physics',
-  'Live Recording',
-  'Dynamic Rig Parenting',
-  'Face Animation',
-  'Lip Sync',
-  'IK / FK',
-  'Graph Editor',
-  'Onion Skins',
-  'Motion Paths',
-  'Layers',
-  'Grips',
-  'Camera Shots',
-  'Team Create',
-  'Takes',
-  'Poses Library',
-]
-
 export const COMPATIBILITY = [
   { label: 'R6 & R15', detail: 'Ready-made dummies included', supported: true },
   { label: 'Custom rigs', detail: 'Humanoid or AnimationController with an Animator', supported: true },

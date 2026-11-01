@@ -14,13 +14,13 @@ const REDACTED_LINE_WIDTHS = ['w-40', 'w-24', 'w-32', 'w-16', 'w-28']
 
 export function MysteryStrip() {
   return (
-    <div aria-hidden="true" className="relative aspect-3/1 overflow-hidden bg-ink text-paper">
+    <div aria-hidden="true" className="relative aspect-3/1 overflow-hidden bg-canvas text-fg">
       <div className="absolute inset-0 bg-halftone" />
       {PARTICLES.map(({ left, top, size, delay, duration, red }) => (
         <span
           key={`${left}-${top}`}
           className={`absolute rotate-45 animate-drift opacity-0 motion-reduce:animate-none motion-reduce:opacity-40 ${
-            red ? 'bg-apex-500' : 'bg-paper'
+            red ? 'bg-apex-500' : 'bg-fg'
           }`}
           style={{
             left,
@@ -33,7 +33,7 @@ export function MysteryStrip() {
         />
       ))}
       <div className="absolute inset-0 grid place-items-center">
-        <span className="grid aspect-square h-[70%] -rotate-3 place-items-center border-[3px] border-paper bg-ink pt-[0.1em] font-hand text-[3em] leading-none font-bold text-apex-500 shadow-[6px_6px_0_var(--color-apex-500)] sm:text-[4em]">
+        <span className="grid aspect-square h-[70%] -rotate-3 place-items-center rounded-[22%] border border-fg/60 bg-surface pt-[0.1em] font-hand text-[3em] leading-none font-bold text-apex-500 shadow-[6px_6px_0_var(--color-apex-500)] sm:text-[4em]">
           ?
         </span>
       </div>
@@ -45,7 +45,7 @@ export function RedactedLines() {
   return (
     <div aria-hidden="true" className="mt-5 flex flex-wrap gap-2">
       {REDACTED_LINE_WIDTHS.map((width, index) => (
-        <span key={index} className={`h-3.5 bg-ink ${width}`} />
+        <span key={index} className={`h-3.5 rounded-full bg-fg/15 ${width}`} />
       ))}
     </div>
   )

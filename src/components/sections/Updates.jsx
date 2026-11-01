@@ -5,13 +5,13 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { UPDATE_PILLARS } from '@/data/updates'
 import { UpdateTrack } from './UpdateTrack'
 
-const CARD_STYLE = 'w-full border-2 border-paper bg-ink p-6'
+const CARD_STYLE = 'w-full rounded-2xl border border-line bg-surface p-6'
 
 function PillarContent({ pillar: { icon: Icon, title, text }, linked }) {
   return (
     <>
       <span className="flex items-start justify-between">
-        <span className="grid size-11 place-items-center border-2 border-apex-500 text-apex-400">
+        <span className="grid size-11 place-items-center rounded-xl border border-apex-500 text-apex-400">
           <Icon className="size-5" strokeWidth={2} />
         </span>
         {linked && (
@@ -22,7 +22,7 @@ function PillarContent({ pillar: { icon: Icon, title, text }, linked }) {
         )}
       </span>
       <h3 className="mt-5 font-display text-lg leading-snug font-extrabold font-stretch-semi-expanded">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-paper/70">{text}</p>
+      <p className="mt-2 text-sm leading-relaxed text-fg-muted">{text}</p>
     </>
   )
 }
@@ -32,7 +32,7 @@ function PillarCard({ pillar }) {
     return (
       <ExternalLink
         href={pillar.href}
-        className={`group block ${CARD_STYLE} shadow-[5px_5px_0_var(--color-apex-500)] transition hover:-translate-1 hover:shadow-[9px_9px_0_var(--color-apex-500)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper motion-reduce:hover:translate-0`}
+        className={`group block ${CARD_STYLE} shadow-[5px_5px_0_var(--color-apex-500)] transition hover:-translate-1 hover:shadow-[9px_9px_0_var(--color-apex-500)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg motion-reduce:hover:translate-0`}
       >
         <PillarContent pillar={pillar} linked />
       </ExternalLink>
@@ -47,16 +47,11 @@ function PillarCard({ pillar }) {
 
 export function Updates() {
   return (
-    <section
-      id="updates"
-      className="relative overflow-hidden border-y-[3px] border-ink bg-ink py-24 text-paper sm:py-32"
-    >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-grid" />
-      <Container className="relative">
+    <section id="updates" className="py-24 sm:py-32">
+      <Container>
         <SectionHeading
           scene="05"
           centered
-          inverted
           eyebrow="Updates"
           title="Shipping fast."
           description="Apex is actively maintained. Its developer works hard and fast to ship community feature requests and bug fixes in frequent updates."

@@ -7,13 +7,13 @@ import { COMPATIBILITY } from '@/data/features'
 function StatusBox({ supported }) {
   if (supported) {
     return (
-      <span className="grid size-8 shrink-0 place-items-center border-2 border-ink bg-paper">
+      <span className="grid size-8 shrink-0 place-items-center rounded-lg border border-line bg-surface-raised">
         <SketchCheck className="size-6 text-apex-500" />
       </span>
     )
   }
   return (
-    <span className="grid size-8 shrink-0 place-items-center border-2 border-dashed border-ink-faint text-ink-faint">
+    <span className="grid size-8 shrink-0 place-items-center rounded-lg border border-dashed border-fg-faint text-fg-faint">
       <Minus className="size-4" strokeWidth={3} />
     </span>
   )
@@ -22,18 +22,18 @@ function StatusBox({ supported }) {
 function CompatibilityItem({ item: { label, detail, supported } }) {
   return (
     <li
-      className={`flex gap-4 border-2 p-5 ${
-        supported ? 'border-ink bg-paper-light shadow-hard-sm' : 'border-dashed border-ink-faint'
+      className={`flex gap-4 rounded-2xl border p-5 ${
+        supported ? 'border-line bg-surface shadow-hard-sm' : 'border-dashed border-fg-faint'
       }`}
     >
       <StatusBox supported={supported} />
       <div>
         <h3
-          className={`font-display font-extrabold font-stretch-semi-expanded ${supported ? '' : 'text-ink-faint line-through decoration-2'}`}
+          className={`font-display font-extrabold font-stretch-semi-expanded ${supported ? '' : 'text-fg-faint line-through decoration-2'}`}
         >
           {label}
         </h3>
-        <p className="mt-1 text-sm leading-relaxed text-ink-muted">{detail}</p>
+        <p className="mt-1 text-sm leading-relaxed text-fg-muted">{detail}</p>
       </div>
     </li>
   )

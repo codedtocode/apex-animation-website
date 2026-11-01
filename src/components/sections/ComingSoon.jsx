@@ -39,7 +39,7 @@ function ThemesBanner() {
 
 function EmitterIconStrip() {
   return (
-    <div className="relative aspect-3/1 bg-paper-deep bg-grid">
+    <div className="relative aspect-3/1 bg-surface-raised bg-grid">
       <img
         src={emitterIcon}
         alt="Apex Emitter Animator icon"
@@ -55,12 +55,12 @@ function EmitterIconStrip() {
 function ProductCard({ media, status, statusTone, title, description, children }) {
   return (
     <li className="flex shrink-0 basis-[85%] snap-start sm:basis-[60%] lg:basis-[calc((100%-3rem)/2.2)]">
-      <article className="flex w-full flex-col overflow-hidden border-[3px] border-ink bg-paper-light shadow-hard">
-        <div className="border-b-[3px] border-ink">{media}</div>
+      <article className="flex w-full flex-col overflow-hidden rounded-3xl border border-line bg-surface shadow-hard">
+        <div className="border-b border-line">{media}</div>
         <div className="flex flex-1 flex-col p-6 sm:p-8">
           <StatusBadge tone={statusTone}>{status}</StatusBadge>
           <h3 className="mt-5 font-display text-2xl font-black uppercase font-stretch-semi-expanded">{title}</h3>
-          <p className="mt-2 max-w-lg leading-relaxed text-ink-muted">{description}</p>
+          <p className="mt-2 max-w-lg leading-relaxed text-fg-muted">{description}</p>
           {children}
         </div>
       </article>
