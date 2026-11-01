@@ -5,7 +5,7 @@ const MAX_WIDTH_PX = 1400
 const MAX_HEIGHT_VH = 80
 
 function LightboxMedia({ media }) {
-  const className = 'block h-auto w-full rounded-xl border border-white/10'
+  const className = 'block h-auto w-full border-[3px] border-paper bg-ink'
 
   if (media.type === 'video') {
     return (
@@ -33,7 +33,7 @@ export function Lightbox({ media, onClose }) {
       onClose={onClose}
       onClick={closeOnBackdropClick}
       aria-label={media?.title}
-      className="m-auto max-h-none max-w-none overflow-visible bg-transparent p-4 text-white backdrop:bg-black/85 backdrop:backdrop-blur-sm"
+      className="m-auto max-h-none max-w-none overflow-visible bg-transparent p-4 text-paper backdrop:bg-ink/90"
     >
       {media && (
         <figure
@@ -43,17 +43,17 @@ export function Lightbox({ media, onClose }) {
           }}
         >
           <LightboxMedia media={media} />
-          <figcaption className="mt-3 text-center text-sm text-ink-300">
-            <span className="font-semibold text-white">{media.title}.</span> {media.description}
+          <figcaption className="mt-4 text-center text-sm text-paper/70">
+            <span className="font-mono font-bold text-paper uppercase">{media.title}.</span> {media.description}
           </figcaption>
           <button
             type="button"
             onClick={close}
             aria-label="Close"
             autoFocus
-            className="absolute -top-3 -right-3 grid size-9 place-items-center rounded-full bg-white text-ink-950 shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="absolute -top-4 -right-4 grid size-10 place-items-center border-2 border-ink bg-apex-500 text-white shadow-hard-sm transition hover:-translate-0.5 hover:shadow-hard focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
           >
-            <X className="size-4" />
+            <X className="size-5" strokeWidth={3} />
           </button>
         </figure>
       )}

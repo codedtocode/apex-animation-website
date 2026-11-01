@@ -1,17 +1,29 @@
 import { Check, Cpu } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
-import { GlowBorderCard } from '@/components/ui/GlowBorderCard'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { HandNote, SketchArrow } from '@/components/ui/Sketch'
 import { ENGINE_BENEFITS, NATIVE_BENEFITS } from '@/data/features'
-import markMono from '@images/apexanimator-mono-branco-512.png'
+import mark from '@images/apexanimator-mono-512.png'
 
-function BenefitList({ benefits, checkStyle }) {
+function PlanCard({ tone, children }) {
+  return (
+    <article className="reveal">
+      <div
+        className={`h-full border-[3px] border-ink p-8 transition duration-200 hover:-translate-1.5 hover:shadow-[15px_15px_0_var(--color-apex-500)] motion-reduce:hover:translate-0 sm:p-10 ${tone}`}
+      >
+        {children}
+      </div>
+    </article>
+  )
+}
+
+function BenefitList({ benefits, checkStyle, textStyle }) {
   return (
     <ul className="mt-8 space-y-4">
       {benefits.map((benefit) => (
-        <li key={benefit} className="flex gap-3 text-sm leading-relaxed text-ink-200 sm:text-base">
-          <span className={`mt-0.5 grid size-5 shrink-0 place-items-center rounded-full ${checkStyle}`}>
-            <Check className="size-3" strokeWidth={3} />
+        <li key={benefit} className={`flex gap-3 text-sm leading-relaxed sm:text-base ${textStyle}`}>
+          <span className={`mt-0.5 grid size-5.5 shrink-0 place-items-center border-2 ${checkStyle}`}>
+            <Check className="size-3.5" strokeWidth={3.5} />
           </span>
           {benefit}
         </li>
@@ -22,11 +34,11 @@ function BenefitList({ benefits, checkStyle }) {
 
 function PlanHeader({ icon, title, subtitle, iconStyle, subtitleStyle }) {
   return (
-    <div className="relative flex items-center gap-4">
-      <span className={`grid size-12 place-items-center rounded-2xl ${iconStyle}`}>{icon}</span>
+    <div className="flex items-center gap-4">
+      <span className={`grid size-14 place-items-center border-2 ${iconStyle}`}>{icon}</span>
       <div>
-        <h3 className="font-display text-xl font-semibold">{title}</h3>
-        <p className={`text-sm ${subtitleStyle}`}>{subtitle}</p>
+        <h3 className="font-display text-2xl font-black uppercase font-stretch-semi-expanded">{title}</h3>
+        <p className={`font-mono text-xs font-bold tracking-wider uppercase ${subtitleStyle}`}>{subtitle}</p>
       </div>
     </div>
   )
@@ -34,55 +46,59 @@ function PlanHeader({ icon, title, subtitle, iconStyle, subtitleStyle }) {
 
 function NativePlan() {
   return (
-    <GlowBorderCard className="reveal">
+    <PlanCard tone="bg-paper-light shadow-hard-lg">
       <PlanHeader
-        icon={<img src={markMono} alt="" width="28" height="28" className="size-7" />}
+        icon={<img src={mark} alt="" width="32" height="32" className="size-8" />}
         title="Native"
         subtitle="Standard Roblox animations"
-        iconStyle="bg-white/6 ring-1 ring-white/10"
-        subtitleStyle="text-ink-400"
+        iconStyle="border-ink bg-paper"
+        subtitleStyle="text-ink-muted"
       />
-      <BenefitList benefits={NATIVE_BENEFITS} checkStyle="bg-white/10 text-white" />
-    </GlowBorderCard>
+      <BenefitList benefits={NATIVE_BENEFITS} checkStyle="border-ink bg-paper" textStyle="text-ink" />
+    </PlanCard>
   )
 }
 
 function EnginePlan() {
   return (
-    <GlowBorderCard className="reveal" restingBorder="bg-linear-to-br from-white/40 via-white/10 to-white/5">
+    <div className="relative">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-32 -right-32 size-72 rounded-full bg-white/8 blur-3xl"
-      />
-      <PlanHeader
-        icon={<Cpu className="size-6" strokeWidth={1.75} />}
-        title="ApexEngine"
-        subtitle="Optional runtime"
-        iconStyle="bg-white text-ink-950 shadow-[0_10px_30px_-10px_rgba(255,255,255,0.4)]"
-        subtitleStyle="text-ink-300"
-      />
-      <div className="relative">
-        <BenefitList benefits={ENGINE_BENEFITS} checkStyle="bg-white text-ink-950" />
+        className="reveal pointer-events-none absolute -top-16 right-2 hidden items-end gap-1 sm:flex"
+      >
+        <HandNote className="mb-5 rotate-2">totally optional!</HandNote>
+        <SketchArrow className="h-12 w-16 rotate-[70deg] text-apex-500" />
       </div>
-    </GlowBorderCard>
+      <PlanCard tone="bg-ink text-paper shadow-hard-red">
+        <PlanHeader
+          icon={<Cpu className="size-7" strokeWidth={2} />}
+          title="ApexEngine"
+          subtitle="Optional runtime"
+          iconStyle="border-paper bg-apex-500 text-white"
+          subtitleStyle="text-apex-400"
+        />
+        <BenefitList
+          benefits={ENGINE_BENEFITS}
+          checkStyle="border-apex-500 bg-apex-500 text-white"
+          textStyle="text-paper/85"
+        />
+      </PlanCard>
+    </div>
   )
 }
 
 export function EngineComparison() {
   return (
-    <section id="engine" className="relative py-24 sm:py-32">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-1/2 h-120 -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.05),transparent_65%)]"
-      />
-      <Container className="relative">
+    <section id="engine" className="py-24 sm:py-32">
+      <Container>
         <SectionHeading
+          scene="03"
           centered
           eyebrow="Native + ApexEngine"
           title="Native by default. Cinematic when you want it."
           description="You never need the engine to ship an animation. Add ApexEngine when you want scenes, sound and effects to play exactly as you built them."
         />
-        <div className="mt-16 grid gap-5 lg:grid-cols-2">
+        <div className="mt-20 grid gap-8 lg:grid-cols-2">
           <NativePlan />
           <EnginePlan />
         </div>

@@ -39,7 +39,7 @@ function ThemesBanner() {
 
 function EmitterIconStrip() {
   return (
-    <div className="relative aspect-3/1 bg-ink-850">
+    <div className="relative aspect-3/1 bg-paper-deep bg-grid">
       <img
         src={emitterIcon}
         alt="Apex Emitter Animator icon"
@@ -54,13 +54,13 @@ function EmitterIconStrip() {
 
 function ProductCard({ media, status, statusTone, title, description, children }) {
   return (
-    <li className="flex shrink-0 basis-[85%] snap-start sm:basis-[60%] lg:basis-[calc((100%-2.5rem)/2.2)]">
-      <article className="flex w-full flex-col overflow-hidden rounded-3xl border border-white/8 bg-ink-900">
-        {media}
+    <li className="flex shrink-0 basis-[85%] snap-start sm:basis-[60%] lg:basis-[calc((100%-3rem)/2.2)]">
+      <article className="flex w-full flex-col overflow-hidden border-[3px] border-ink bg-paper-light shadow-hard">
+        <div className="border-b-[3px] border-ink">{media}</div>
         <div className="flex flex-1 flex-col p-6 sm:p-8">
           <StatusBadge tone={statusTone}>{status}</StatusBadge>
-          <h3 className="mt-4 font-display text-2xl font-bold">{title}</h3>
-          <p className="mt-2 max-w-lg leading-relaxed text-ink-300">{description}</p>
+          <h3 className="mt-5 font-display text-2xl font-black uppercase font-stretch-semi-expanded">{title}</h3>
+          <p className="mt-2 max-w-lg leading-relaxed text-ink-muted">{description}</p>
           {children}
         </div>
       </article>
@@ -75,6 +75,7 @@ export function ComingSoon() {
     <section id="next" className="py-24 sm:py-32">
       <Container>
         <SectionHeading
+          scene="06"
           eyebrow="What's next"
           title="The Apex family is growing."
           description="More tools are on the way to make Roblox animation faster, prettier and more fun."
@@ -99,7 +100,7 @@ export function ComingSoon() {
             ref={trackRef}
             id={TRACK_ID}
             aria-label="Upcoming tools"
-            className={`flex snap-x snap-mandatory scrollbar-none gap-5 overflow-x-auto [&::-webkit-scrollbar]:hidden ${edgeFadeFor(canScrollPrev, canScrollNext)}`}
+            className={`flex snap-x snap-mandatory scrollbar-none gap-6 overflow-x-auto pt-1 pr-2 pb-3 [&::-webkit-scrollbar]:hidden ${edgeFadeFor(canScrollPrev, canScrollNext)}`}
           >
             <ProductCard
               media={<ThemesBanner />}

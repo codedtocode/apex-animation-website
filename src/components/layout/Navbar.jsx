@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { Menu, X } from 'lucide-react'
-import mark from '@images/apexanimator-mono-branco-512.png'
+import mark from '@images/apexanimator-mono-512.png'
 import { DiscordIcon } from '@/components/ui/BrandIcons'
 import { Container } from '@/components/ui/Container'
 import { DownloadButton } from '@/components/ui/DownloadButton'
@@ -15,9 +15,14 @@ const MOBILE_MENU_ID = 'mobile-menu'
 
 function BrandLink() {
   return (
-    <a href="#top" className="flex items-center gap-2.5 rounded-lg focus-visible:outline-2 focus-visible:outline-white">
+    <a
+      href="#top"
+      className="flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+    >
       <img src={mark} alt="" width="36" height="36" className="size-9" />
-      <span className="font-display text-lg font-bold tracking-tight whitespace-nowrap">Apex Animator</span>
+      <span className="font-display text-lg font-black tracking-tight whitespace-nowrap uppercase font-stretch-semi-expanded">
+        Apex Animator
+      </span>
     </a>
   )
 }
@@ -25,10 +30,13 @@ function BrandLink() {
 function DesktopNav() {
   return (
     <nav aria-label="Main" className="hidden xl:block">
-      <ul className="flex items-center gap-8 text-sm font-medium text-ink-300">
+      <ul className="flex items-center gap-7 font-mono text-xs font-bold tracking-wider uppercase">
         {NAV_ITEMS.map((item) => (
           <li key={item.href}>
-            <a href={item.href} className="transition hover:text-white">
+            <a
+              href={item.href}
+              className="decoration-apex-500 decoration-[3px] underline-offset-[6px] hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+            >
               {item.label}
             </a>
           </li>
@@ -44,10 +52,10 @@ function DiscordNudgeButton() {
   return (
     <ExternalLink
       href={LINKS.discord}
-      className={`inline-flex h-10 items-center gap-2 rounded-xl bg-white/6 px-3 text-sm font-semibold whitespace-nowrap text-white ring-1 ring-white/10 transition-colors hover:animate-none hover:bg-discord hover:ring-discord focus-visible:animate-none focus-visible:bg-discord focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-4 ${
+      className={`inline-flex h-11 items-center gap-2 border-2 border-ink bg-paper-light px-3 font-mono text-xs font-bold tracking-wide whitespace-nowrap uppercase shadow-hard-sm transition-[translate,box-shadow,background-color,color] hover:-translate-0.5 hover:animate-none hover:bg-discord hover:text-white hover:shadow-hard focus-visible:animate-none focus-visible:bg-discord focus-visible:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:px-4 ${
         discordClicked
           ? ''
-          : 'animate-nudge motion-reduce:animate-none motion-reduce:bg-discord motion-reduce:ring-discord'
+          : 'animate-nudge motion-reduce:animate-none motion-reduce:bg-discord motion-reduce:text-white'
       }`}
     >
       <DiscordIcon className="size-5" />
@@ -64,16 +72,16 @@ function MenuToggle({ open, onToggle }) {
       aria-expanded={open}
       aria-controls={MOBILE_MENU_ID}
       aria-label={open ? 'Close menu' : 'Open menu'}
-      className="grid size-10 place-items-center rounded-xl text-ink-200 ring-1 ring-white/10 xl:hidden"
+      className="grid size-11 place-items-center border-2 border-ink bg-paper-light shadow-hard-sm xl:hidden"
     >
-      {open ? <X className="size-5" /> : <Menu className="size-5" />}
+      {open ? <X className="size-5" strokeWidth={2.5} /> : <Menu className="size-5" strokeWidth={2.5} />}
     </button>
   )
 }
 
 function MobileMenu({ onNavigate }) {
   return (
-    <div id={MOBILE_MENU_ID} className="border-t border-white/6 xl:hidden">
+    <div id={MOBILE_MENU_ID} className="border-t-2 border-ink xl:hidden">
       <Container className="py-4">
         <ul className="flex flex-col">
           {NAV_ITEMS.map((item) => (
@@ -81,14 +89,14 @@ function MobileMenu({ onNavigate }) {
               <a
                 href={item.href}
                 onClick={onNavigate}
-                className="block rounded-lg px-2 py-3 font-medium text-ink-200 hover:bg-white/4 hover:text-white"
+                className="block border-b-2 border-dashed border-ink/20 px-1 py-3.5 font-mono text-sm font-bold tracking-wider uppercase hover:text-apex-500"
               >
                 {item.label}
               </a>
             </li>
           ))}
         </ul>
-        <DownloadButton className="mt-4 mb-2 w-full lg:hidden" />
+        <DownloadButton className="mt-5 mb-3 w-full lg:hidden" />
       </Container>
     </div>
   )
@@ -104,8 +112,8 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        solidBackground ? 'border-b border-white/6 bg-ink-950/85 backdrop-blur-xl' : 'border-b border-transparent'
+      className={`fixed inset-x-0 top-0 z-50 border-b-2 transition-colors duration-200 ${
+        solidBackground ? 'border-ink bg-paper' : 'border-transparent'
       }`}
     >
       <Container className="flex h-16 items-center justify-between gap-6 sm:h-18">
@@ -113,7 +121,7 @@ export function Navbar() {
         <DesktopNav />
         <div className="flex items-center gap-3">
           <DiscordNudgeButton />
-          <DownloadButton className="py-2.5! text-sm! whitespace-nowrap max-lg:hidden" />
+          <DownloadButton className="h-11 py-0! text-xs! whitespace-nowrap max-lg:hidden" />
           <MenuToggle open={menuOpen} onToggle={() => setMenuOpen((open) => !open)} />
         </div>
       </Container>

@@ -18,15 +18,15 @@ const FILTERS = [
 ]
 
 const TAG_STYLES = {
-  native: 'bg-transparent text-ink-300 ring-white/15',
-  hybrid: 'bg-white/12 text-white ring-white/25',
-  engine: 'bg-white text-ink-950 ring-white',
+  native: 'bg-paper text-ink',
+  hybrid: 'bg-paper-deep text-ink',
+  engine: 'bg-ink text-paper',
 }
 
 function TagChip({ tag }) {
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${TAG_STYLES[tag]}`}
+      className={`inline-flex shrink-0 items-center border-2 border-ink px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider uppercase ${TAG_STYLES[tag]}`}
     >
       {FEATURE_TAGS[tag]}
     </span>
@@ -39,53 +39,49 @@ function FilterButton({ filter, active, onSelect }) {
       type="button"
       aria-pressed={active}
       onClick={() => onSelect(filter.key)}
-      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+      className={`inline-flex items-center gap-2 border-2 border-ink px-3.5 py-2 font-mono text-xs font-bold tracking-wider uppercase transition focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink ${
         active
-          ? 'bg-white text-ink-950'
-          : 'bg-white/5 text-ink-300 ring-1 ring-white/10 hover:bg-white/10 hover:text-white'
+          ? 'bg-ink text-paper shadow-[4px_4px_0_var(--color-apex-500)]'
+          : 'bg-paper-light hover:-translate-0.5 hover:shadow-hard-sm'
       }`}
     >
       {filter.label}
-      <span className="text-xs text-ink-500 tabular-nums">{filter.count}</span>
+      <span className={`tabular-nums ${active ? 'text-apex-400' : 'text-ink-faint'}`}>[{filter.count}]</span>
     </button>
   )
 }
 
 function FeatureCard({ feature: { title, description, tag, icon: Icon } }) {
   return (
-    <li className="group relative overflow-hidden rounded-2xl border border-white/6 bg-ink-900 p-6 transition duration-300 hover:-translate-y-0.5 hover:border-white/20">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-24 -right-24 size-48 rounded-full bg-white/0 blur-3xl transition duration-500 group-hover:bg-white/8"
-      />
-      <div className="relative flex items-start justify-between gap-4">
-        <span className="grid size-11 place-items-center rounded-xl bg-white/5 text-white ring-1 ring-white/10">
-          <Icon className="size-5" strokeWidth={1.75} />
+    <li className="group border-2 border-ink bg-paper-light p-6 shadow-hard transition duration-200 hover:-translate-1 hover:shadow-hard-lg motion-reduce:hover:translate-0">
+      <div className="flex items-start justify-between gap-4">
+        <span className="grid size-12 place-items-center border-2 border-ink bg-paper transition-colors group-hover:bg-apex-500 group-hover:text-white">
+          <Icon className="size-5.5" strokeWidth={2} />
         </span>
         <TagChip tag={tag} />
       </div>
-      <h3 className="relative mt-5 font-display text-lg font-semibold">{title}</h3>
-      <p className="relative mt-2 text-sm leading-relaxed text-ink-300">{description}</p>
+      <h3 className="mt-6 font-display text-xl font-extrabold font-stretch-semi-expanded">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-ink-muted">{description}</p>
     </li>
   )
 }
 
 function MoreFeaturesCard() {
   return (
-    <li className="flex flex-col justify-between gap-6 rounded-2xl border border-dashed border-white/15 bg-linear-to-br from-white/5 to-transparent p-6 sm:flex-row sm:items-end lg:col-span-2">
+    <li className="relative flex flex-col justify-between gap-6 border-2 border-dashed border-ink p-6 sm:flex-row sm:items-end lg:col-span-2">
       <div>
-        <h3 className="font-display text-lg font-semibold">And much more</h3>
-        <p className="mt-2 max-w-md text-sm leading-relaxed text-ink-300">
+        <h3 className="font-hand text-4xl leading-none font-bold text-apex-500">and much more&hellip;</h3>
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-muted">
           Takes, a Poses library, reference images, recovery copies, floating windows and a What&rsquo;s New window to
           keep you in the loop.
         </p>
       </div>
       <ExternalLink
         href={LINKS.devforum}
-        className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-white transition hover:text-ink-300"
+        className="inline-flex shrink-0 items-center gap-1.5 self-start border-2 border-ink bg-paper-light px-3.5 py-2 font-mono text-xs font-bold tracking-wider uppercase shadow-hard-sm transition hover:-translate-0.5 hover:shadow-hard focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:self-end"
       >
         Full feature list
-        <ArrowUpRight className="size-4" />
+        <ArrowUpRight className="size-4" strokeWidth={2.5} />
       </ExternalLink>
     </li>
   )
@@ -101,12 +97,13 @@ export function Features() {
       <Container>
         <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
+            scene="02"
             eyebrow="Features"
             title="A full animation studio, right inside Roblox Studio."
             description="Every tool is tagged by how it plays. Native features bake down to standard Roblox animations. Engine features use the optional ApexEngine runtime for cinematic extras."
           />
 
-          <div role="group" aria-label="Filter features" className="reveal flex flex-wrap gap-2">
+          <div role="group" aria-label="Filter features" className="reveal flex flex-wrap gap-2.5">
             {FILTERS.map((filter) => (
               <FilterButton
                 key={filter.key}
@@ -118,7 +115,7 @@ export function Features() {
           </div>
         </div>
 
-        <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {visibleFeatures.map((feature) => (
             <FeatureCard key={feature.title} feature={feature} />
           ))}

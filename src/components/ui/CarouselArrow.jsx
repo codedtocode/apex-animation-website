@@ -1,12 +1,12 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { SketchArrow } from './Sketch'
 
 const DIRECTIONS = {
-  previous: { label: 'Previous', icon: ChevronLeft, nudge: 'hover:-translate-x-1' },
-  next: { label: 'Next', icon: ChevronRight, nudge: 'hover:translate-x-1' },
+  previous: { label: 'Previous', flip: '-scale-x-100', nudge: 'hover:-translate-x-1' },
+  next: { label: 'Next', flip: '', nudge: 'hover:translate-x-1' },
 }
 
 export function CarouselArrow({ direction, hidden, onClick, controls, className = '' }) {
-  const { label, icon: Icon, nudge } = DIRECTIONS[direction]
+  const { label, flip, nudge } = DIRECTIONS[direction]
 
   return (
     <button
@@ -15,10 +15,16 @@ export function CarouselArrow({ direction, hidden, onClick, controls, className 
       disabled={hidden}
       aria-label={label}
       aria-controls={controls}
-      className={`absolute top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-lg text-apex-500 transition hover:text-apex-400 focus-visible:outline-2 focus-visible:outline-apex-400 disabled:pointer-events-none disabled:opacity-0 lg:size-14 ${nudge} ${className}`}
+      className={`group absolute top-1/2 z-10 grid h-10 w-12 -translate-y-1/2 place-items-center transition focus-visible:outline-2 focus-visible:outline-ink disabled:pointer-events-none disabled:opacity-0 lg:h-14 lg:w-16 ${nudge} ${className}`}
     >
-      <span aria-hidden="true" className="absolute inset-1 rounded-full bg-apex-500/25 blur-lg" />
-      <Icon className="relative size-8 drop-shadow-[0_0_10px_rgba(225,29,38,0.8)] lg:size-11" strokeWidth={1.75} />
+      <span className={`relative block size-full ${flip}`}>
+        <SketchArrow shape="straight" strokeWidth={4.5} className="absolute inset-0 translate-0.75 text-ink" />
+        <SketchArrow
+          shape="straight"
+          strokeWidth={4.5}
+          className="absolute inset-0 text-apex-500 transition-colors group-hover:text-apex-400"
+        />
+      </span>
     </button>
   )
 }

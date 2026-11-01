@@ -7,14 +7,14 @@ import { LINKS } from '@/data/site'
 
 function FaqItem({ faq: { question, answer } }) {
   return (
-    <details className="group">
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left font-medium text-white transition hover:text-ink-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:text-lg [&::-webkit-details-marker]:hidden">
+    <details className="group border-2 border-ink bg-paper-light transition-shadow open:shadow-hard">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-5 py-4 text-left font-display font-bold font-stretch-semi-expanded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:text-lg [&::-webkit-details-marker]:hidden">
         {question}
-        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-white/5 ring-1 ring-white/10 transition group-open:rotate-45 group-open:bg-white group-open:text-ink-950 group-open:ring-white">
-          <Plus className="size-4" />
+        <span className="grid size-9 shrink-0 place-items-center border-2 border-ink bg-paper transition group-open:rotate-45 group-open:bg-apex-500 group-open:text-white">
+          <Plus className="size-4.5" strokeWidth={3} />
         </span>
       </summary>
-      <p className="pr-12 pb-6 leading-relaxed text-ink-300">{answer}</p>
+      <p className="border-t-2 border-dashed border-ink/25 px-5 py-4 leading-relaxed text-ink-muted">{answer}</p>
     </details>
   )
 }
@@ -24,6 +24,7 @@ export function Faq() {
     <section id="faq" className="py-24 sm:py-32">
       <Container className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <SectionHeading
+          scene="07"
           eyebrow="FAQ"
           title="Questions, answered."
           description={
@@ -31,7 +32,7 @@ export function Faq() {
               Can&rsquo;t find what you&rsquo;re looking for? Ask the community on{' '}
               <ExternalLink
                 href={LINKS.discord}
-                className="font-semibold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white"
+                className="font-bold text-ink underline decoration-apex-500 decoration-[3px] underline-offset-4 hover:text-apex-600"
               >
                 Discord
               </ExternalLink>
@@ -40,7 +41,7 @@ export function Faq() {
           }
         />
 
-        <div className="reveal divide-y divide-white/8 border-y border-white/8">
+        <div className="reveal flex flex-col gap-3">
           {FAQS.map((faq) => (
             <FaqItem key={faq.question} faq={faq} />
           ))}
