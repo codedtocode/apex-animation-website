@@ -1,42 +1,20 @@
-import { useEffect, useRef } from 'react'
-import { prefersReducedMotion } from '@/lib/motion'
+import { useCallback, useRef } from 'react'
+import { useEasedScroll } from '@/hooks/useEasedScroll'
 
 const TILE_PX = 96
 const GROUND_SPEED = 0.06
 const HORIZON_SPEED = 0.012
 const MAX_HORIZON_SHIFT_PX = 60
-const EASING = 0.06
-const SETTLE_PX = 0.5
 
 export function StudioBackdrop() {
   const horizonRef = useRef(null)
   const groundRef = useRef(null)
 
-  useEffect(() => {
-    if (prefersReducedMotion()) return
-
-    let frame
-    let easedScroll = window.scrollY
-    const render = () => {
-      const target = window.scrollY
-      easedScroll += (target - easedScroll) * EASING
-      if (Math.abs(target - easedScroll) < SETTLE_PX) easedScroll = target
-
-      groundRef.current.style.translate = `0 ${-((easedScroll * GROUND_SPEED) % TILE_PX)}px`
-      horizonRef.current.style.translate = `0 ${Math.min(easedScroll * HORIZON_SPEED, MAX_HORIZON_SHIFT_PX)}px`
-      frame = easedScroll === target ? undefined : requestAnimationFrame(render)
-    }
-    const scheduleUpdate = () => {
-      frame ??= requestAnimationFrame(render)
-    }
-
-    render()
-    window.addEventListener('scroll', scheduleUpdate, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', scheduleUpdate)
-      if (frame) cancelAnimationFrame(frame)
-    }
+  const moveScene = useCallback((scrolled) => {
+    groundRef.current.style.translate = `0 ${-((scrolled * GROUND_SPEED) % TILE_PX)}px`
+    horizonRef.current.style.translate = `0 ${Math.min(scrolled * HORIZON_SPEED, MAX_HORIZON_SHIFT_PX)}px`
   }, [])
+  useEasedScroll(moveScene)
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">

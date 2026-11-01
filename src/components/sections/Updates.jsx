@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
 import { ExternalLink } from '@/components/ui/ExternalLink'
+import { PluginPanel } from '@/components/ui/PluginPanel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { UPDATE_PILLARS } from '@/data/updates'
 import { UpdateTrack } from './UpdateTrack'
@@ -47,26 +48,28 @@ function PillarCard({ pillar }) {
 
 export function Updates() {
   return (
-    <section id="updates" className="py-24 sm:py-32">
+    <section id="updates" className="py-8 sm:py-10">
       <Container>
-        <SectionHeading
-          scene="05"
-          centered
-          eyebrow="Updates"
-          title="Shipping fast."
-          description="Apex is actively maintained. Its developer works hard and fast to ship community feature requests and bug fixes in frequent updates."
-        />
+        <PluginPanel title="What's New" status="Every update is documented on the DevForum.">
+          <SectionHeading
+            scene="05"
+            centered
+            eyebrow="Updates"
+            title="Shipping fast."
+            description="Apex is actively maintained. Its developer works hard and fast to ship community feature requests and bug fixes in frequent updates."
+          />
 
-        <div className="reveal mx-auto mt-14 max-w-4xl">
-          <UpdateTrack />
-          <ul className="mt-16 grid gap-6 sm:grid-cols-3">
-            {UPDATE_PILLARS.map((pillar) => (
-              <li key={pillar.title} className="flex">
-                <PillarCard pillar={pillar} />
-              </li>
-            ))}
-          </ul>
-        </div>
+          <div className="reveal mx-auto mt-14 max-w-4xl">
+            <UpdateTrack />
+            <ul className="mt-16 grid gap-6 sm:grid-cols-3">
+              {UPDATE_PILLARS.map((pillar) => (
+                <li key={pillar.title} className="flex">
+                  <PillarCard pillar={pillar} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </PluginPanel>
       </Container>
     </section>
   )

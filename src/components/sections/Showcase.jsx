@@ -3,6 +3,7 @@ import { Expand } from 'lucide-react'
 import { AutoVideo } from '@/components/ui/AutoVideo'
 import { Container } from '@/components/ui/Container'
 import { Lightbox } from '@/components/ui/Lightbox'
+import { PluginPanel } from '@/components/ui/PluginPanel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Marked } from '@/components/ui/Sketch'
 import { SHOWCASE_ROWS } from '@/data/media'
@@ -84,28 +85,33 @@ export function Showcase() {
   const [expandedMedia, setExpandedMedia] = useState(null)
 
   return (
-    <section id="showcase" className="py-24 sm:py-32">
+    <section id="showcase" className="py-8 sm:py-10">
       <Container>
-        <SectionHeading
-          scene="01"
-          eyebrow="See it in action"
-          title={
-            <>
-              Real tools, captured in <Marked>Roblox Studio.</Marked>
-            </>
-          }
-          description="No mockups. Every clip below is the actual plugin, running live."
-        />
+        <PluginPanel title="Viewport" status="Click any clip to see it bigger.">
+          <SectionHeading
+            scene="01"
+            eyebrow="See it in action"
+            title={
+              <>
+                Real tools, captured in <Marked>Roblox Studio.</Marked>
+              </>
+            }
+            description="No mockups. Every clip below is the actual plugin, running live."
+          />
 
-        <div className="mt-16 flex flex-col gap-12 lg:gap-10">
-          {NUMBERED_ROWS.map((row) => (
-            <div key={row.map(({ media }) => media.title).join()} className="flex flex-col gap-12 lg:flex-row lg:gap-6">
-              {row.map(({ media, figure }) => (
-                <ShowcaseItem key={media.title} media={media} figure={figure} onExpand={setExpandedMedia} />
-              ))}
-            </div>
-          ))}
-        </div>
+          <div className="mt-14 flex flex-col gap-12 lg:gap-10">
+            {NUMBERED_ROWS.map((row) => (
+              <div
+                key={row.map(({ media }) => media.title).join()}
+                className="flex flex-col gap-12 lg:flex-row lg:gap-6"
+              >
+                {row.map(({ media, figure }) => (
+                  <ShowcaseItem key={media.title} media={media} figure={figure} onExpand={setExpandedMedia} />
+                ))}
+              </div>
+            ))}
+          </div>
+        </PluginPanel>
       </Container>
 
       <Lightbox media={expandedMedia} onClose={() => setExpandedMedia(null)} />

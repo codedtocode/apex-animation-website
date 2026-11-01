@@ -1,5 +1,6 @@
 import { Minus } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
+import { PluginPanel } from '@/components/ui/PluginPanel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { SketchCheck } from '@/components/ui/Sketch'
 import { COMPATIBILITY } from '@/data/features'
@@ -39,21 +40,29 @@ function CompatibilityItem({ item: { label, detail, supported } }) {
   )
 }
 
+const SUPPORTED_COUNT = COMPATIBILITY.filter(({ supported }) => supported).length
+
 export function Compatibility() {
   return (
-    <section id="compatibility" className="py-24 sm:py-32">
-      <Container className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-        <SectionHeading
-          scene="04"
-          eyebrow="Compatibility"
-          title="Works with the rigs you already have."
-          description="Open a place, select a rig and start animating. Coming from Moon Animator? Bring your exported animations with you."
-        />
-        <ul className="reveal grid gap-4 sm:grid-cols-2">
-          {COMPATIBILITY.map((item) => (
-            <CompatibilityItem key={item.label} item={item} />
-          ))}
-        </ul>
+    <section id="compatibility" className="py-8 sm:py-10">
+      <Container>
+        <PluginPanel
+          title="Rig check"
+          status={`${SUPPORTED_COUNT} of ${COMPATIBILITY.length} supported.`}
+          bodyClassName="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16"
+        >
+          <SectionHeading
+            scene="04"
+            eyebrow="Compatibility"
+            title="Works with the rigs you already have."
+            description="Open a place, select a rig and start animating. Coming from Moon Animator? Bring your exported animations with you."
+          />
+          <ul className="reveal grid gap-4 sm:grid-cols-2">
+            {COMPATIBILITY.map((item) => (
+              <CompatibilityItem key={item.label} item={item} />
+            ))}
+          </ul>
+        </PluginPanel>
       </Container>
     </section>
   )

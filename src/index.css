@@ -8,13 +8,16 @@
 
   --container-stage: 87rem;
 
-  --color-canvas: #0a0a0b;
-  --color-surface: #121214;
-  --color-surface-raised: #1c1c1f;
-  --color-line: #3a3a41;
-  --color-fg: #f4f4f5;
-  --color-fg-muted: #b5b5bb;
-  --color-fg-faint: #6e6e76;
+  --color-canvas: #0b0d11;
+  --color-panel: #111419;
+  --color-panel-bar: #191d24;
+  --color-surface: #181c23;
+  --color-surface-raised: #212631;
+  --color-line: #2c323d;
+  --color-fg: #eef1f6;
+  --color-fg-muted: #a9b0bc;
+  --color-fg-faint: #6c7483;
+  --color-select: #2f7fe0;
 
   --color-discord: #5865f2;
 

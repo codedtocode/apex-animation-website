@@ -1,5 +1,6 @@
 import { CarouselArrow } from '@/components/ui/CarouselArrow'
 import { Container } from '@/components/ui/Container'
+import { PluginPanel } from '@/components/ui/PluginPanel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { useCarousel } from '@/hooks/useCarousel'
@@ -72,60 +73,62 @@ export function ComingSoon() {
   const { trackRef, canScrollPrev, canScrollNext, scrollPrev, scrollNext } = useCarousel()
 
   return (
-    <section id="next" className="py-24 sm:py-32">
+    <section id="next" className="py-8 sm:py-10">
       <Container>
-        <SectionHeading
-          scene="06"
-          eyebrow="What's next"
-          title="The Apex family is growing."
-          description="More tools are on the way to make Roblox animation faster, prettier and more fun."
-        />
+        <PluginPanel title="Apex family" status="Swipe or use the arrows to browse.">
+          <SectionHeading
+            scene="06"
+            eyebrow="What's next"
+            title="The Apex family is growing."
+            description="More tools are on the way to make Roblox animation faster, prettier and more fun."
+          />
 
-        <div className="reveal relative mt-14 min-[1440px]:-mx-24 min-[1440px]:px-24 lg:max-[1440px]:px-18">
-          <CarouselArrow
-            direction="previous"
-            hidden={!canScrollPrev}
-            onClick={scrollPrev}
-            controls={TRACK_ID}
-            className="left-0"
-          />
-          <CarouselArrow
-            direction="next"
-            hidden={!canScrollNext}
-            onClick={scrollNext}
-            controls={TRACK_ID}
-            className="right-0"
-          />
-          <ul
-            ref={trackRef}
-            id={TRACK_ID}
-            aria-label="Upcoming tools"
-            className={`flex snap-x snap-mandatory scrollbar-none gap-6 overflow-x-auto pt-1 pr-2 pb-3 [&::-webkit-scrollbar]:hidden ${edgeFadeFor(canScrollPrev, canScrollNext)}`}
-          >
-            <ProductCard
-              media={<ThemesBanner />}
-              status="Coming soon"
-              statusTone="yellow"
-              title="Apex Themes"
-              description="Restyle the editor with ready-made light and dark themes, or create your own colors and backgrounds and make it truly yours."
+          <div className="reveal relative mt-14 lg:px-16">
+            <CarouselArrow
+              direction="previous"
+              hidden={!canScrollPrev}
+              onClick={scrollPrev}
+              controls={TRACK_ID}
+              className="left-0"
             />
-            <ProductCard
-              media={<EmitterIconStrip />}
-              status="In development"
-              statusTone="blue"
-              title="Apex Emitter Animator"
-              description="A companion VFX plugin for animating particle emitters, designed to work hand in hand with Apex Animator."
+            <CarouselArrow
+              direction="next"
+              hidden={!canScrollNext}
+              onClick={scrollNext}
+              controls={TRACK_ID}
+              className="right-0"
             />
-            <ProductCard
-              media={<MysteryStrip />}
-              status="Under wraps"
-              title="Apex VFX"
-              description="Something new is taking shape. That’s all we can say for now."
+            <ul
+              ref={trackRef}
+              id={TRACK_ID}
+              aria-label="Upcoming tools"
+              className={`flex snap-x snap-mandatory scrollbar-none gap-6 overflow-x-auto pt-1 pr-2 pb-3 [&::-webkit-scrollbar]:hidden ${edgeFadeFor(canScrollPrev, canScrollNext)}`}
             >
-              <RedactedLines />
-            </ProductCard>
-          </ul>
-        </div>
+              <ProductCard
+                media={<ThemesBanner />}
+                status="Coming soon"
+                statusTone="yellow"
+                title="Apex Themes"
+                description="Restyle the editor with ready-made light and dark themes, or create your own colors and backgrounds and make it truly yours."
+              />
+              <ProductCard
+                media={<EmitterIconStrip />}
+                status="In development"
+                statusTone="blue"
+                title="Apex Emitter Animator"
+                description="A companion VFX plugin for animating particle emitters, designed to work hand in hand with Apex Animator."
+              />
+              <ProductCard
+                media={<MysteryStrip />}
+                status="Under wraps"
+                title="Apex VFX"
+                description="Something new is taking shape. That’s all we can say for now."
+              >
+                <RedactedLines />
+              </ProductCard>
+            </ul>
+          </div>
+        </PluginPanel>
       </Container>
     </section>
   )

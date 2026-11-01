@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
 import { ExternalLink } from '@/components/ui/ExternalLink'
+import { PluginPanel } from '@/components/ui/PluginPanel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { FEATURE_TAGS, FEATURES } from '@/data/features'
 import { LINKS } from '@/data/site'
@@ -39,14 +40,12 @@ function FilterButton({ filter, active, onSelect }) {
       type="button"
       aria-pressed={active}
       onClick={() => onSelect(filter.key)}
-      className={`inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 font-mono text-xs font-bold tracking-wider uppercase transition focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg ${
-        active
-          ? 'bg-fg text-canvas shadow-[4px_4px_0_var(--color-apex-500)]'
-          : 'bg-surface hover:-translate-0.5 hover:shadow-hard-sm'
+      className={`inline-flex items-center gap-2 rounded-md px-3 py-1 text-xs font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg ${
+        active ? 'bg-select text-white' : 'text-fg-muted hover:bg-surface-raised hover:text-fg'
       }`}
     >
       {filter.label}
-      <span className={`tabular-nums ${active ? 'text-apex-500' : 'text-fg-faint'}`}>[{filter.count}]</span>
+      <span className={`tabular-nums ${active ? 'text-white/70' : 'text-fg-faint'}`}>{filter.count}</span>
     </button>
   )
 }
@@ -93,9 +92,24 @@ export function Features() {
   const visibleFeatures = showingAll ? FEATURES : FEATURES.filter((feature) => feature.tag === activeFilter)
 
   return (
-    <section id="features" className="py-24 sm:py-32">
+    <section id="features" className="py-8 sm:py-10">
       <Container>
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+        <PluginPanel
+          title="Tools"
+          toolbar={
+            <div role="group" aria-label="Filter features" className="flex flex-wrap gap-1">
+              {FILTERS.map((filter) => (
+                <FilterButton
+                  key={filter.key}
+                  filter={filter}
+                  active={filter.key === activeFilter}
+                  onSelect={setActiveFilter}
+                />
+              ))}
+            </div>
+          }
+          status={`Showing ${visibleFeatures.length} of ${FEATURES.length} tools.`}
+        >
           <SectionHeading
             scene="02"
             eyebrow="Features"
@@ -103,24 +117,13 @@ export function Features() {
             description="Every tool is tagged by how it plays. Native features bake down to standard Roblox animations. Engine features use the optional ApexEngine runtime for cinematic extras."
           />
 
-          <div role="group" aria-label="Filter features" className="reveal flex flex-wrap gap-2.5">
-            {FILTERS.map((filter) => (
-              <FilterButton
-                key={filter.key}
-                filter={filter}
-                active={filter.key === activeFilter}
-                onSelect={setActiveFilter}
-              />
+          <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {visibleFeatures.map((feature) => (
+              <FeatureCard key={feature.title} feature={feature} />
             ))}
-          </div>
-        </div>
-
-        <ul className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visibleFeatures.map((feature) => (
-            <FeatureCard key={feature.title} feature={feature} />
-          ))}
-          {showingAll && <MoreFeaturesCard />}
-        </ul>
+            {showingAll && <MoreFeaturesCard />}
+          </ul>
+        </PluginPanel>
       </Container>
     </section>
   )

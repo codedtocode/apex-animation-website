@@ -1,5 +1,6 @@
 import { Check, Cpu } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
+import { PluginPanel } from '@/components/ui/PluginPanel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { HandNote, SketchArrow } from '@/components/ui/Sketch'
 import { ENGINE_BENEFITS, NATIVE_BENEFITS } from '@/data/features'
@@ -89,19 +90,21 @@ function EnginePlan() {
 
 export function EngineComparison() {
   return (
-    <section id="engine" className="py-24 sm:py-32">
+    <section id="engine" className="py-8 sm:py-10">
       <Container>
-        <SectionHeading
-          scene="03"
-          centered
-          eyebrow="Native + ApexEngine"
-          title="Native by default. Cinematic when you want it."
-          description="You never need the engine to ship an animation. Add ApexEngine when you want scenes, sound and effects to play exactly as you built them."
-        />
-        <div className="mt-20 grid gap-8 lg:grid-cols-2">
-          <NativePlan />
-          <EnginePlan />
-        </div>
+        <PluginPanel title="Playback settings" status="ApexEngine is optional. Native animations never need it.">
+          <SectionHeading
+            scene="03"
+            centered
+            eyebrow="Native + ApexEngine"
+            title="Native by default. Cinematic when you want it."
+            description="You never need the engine to ship an animation. Add ApexEngine when you want scenes, sound and effects to play exactly as you built them."
+          />
+          <div className="mt-20 grid gap-8 lg:grid-cols-2">
+            <NativePlan />
+            <EnginePlan />
+          </div>
+        </PluginPanel>
       </Container>
     </section>
   )

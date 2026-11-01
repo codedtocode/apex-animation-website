@@ -1,6 +1,7 @@
 import { Plus } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
 import { ExternalLink } from '@/components/ui/ExternalLink'
+import { PluginPanel } from '@/components/ui/PluginPanel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { FAQS } from '@/data/faq'
 import { LINKS } from '@/data/site'
@@ -21,31 +22,37 @@ function FaqItem({ faq: { question, answer } }) {
 
 export function Faq() {
   return (
-    <section id="faq" className="py-24 sm:py-32">
-      <Container className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <SectionHeading
-          scene="07"
-          eyebrow="FAQ"
-          title="Questions, answered."
-          description={
-            <>
-              Can&rsquo;t find what you&rsquo;re looking for? Ask the community on{' '}
-              <ExternalLink
-                href={LINKS.discord}
-                className="font-bold text-fg underline decoration-apex-500 decoration-[3px] underline-offset-4 hover:text-apex-400"
-              >
-                Discord
-              </ExternalLink>
-              .
-            </>
-          }
-        />
+    <section id="faq" className="py-8 pb-24 sm:py-10 sm:pb-32">
+      <Container>
+        <PluginPanel
+          title="Help!"
+          status="Click a question to expand it."
+          bodyClassName="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16"
+        >
+          <SectionHeading
+            scene="07"
+            eyebrow="FAQ"
+            title="Questions, answered."
+            description={
+              <>
+                Can&rsquo;t find what you&rsquo;re looking for? Ask the community on{' '}
+                <ExternalLink
+                  href={LINKS.discord}
+                  className="font-bold text-fg underline decoration-apex-500 decoration-[3px] underline-offset-4 hover:text-apex-400"
+                >
+                  Discord
+                </ExternalLink>
+                .
+              </>
+            }
+          />
 
-        <div className="reveal flex flex-col gap-3">
-          {FAQS.map((faq) => (
-            <FaqItem key={faq.question} faq={faq} />
-          ))}
-        </div>
+          <div className="reveal flex flex-col gap-3">
+            {FAQS.map((faq) => (
+              <FaqItem key={faq.question} faq={faq} />
+            ))}
+          </div>
+        </PluginPanel>
       </Container>
     </section>
   )
