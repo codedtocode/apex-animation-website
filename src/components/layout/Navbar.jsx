@@ -1,43 +1,50 @@
 import { useCallback, useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, PanelRight, X } from 'lucide-react'
 import mark from '@images/apexanimator-mono-branco-512.png'
 import { DiscordIcon } from '@/components/ui/BrandIcons'
 import { Container } from '@/components/ui/Container'
 import { DownloadButton } from '@/components/ui/DownloadButton'
 import { ExternalLink } from '@/components/ui/ExternalLink'
-import { LINKS, NAV_ITEMS } from '@/data/site'
+import { API_HASH, LINKS, NAV_ITEMS } from '@/data/site'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
+import { useHashView } from '@/hooks/useHashView'
 import { useLinkClicked } from '@/hooks/useLinkClicked'
-import { useScrolledPast } from '@/hooks/useScrolledPast'
 
-const SOLID_BACKGROUND_AFTER_PX = 12
 const MOBILE_MENU_ID = 'mobile-menu'
 
-function BrandLink() {
+const MENU_ITEM_STYLE =
+  'flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm text-fg-muted transition hover:bg-select hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg aria-[current=page]:bg-select aria-[current=page]:text-white'
+
+function TitleBar() {
   return (
-    <a
-      href="#top"
-      className="flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg"
-    >
-      <img src={mark} alt="" width="36" height="36" className="size-9" />
-      <span className="font-display text-lg font-black tracking-tight whitespace-nowrap uppercase font-stretch-semi-expanded">
-        Apex Animator
+    <div className="flex h-10 items-center justify-between gap-4 border-b border-line bg-panel-bar px-4 sm:px-5">
+      <a
+        href="#top"
+        className="flex min-w-0 items-center gap-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+      >
+        <img src={mark} alt="" width="16" height="16" className="size-4" />
+        <span className="font-semibold whitespace-nowrap">Apex Animator</span>
+        <span className="truncate text-fg-faint max-sm:hidden">· Free animation plugin for Roblox Studio</span>
+      </a>
+      <span aria-hidden="true" className="flex shrink-0 gap-3 text-fg-faint max-sm:hidden">
+        <PanelRight className="size-4" />
+        <X className="size-4" />
       </span>
-    </a>
+    </div>
   )
 }
 
-function DesktopNav() {
+const currentPage = (href, view) => (view === 'api' && href === API_HASH ? 'page' : undefined)
+
+function MenuBar({ view }) {
   return (
-    <nav aria-label="Main" className="hidden xl:block">
-      <ul className="flex items-center gap-7 font-mono text-xs font-bold tracking-wider uppercase">
-        {NAV_ITEMS.map((item) => (
-          <li key={item.href}>
-            <a
-              href={item.href}
-              className="decoration-apex-500 decoration-[3px] underline-offset-[6px] hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg"
-            >
-              {item.label}
+    <nav aria-label="Main" className="max-xl:hidden">
+      <ul className="flex items-center gap-1">
+        {NAV_ITEMS.map(({ label, href, icon: Icon }) => (
+          <li key={href}>
+            <a href={href} aria-current={currentPage(href, view)} className={MENU_ITEM_STYLE}>
+              <Icon className="size-4" strokeWidth={1.75} />
+              {label}
             </a>
           </li>
         ))}
@@ -52,7 +59,7 @@ function DiscordNudgeButton() {
   return (
     <ExternalLink
       href={LINKS.discord}
-      className={`inline-flex h-11 items-center gap-2 rounded-xl border border-line bg-surface px-3 font-mono text-xs font-bold tracking-wide whitespace-nowrap uppercase shadow-hard-sm transition-[translate,box-shadow,background-color,color] hover:-translate-0.5 hover:animate-none hover:bg-discord hover:text-white hover:shadow-hard focus-visible:animate-none focus-visible:bg-discord focus-visible:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg sm:px-4 ${
+      className={`inline-flex h-10 items-center gap-2 rounded-lg border border-line bg-surface px-3 font-mono text-sm font-bold tracking-wide whitespace-nowrap uppercase transition-colors hover:animate-none hover:bg-discord hover:text-white focus-visible:animate-none focus-visible:bg-discord focus-visible:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg sm:px-4 ${
         discordClicked
           ? ''
           : 'animate-nudge motion-reduce:animate-none motion-reduce:bg-discord motion-reduce:text-white'
@@ -72,26 +79,28 @@ function MenuToggle({ open, onToggle }) {
       aria-expanded={open}
       aria-controls={MOBILE_MENU_ID}
       aria-label={open ? 'Close menu' : 'Open menu'}
-      className="grid size-11 place-items-center rounded-xl border border-line bg-surface shadow-hard-sm xl:hidden"
+      className="grid size-10 place-items-center rounded-lg border border-line bg-surface transition-colors hover:bg-surface-raised xl:hidden"
     >
-      {open ? <X className="size-5" strokeWidth={2.5} /> : <Menu className="size-5" strokeWidth={2.5} />}
+      {open ? <X className="size-4.5" strokeWidth={2.5} /> : <Menu className="size-4.5" strokeWidth={2.5} />}
     </button>
   )
 }
 
-function MobileMenu({ onNavigate }) {
+function MobileMenu({ view, onNavigate }) {
   return (
     <div id={MOBILE_MENU_ID} className="border-t border-line xl:hidden">
       <Container className="py-4">
-        <ul className="flex flex-col">
-          {NAV_ITEMS.map((item) => (
-            <li key={item.href}>
+        <ul className="flex flex-col gap-1">
+          {NAV_ITEMS.map(({ label, href, icon: Icon }) => (
+            <li key={href}>
               <a
-                href={item.href}
+                href={href}
                 onClick={onNavigate}
-                className="block border-b border-dashed border-fg/15 px-1 py-3.5 font-mono text-sm font-bold tracking-wider uppercase hover:text-apex-500"
+                aria-current={currentPage(href, view)}
+                className={`${MENU_ITEM_STYLE} py-3 text-base`}
               >
-                {item.label}
+                <Icon className="size-4.5" strokeWidth={1.75} />
+                {label}
               </a>
             </li>
           ))}
@@ -104,31 +113,23 @@ function MobileMenu({ onNavigate }) {
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const scrolled = useScrolledPast(SOLID_BACKGROUND_AFTER_PX)
+  const view = useHashView()
   const closeMenu = useCallback(() => setMenuOpen(false), [])
   useEscapeKey(closeMenu, menuOpen)
 
-  const solidBackground = scrolled || menuOpen
-
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      <div
-        className={`mx-auto max-w-stage border-x border-b transition-colors duration-200 ${
-          solidBackground ? 'border-line bg-canvas' : 'border-transparent'
-        }`}
-      >
-        <Container className="flex h-16 items-center justify-between gap-6 sm:h-18">
-          <BrandLink />
-          <DesktopNav />
-          <div className="flex items-center gap-3">
-            <DiscordNudgeButton />
-            <DownloadButton className="h-11 py-0! text-xs! whitespace-nowrap max-lg:hidden" />
-            <MenuToggle open={menuOpen} onToggle={() => setMenuOpen((open) => !open)} />
-          </div>
-        </Container>
-
-        {menuOpen && <MobileMenu onNavigate={closeMenu} />}
+    <header className="sticky top-0 z-50 border-b border-line bg-panel">
+      <TitleBar />
+      <div className="flex h-14 items-center gap-3 px-3 sm:px-4">
+        <MenuBar view={view} />
+        <div className="ml-auto flex items-center gap-2">
+          <DiscordNudgeButton />
+          <DownloadButton className="h-10 py-0! whitespace-nowrap shadow-none! hover:translate-0! hover:bg-apex-400 active:translate-0! max-lg:hidden" />
+          <MenuToggle open={menuOpen} onToggle={() => setMenuOpen((open) => !open)} />
+        </div>
       </div>
+
+      {menuOpen && <MobileMenu view={view} onNavigate={closeMenu} />}
     </header>
   )
 }

@@ -1,8 +1,15 @@
-import mark from '@images/apexanimator-mono-branco-512.png'
-import { DiscordIcon, RobloxIcon } from '@/components/ui/BrandIcons'
+import {
+  DiscordIcon,
+  RobloxIcon,
+} from '@/components/ui/BrandIcons'
 import { Container } from '@/components/ui/Container'
 import { ExternalLink } from '@/components/ui/ExternalLink'
-import { COMMUNITY_LINKS, LINKS, NAV_ITEMS } from '@/data/site'
+import {
+  COMMUNITY_LINKS,
+  LINKS,
+  NAV_ITEMS,
+} from '@/data/site'
+import mark from '@images/apexanimator-mono-branco-512.png'
 
 const SOCIAL_BUTTON_STYLE =
   'grid size-11 place-items-center rounded-xl border border-line transition hover:-translate-0.5 hover:bg-apex-500 hover:shadow-hard-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg'
@@ -15,12 +22,12 @@ function FooterBrand() {
     <div className="max-w-xs">
       <div className="flex items-center gap-2.5">
         <img src={mark} alt="" width="32" height="32" className="size-8" />
-        <span className="font-display text-lg font-black uppercase font-stretch-semi-expanded">Apex Animator</span>
+        <span className="font-display font-black font-stretch-semi-expanded text-lg uppercase">Apex Animator</span>
       </div>
-      <p className="mt-5 text-sm leading-relaxed text-fg-muted">
+      <p className="mt-5 text-fg-muted text-sm leading-relaxed">
         The free animation plugin for Roblox Studio. Physics, live recording, face animation, IK/FK and much more.
       </p>
-      <div className="mt-6 flex gap-3">
+      <div className="flex gap-3 mt-6">
         <ExternalLink href={LINKS.discord} aria-label="Discord" className={SOCIAL_BUTTON_STYLE}>
           <DiscordIcon className="size-5" />
         </ExternalLink>
@@ -34,15 +41,15 @@ function FooterBrand() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-surface">
+    <footer className="bg-surface border-line border-t">
       <Container className="pt-16 pb-10">
-        <div className="flex flex-col gap-12 md:flex-row md:justify-between">
+        <div className="flex md:flex-row flex-col md:justify-between gap-12">
           <FooterBrand />
 
-          <div className="grid grid-cols-2 gap-12 sm:gap-20">
+          <div className="gap-12 sm:gap-20 grid grid-cols-2">
             <nav aria-label="Footer">
               <h2 className={LIST_TITLE_STYLE}>Plugin</h2>
-              <ul className="mt-4 space-y-3 text-sm">
+              <ul className="space-y-3 mt-4 text-sm">
                 {NAV_ITEMS.map((item) => (
                   <li key={item.href}>
                     <a href={item.href} className={LIST_LINK_STYLE}>
@@ -54,7 +61,7 @@ export function Footer() {
             </nav>
             <div>
               <h2 className={LIST_TITLE_STYLE}>Community</h2>
-              <ul className="mt-4 space-y-3 text-sm">
+              <ul className="space-y-3 mt-4 text-sm">
                 {COMMUNITY_LINKS.map((item) => (
                   <li key={item.label}>
                     <ExternalLink href={item.href} className={LIST_LINK_STYLE}>
@@ -67,10 +74,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-2 border-t border-dashed border-fg/15 pt-6 font-mono text-[11px] tracking-wider text-fg-faint uppercase sm:flex-row sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} Apex Animator. Free forever.</p>
-          <p>Not affiliated with or endorsed by Roblox Corporation.</p>
-        </div>
+        <p className="mt-14 pt-6 border-fg/15 border-t border-dashed font-mono text-[11px] text-fg-faint uppercase tracking-wider">
+          &copy; {new Date().getFullYear()} Apex Animator, By Codedtocode
+        </p>
       </Container>
     </footer>
   )

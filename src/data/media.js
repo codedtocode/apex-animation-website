@@ -1,3 +1,4 @@
+import editorOverview from '@/assets/apex-animator-editor.png'
 import customRigIkPoster from '@/assets/demos/custom-rig-ik.jpg'
 import customRigIk from '@/assets/demos/custom-rig-ik.mp4'
 import faceControlsPoster from '@/assets/demos/face-controls.jpg'
@@ -19,16 +20,15 @@ import motionTrails from '@/assets/demos/motion-trails.mp4'
 import r15IkPoster from '@/assets/demos/r15-ik.jpg'
 import r15Ik from '@/assets/demos/r15-ik.mp4'
 import orthoViews from '@images/apex1.png'
-import editorOverview from '@images/apexnimatorshowcase.png'
 
 const MEDIA = {
   editorOverview: {
     type: 'image',
     src: editorOverview,
-    width: 1069,
-    height: 458,
+    width: 846,
+    height: 445,
     title: 'One timeline for everything',
-    description: 'Takes, camera, screen, markers, sounds and every joint, stacked in a single editor.',
+    description: 'Camera, markers, sounds, every joint and its controls, stacked in a single editor.',
   },
   customRigIk: {
     type: 'video',

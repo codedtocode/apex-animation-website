@@ -5,7 +5,7 @@ function SceneLabel({ scene, centered, children }) {
         centered ? 'justify-center' : ''
       }`}
     >
-      <span className="rounded-full bg-fg px-2.5 py-1 text-canvas">SC.{scene}</span>
+      {scene && <span className="rounded-full bg-fg px-2.5 py-1 text-canvas">SC.{scene}</span>}
       {children}
     </p>
   )

@@ -8,7 +8,7 @@ const PLAY_THRESHOLD = 0.2
 
 const ignoreAutoplayRejection = () => {}
 
-export function AutoVideo({ media }) {
+export function AutoVideo({ media, fill = false }) {
   const videoRef = useRef(null)
   const shouldLoad = useInViewport(videoRef, { rootMargin: PRELOAD_MARGIN, once: true })
   const isVisible = useInViewport(videoRef, { threshold: PLAY_THRESHOLD })
@@ -22,7 +22,7 @@ export function AutoVideo({ media }) {
   }, [shouldLoad, isVisible, paused])
 
   return (
-    <div className="group/video relative">
+    <div className={`group/video ${fill ? 'absolute inset-0' : 'relative'}`}>
       <video
         ref={videoRef}
         src={shouldLoad ? media.src : undefined}
@@ -34,7 +34,7 @@ export function AutoVideo({ media }) {
         playsInline
         preload="none"
         aria-label={`${media.title}: ${media.description}`}
-        className="block h-auto w-full"
+        className={fill ? 'size-full object-contain' : 'block h-auto w-full'}
       />
       <button
         type="button"

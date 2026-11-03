@@ -48,14 +48,6 @@ export function ScribbleCircle({ className = '' }) {
   )
 }
 
-export function SketchCheck({ className = '' }) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className={className}>
-      <path d="M4 13C6 14 8 16 10 19C13 12 16 8 21 4" strokeWidth="3" {...STROKE_PROPS} />
-    </svg>
-  )
-}
-
 export function Marked({ children }) {
   return (
     <span className="relative inline-block whitespace-nowrap">

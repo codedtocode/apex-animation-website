@@ -1,10 +1,9 @@
 const DOT_TONES = {
-  neutral: 'bg-fg',
-  yellow: 'bg-amber-400',
+  green: 'bg-emerald-400',
   blue: 'bg-sky-500',
 }
 
-export function StatusBadge({ tone = 'neutral', children }) {
+export function StatusBadge({ tone, children }) {
   const dotColor = DOT_TONES[tone]
 
   return (

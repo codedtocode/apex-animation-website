@@ -1,5 +1,17 @@
 @import 'tailwindcss';
 
+@property --stride {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --bob {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
 @theme {
   --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
@@ -30,19 +42,81 @@
   --shadow-hard-red: 9px 9px 0 0 var(--color-apex-500);
 
   --animate-nudge: nudge 4s ease-in-out infinite;
-  --animate-drift: drift 7s ease-in-out infinite;
+  --animate-run-stride: run-stride 0.56s ease-in-out infinite;
+  --animate-run-across: run-across 14s linear infinite;
+  --animate-page-in: page-in 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+  --animate-wave: wave 3.4s ease-in-out infinite;
+  --animate-dialog-in: dialog-in 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+  --animate-fade-in: fade-in 0.25s ease-out;
 
-  @keyframes drift {
-    0% {
-      translate: 0 0;
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+      scale: 0.97;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
       opacity: 0;
     }
-    25% {
-      opacity: 0.9;
-    }
+  }
+
+  @keyframes wave {
+    0%,
+    10%,
+    92%,
     100% {
-      translate: 0 -72px;
+      rotate: z 0deg;
+    }
+    22% {
+      rotate: z 100deg;
+    }
+    30%,
+    46%,
+    62% {
+      rotate: z 176deg;
+    }
+    38%,
+    54%,
+    70% {
+      rotate: z 148deg;
+    }
+    78% {
+      rotate: z 172deg;
+    }
+  }
+
+  @keyframes page-in {
+    from {
       opacity: 0;
+      translate: var(--page-shift, 0) 0;
+    }
+  }
+
+  @keyframes run-stride {
+    0%,
+    100% {
+      --stride: 1;
+      --bob: -1;
+    }
+    25%,
+    75% {
+      --bob: 0;
+    }
+    50% {
+      --stride: -1;
+      --bob: -1;
+    }
+  }
+
+  @keyframes run-across {
+    from {
+      translate: -10vw 0;
+    }
+    to {
+      translate: 110vw 0;
     }
   }
 
@@ -82,7 +156,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 7rem;
+    scrollbar-gutter: stable;
+  }
+
+  html:has(dialog:modal) {
+    overflow: hidden;
   }
 
   body {
@@ -112,11 +191,6 @@
     linear-gradient(to right, color-mix(in srgb, currentColor 5%, transparent) 1px, transparent 1px),
     linear-gradient(to bottom, color-mix(in srgb, currentColor 5%, transparent) 1px, transparent 1px);
   background-size: 28px 28px;
-}
-
-@utility bg-halftone {
-  background-image: radial-gradient(color-mix(in srgb, currentColor 18%, transparent) 1.2px, transparent 1.6px);
-  background-size: 12px 12px;
 }
 
 .draw-on {

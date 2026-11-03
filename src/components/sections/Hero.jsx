@@ -1,6 +1,5 @@
 import { ArrowUpRight, Download } from 'lucide-react'
-import wavingStill from '@/assets/codedtocode-waving-still.png'
-import waving from '@/assets/codedtocode-waving.webp'
+import { DeveloperRig } from '@/components/layout/DeveloperRig'
 import { AutoVideo } from '@/components/ui/AutoVideo'
 import { RobloxStudioIcon } from '@/components/ui/BrandIcons'
 import { Container } from '@/components/ui/Container'
@@ -9,11 +8,17 @@ import { ExternalLink } from '@/components/ui/ExternalLink'
 import { HandNote, SketchArrow } from '@/components/ui/Sketch'
 import { StarRating } from '@/components/ui/StarRating'
 import { HERO_MEDIA } from '@/data/media'
-import { LATEST_VERSION, LINKS, STATS } from '@/data/site'
+import { LINKS, STATS } from '@/data/site'
+import { usePluginVersion } from '@/hooks/usePluginVersion'
+import { studs } from '@/lib/r6Rig'
 import mark from '@images/apexanimator-mono-branco-512.png'
 import apexTile from '@images/apexanimator-tile-1024.png'
 
 const HEADLINE_ICON_STYLE = 'mr-[0.18em] inline-block size-[0.84em] align-[-0.1em]'
+
+const WAVE_TURN_DEG = -10
+const WAVE_TILT_DEG = -6
+const WAVING_ARM = 'rightArm'
 
 function FreeSticker() {
   return (
@@ -60,15 +65,17 @@ function Headline() {
 }
 
 function LatestReleaseLink() {
+  const version = usePluginVersion()
+
   return (
     <ExternalLink
       href={LINKS.devforum}
       className="group inline-flex items-center gap-2.5 self-start rounded-full border border-line bg-surface py-1.5 pr-3 pl-1.5 text-sm font-semibold shadow-hard-sm transition hover:-translate-0.5 hover:shadow-[5px_5px_0_var(--color-apex-500)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg"
     >
       <span className="rounded-full bg-apex-500 px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider text-white uppercase">
-        Free
+        {version}
       </span>
-      Version {LATEST_VERSION} is out. See what&rsquo;s new
+      New version is out. See what&rsquo;s new
       <ArrowUpRight className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-apex-500" />
     </ExternalLink>
   )
@@ -99,12 +106,20 @@ function Stats() {
   )
 }
 
+const waveArm = (id) =>
+  id === WAVING_ARM ? { className: 'origin-[65%_15%]! animate-wave motion-reduce:animate-none' } : undefined
+
 function WavingDeveloper() {
   return (
-    <picture className="pointer-events-none absolute right-[8%] bottom-[calc(100%+1px)] w-16 sm:w-24 lg:w-30">
-      <source srcSet={wavingStill} media="(prefers-reduced-motion: reduce)" />
-      <img src={waving} alt="" width="169" height="212" className="block h-auto w-full" />
-    </picture>
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute right-[10%] bottom-[calc(100%-2px)] [--stud:15px] sm:[--stud:21px] lg:[--stud:25px]"
+      style={{ width: studs(4), height: studs(5) }}
+    >
+      <div style={{ perspective: studs(32) }}>
+        <DeveloperRig turnDeg={WAVE_TURN_DEG} tiltDeg={WAVE_TILT_DEG} getLimbProps={waveArm} />
+      </div>
+    </div>
   )
 }
 
@@ -134,7 +149,7 @@ function EditorWindow({ media }) {
       </WindowBar>
       <img
         src={media.src}
-        alt="The Apex Animator editor with takes, camera, screen, markers, sounds and joints on one timeline"
+        alt="The Apex Animator editor with camera, markers, sounds, joints and controls on one timeline"
         width={media.width}
         height={media.height}
         fetchPriority="high"
@@ -184,7 +199,6 @@ function EditorPreview() {
         <EditorWindow media={editor} />
       </figure>
       <figure className="relative z-10 -mt-8 ml-auto w-[92%] sm:-mt-16 sm:w-[72%] lg:absolute lg:right-0 lg:-bottom-24 lg:mt-0 lg:w-[56%]">
-        <WavingDeveloper />
         <LiveCaptureWindow media={demo} />
       </figure>
       <PreviewNotes />
@@ -194,7 +208,7 @@ function EditorPreview() {
 
 export function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24">
+    <section id="top" className="relative overflow-hidden pt-12 pb-16 sm:pt-18 sm:pb-24">
       <Container className="relative">
         <Headline />
 
@@ -206,7 +220,10 @@ export function Hero() {
             </p>
             <LatestReleaseLink />
           </div>
-          <Stats />
+          <div className="relative max-lg:mt-18 sm:max-lg:mt-24">
+            <WavingDeveloper />
+            <Stats />
+          </div>
         </div>
         <DownloadButton className="mt-8 w-full sm:w-auto lg:hidden" />
 

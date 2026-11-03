@@ -18,10 +18,10 @@ const updateReveal = (entry) => {
   target.dataset.revealFrom = isAboveViewport(entry) ? 'above' : 'below'
 }
 
-export function useScrollReveal() {
+export function useScrollReveal(resetKey) {
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => entries.forEach(updateReveal), OBSERVER_OPTIONS)
     document.querySelectorAll(REVEAL_SELECTOR).forEach((element) => observer.observe(element))
     return () => observer.disconnect()
-  }, [])
+  }, [resetKey])
 }
