@@ -55,6 +55,77 @@
   --animate-marshmallow-fling: marshmallow-fling 0.5s ease-in forwards;
   --animate-smoke-puff: smoke-puff 1.1s ease-out forwards;
 
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+      scale: 0.97;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes wave {
+    0%,
+    10%,
+    92%,
+    100% {
+      rotate: z 0deg;
+    }
+    22% {
+      rotate: z 100deg;
+    }
+    30%,
+    46%,
+    62% {
+      rotate: z 176deg;
+    }
+    38%,
+    54%,
+    70% {
+      rotate: z 148deg;
+    }
+    78% {
+      rotate: z 172deg;
+    }
+  }
+
+  @keyframes page-in {
+    from {
+      opacity: 0;
+      translate: var(--page-shift, 0) 0;
+    }
+  }
+
+  @keyframes run-stride {
+    0%,
+    100% {
+      --stride: 1;
+      --bob: -1;
+    }
+    25%,
+    75% {
+      --bob: 0;
+    }
+    50% {
+      --stride: -1;
+      --bob: -1;
+    }
+  }
+
+  @keyframes run-across {
+    from {
+      translate: -10vw 0;
+    }
+    to {
+      translate: 110vw 0;
+    }
+  }
+
   @keyframes flicker {
     0%,
     100% {
