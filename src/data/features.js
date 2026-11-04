@@ -5,7 +5,6 @@ import {
   Captions,
   CircleDot,
   Clapperboard,
-  CodeXml,
   Film,
   Flag,
   Footprints,
@@ -16,8 +15,6 @@ import {
   Library,
   MonitorPlay,
   Move,
-  Palette,
-  PanelsTopLeft,
   PersonStanding,
   Route,
   ShieldCheck,
@@ -150,6 +147,7 @@ export const FEATURES = [
       'Decal faces: a picture library (from an id, a file or Explorer), crossfades, separate layers for eyes, brows and mouth, and lip sync with mouth pictures.',
       'Fit to face per head. Head swaps mid-animation on a Head row.',
     ],
+    clips: [CLIPS.faceAnimation],
   },
   {
     title: 'Layers',
@@ -233,6 +231,7 @@ export const FEATURES = [
       'Look through the camera, Play + Camera, Follow a character, Spring follow and Camera path.',
       'Curve plotter and key tools work on camera keys. The Camera row shows before a scene exists.',
     ],
+    clips: [CLIPS.scenesRig, CLIPS.scenesCamera, CLIPS.cameraPath],
   },
   {
     title: 'Markers & Gameplay States',
@@ -264,6 +263,7 @@ export const FEATURES = [
       'Bars, fades, dark edges and subtitles, each kind on its own row, with fade lines.',
       'Subtitles come in 4 styles and 20 fonts, typed out by letter or by word, and you drag them in the Camera View.',
     ],
+    clips: [CLIPS.screenEffects],
   },
   {
     title: 'Scene Look',
@@ -274,6 +274,7 @@ export const FEATURES = [
       'Time of day on a sun arc, fog, color grade, bloom, and depth of field with click-to-focus pulls.',
       'Built-in presets plus your own saved ones.',
     ],
+    clips: [CLIPS.sceneLook],
   },
   {
     title: 'Sounds',
@@ -285,6 +286,7 @@ export const FEATURES = [
       'Sound window with a waveform.',
       'Sound props with Play and Stop cues, plus Volume and PlaybackSpeed keys.',
     ],
+    clips: [CLIPS.sound],
   },
   {
     title: 'Props & Releases',
@@ -311,7 +313,7 @@ export const FEATURES = [
       'Time warp, Rewind, Plays backwards, and Redo from here.',
       'The result is baked to keys.',
     ],
-    clips: [CLIPS.ragdoll],
+    clips: [CLIPS.ragdoll, CLIPS.physicsForces],
   },
   {
     title: 'Record in Play',
@@ -323,6 +325,7 @@ export const FEATURES = [
       'F6 records models, parts or folders during Play, several times in one Play.',
       'Each recording comes in as a new scene or a take. Things that appeared or were destroyed get Shown rows, and sounds come in too.',
     ],
+    clips: [CLIPS.recordInPlay],
   },
   {
     title: 'Takes',
@@ -390,47 +393,6 @@ export const FEATURES = [
       'Link id, PLAY IT code, Bake Settings and Check Place.',
       'Play settings: length, looping, priority, and what happens when stopped part-way.',
       'Clips end at your last key.',
-    ],
-  },
-  {
-    title: 'Editor & Workflow',
-    tag: 'native',
-    icon: PanelsTopLeft,
-    description:
-      'Floating or docked windows, searchable Help and Settings, a key for every feature, custom frame rates and a Values window.',
-    details: [
-      'Floating or docked windows, and File, Pose, View and Window menus with submenus and icons.',
-      'Help window with search, Settings window with search, mouse hints, and tips that show keys.',
-      'Every feature can take a key, and rebinding asks when the key is taken.',
-      'Values window with a field per channel. Double-click a key for a quick edit.',
-      'Frame rates 24, 30, 60 or custom. Play range. Edits past the end make the animation longer.',
-      'Collapse joints. Clicking a joint in the viewport scrolls the dope sheet to its row.',
-      'Hide everything (Ctrl+H). Community link.',
-    ],
-  },
-  {
-    title: 'Themes',
-    tag: 'native',
-    icon: Palette,
-    description:
-      '3 free themes and 10 more with Apex Themes, some with their own font and moving background. Build your own and share codes.',
-    details: [
-      '3 free themes and 10 with Apex Themes. Some bring their own font, key shape and moving background.',
-      'Point at a theme to try it.',
-      'Theme editor with pictures or GIFs, editor part colors and shapes, and share codes.',
-    ],
-  },
-  {
-    title: 'ApexEngine for Programmers',
-    tag: 'engine',
-    icon: CodeXml,
-    description:
-      'Plain Animator plays of registered clips get the enhanced parts. LoadAnimation, GetTrack, GetRigState and LoadScene. Open source.',
-    details: [
-      'Any plain Animator play of a registered clip gets the enhanced parts.',
-      'LoadAnimation, GetTrack, GetRigState and LoadScene, with signals and state events.',
-      'Works on rigs of another size, and the companion script explains itself.',
-      'Open source.',
     ],
   },
 ]

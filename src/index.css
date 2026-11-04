@@ -48,75 +48,85 @@
   --animate-wave: wave 3.4s ease-in-out infinite;
   --animate-dialog-in: dialog-in 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
   --animate-fade-in: fade-in 0.25s ease-out;
+  --animate-flicker: flicker 1.2s ease-in-out infinite;
+  --animate-ember: ember 3s ease-out infinite;
+  --animate-glow: glow 2.6s ease-in-out infinite;
+  --animate-marshmallow-pop: marshmallow-pop 0.45s cubic-bezier(0.3, 1.5, 0.5, 1);
+  --animate-marshmallow-fling: marshmallow-fling 0.5s ease-in forwards;
+  --animate-smoke-puff: smoke-puff 1.1s ease-out forwards;
 
-  @keyframes dialog-in {
-    from {
-      opacity: 0;
-      translate: 0 24px;
-      scale: 0.97;
-    }
-  }
-
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-  }
-
-  @keyframes wave {
-    0%,
-    10%,
-    92%,
-    100% {
-      rotate: z 0deg;
-    }
-    22% {
-      rotate: z 100deg;
-    }
-    30%,
-    46%,
-    62% {
-      rotate: z 176deg;
-    }
-    38%,
-    54%,
-    70% {
-      rotate: z 148deg;
-    }
-    78% {
-      rotate: z 172deg;
-    }
-  }
-
-  @keyframes page-in {
-    from {
-      opacity: 0;
-      translate: var(--page-shift, 0) 0;
-    }
-  }
-
-  @keyframes run-stride {
+  @keyframes flicker {
     0%,
     100% {
-      --stride: 1;
-      --bob: -1;
+      transform: scale(1, 1) skewX(0deg);
     }
-    25%,
-    75% {
-      --bob: 0;
+    30% {
+      transform: scale(0.94, 1.07) skewX(-3deg);
     }
-    50% {
-      --stride: -1;
-      --bob: -1;
+    55% {
+      transform: scale(1.05, 0.93) skewX(2deg);
+    }
+    80% {
+      transform: scale(0.97, 1.04) skewX(3deg);
     }
   }
 
-  @keyframes run-across {
+  @keyframes ember {
     from {
-      translate: -10vw 0;
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
     }
     to {
-      translate: 110vw 0;
+      opacity: 0;
+      translate: var(--drift, 0) var(--rise, -230px);
+      scale: 0.3;
+      rotate: var(--spin, 200deg);
+    }
+  }
+
+  @keyframes glow {
+    0%,
+    100% {
+      opacity: 0.85;
+    }
+    20% {
+      opacity: 1;
+    }
+    45% {
+      opacity: 0.72;
+    }
+    70% {
+      opacity: 0.95;
+    }
+  }
+
+  @keyframes marshmallow-pop {
+    from {
+      scale: 0;
+    }
+    60% {
+      scale: 1.2;
+    }
+  }
+
+  @keyframes marshmallow-fling {
+    to {
+      translate: 0 calc(var(--stud) * 1.6);
+      scale: 0;
+    }
+  }
+
+  @keyframes smoke-puff {
+    from {
+      opacity: 0.7;
+      scale: 0.4;
+    }
+    to {
+      opacity: 0;
+      scale: 1.8;
+      translate: 0 calc(var(--stud) * -0.9);
     }
   }
 
@@ -191,6 +201,86 @@
     linear-gradient(to right, color-mix(in srgb, currentColor 5%, transparent) 1px, transparent 1px),
     linear-gradient(to bottom, color-mix(in srgb, currentColor 5%, transparent) 1px, transparent 1px);
   background-size: 28px 28px;
+}
+
+.seek-bar {
+  --thumb: 10px;
+  --track: 3px;
+  --seek-track: linear-gradient(
+    to right,
+    var(--color-fg) calc(var(--thumb) / 2 + (100% - var(--thumb)) * var(--progress)),
+    color-mix(in srgb, var(--color-fg) 25%, transparent) 0
+  );
+  appearance: none;
+  height: 1.25rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.seek-bar::-webkit-slider-runnable-track {
+  height: var(--track);
+  border-radius: 9999px;
+  background: var(--seek-track);
+}
+
+.seek-bar::-moz-range-track {
+  height: var(--track);
+  border-radius: 9999px;
+  background: var(--seek-track);
+}
+
+.seek-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: var(--thumb);
+  height: var(--thumb);
+  margin-top: calc((var(--track) - var(--thumb)) / 2);
+  border-radius: 9999px;
+  background: var(--color-fg);
+  scale: 0;
+  transition: scale 0.15s ease;
+}
+
+.seek-bar::-moz-range-thumb {
+  width: var(--thumb);
+  height: var(--thumb);
+  border: 0;
+  border-radius: 9999px;
+  background: var(--color-fg);
+  scale: 0;
+  transition: scale 0.15s ease;
+}
+
+.seek-bar:hover::-webkit-slider-thumb,
+.seek-bar:active::-webkit-slider-thumb,
+.seek-bar:focus-visible::-webkit-slider-thumb {
+  scale: 1;
+}
+
+.seek-bar:hover::-moz-range-thumb,
+.seek-bar:active::-moz-range-thumb,
+.seek-bar:focus-visible::-moz-range-thumb {
+  scale: 1;
+}
+
+@media (hover: none) {
+  .seek-bar::-webkit-slider-thumb {
+    scale: 1;
+  }
+
+  .seek-bar::-moz-range-thumb {
+    scale: 1;
+  }
+}
+
+.seek-bar:focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.seek-bar:disabled {
+  cursor: default;
+  opacity: 0.5;
 }
 
 .draw-on {

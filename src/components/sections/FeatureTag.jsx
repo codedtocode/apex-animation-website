@@ -9,7 +9,7 @@ const TAG_STYLES = {
 export function FeatureTag({ tag }) {
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded-full border border-line px-2.5 py-0.5 font-mono text-[10px] font-bold tracking-wider uppercase ${TAG_STYLES[tag]}`}
+      className={`inline-flex shrink-0 items-center rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider uppercase ${TAG_STYLES[tag]}`}
     >
       {FEATURE_TAGS[tag]}
     </span>

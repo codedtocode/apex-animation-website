@@ -70,7 +70,7 @@ function FilterButton({ filter, active, onSelect }) {
       type="button"
       aria-pressed={active}
       onClick={() => onSelect(filter.key)}
-      className={`inline-flex items-center gap-2 rounded-md px-3 py-1 text-xs font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg ${
+      className={`inline-flex items-center gap-2 rounded-md px-3.5 py-1.5 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg ${
         active ? 'bg-select text-white' : 'text-fg-muted hover:bg-surface-raised hover:text-fg'
       }`}
     >
@@ -129,10 +129,10 @@ function FeatureCard({ feature }) {
           {title}
         </a>
       </h3>
-      <p className="mt-2 text-sm leading-relaxed text-fg-muted">{description}</p>
+      <p className="mt-2 leading-relaxed text-fg-muted">{description}</p>
       <span
         aria-hidden="true"
-        className="mt-auto flex items-center gap-1.5 pt-5 font-mono text-[11px] font-bold tracking-wider text-fg-faint uppercase transition-colors group-hover:text-apex-400"
+        className="mt-auto flex items-center gap-1.5 pt-5 font-mono text-xs font-bold tracking-wider text-fg-faint uppercase transition-colors group-hover:text-apex-400"
       >
         <OpenIcon className={`size-3.5 ${clips ? 'fill-current' : ''}`} strokeWidth={2.5} />
         {openLabel(clips)}

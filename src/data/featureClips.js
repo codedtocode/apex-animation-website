@@ -1,9 +1,13 @@
+import cameraPathPoster from '@/assets/features/camera-path.jpg'
+import cameraPath from '@/assets/features/camera-path.mp4'
 import carryPoster from '@/assets/features/carry.jpg'
 import carry from '@/assets/features/carry.mp4'
 import curvePlotterPoster from '@/assets/features/curve-plotter.jpg'
 import curvePlotter from '@/assets/features/curve-plotter.mp4'
 import dynamicRigSpacesPoster from '@/assets/features/dynamic-rig-spaces.jpg'
 import dynamicRigSpaces from '@/assets/features/dynamic-rig-spaces.mp4'
+import faceAnimationPoster from '@/assets/features/face-animation.jpg'
+import faceAnimation from '@/assets/features/face-animation.mp4'
 import fullBodyPushPoster from '@/assets/features/full-body-push.jpg'
 import fullBodyPush from '@/assets/features/full-body-push.mp4'
 import gripPoster from '@/assets/features/grip.jpg'
@@ -18,6 +22,8 @@ import onionSkinWormholePoster from '@/assets/features/onion-skin-wormhole.jpg'
 import onionSkinWormhole from '@/assets/features/onion-skin-wormhole.mp4'
 import overshootPoster from '@/assets/features/overshoot.jpg'
 import overshoot from '@/assets/features/overshoot.mp4'
+import physicsForcesPoster from '@/assets/features/physics.jpg'
+import physicsForces from '@/assets/features/physics.mp4'
 import pinsPoster from '@/assets/features/pins.jpg'
 import pins from '@/assets/features/pins.mp4'
 import plantingPoster from '@/assets/features/planting.jpg'
@@ -26,6 +32,18 @@ import propReleasePoster from '@/assets/features/prop-release.jpg'
 import propRelease from '@/assets/features/prop-release.mp4'
 import ragdollPoster from '@/assets/features/ragdoll.jpg'
 import ragdoll from '@/assets/features/ragdoll.mp4'
+import recordInPlayPoster from '@/assets/features/record-in-play.jpg'
+import recordInPlay from '@/assets/features/record-in-play.mp4'
+import sceneLookPoster from '@/assets/features/scene-look.jpg'
+import sceneLook from '@/assets/features/scene-look.mp4'
+import scenesCameraPoster from '@/assets/features/scenes-camera.jpg'
+import scenesCamera from '@/assets/features/scenes-camera.mp4'
+import scenesRigPoster from '@/assets/features/scenes-rig.jpg'
+import scenesRig from '@/assets/features/scenes-rig.mp4'
+import screenEffectsPoster from '@/assets/features/screen-effects.jpg'
+import screenEffects from '@/assets/features/screen-effects.mp4'
+import soundPoster from '@/assets/features/sound.jpg'
+import sound from '@/assets/features/sound.mp4'
 import spreadPoster from '@/assets/features/spread.jpg'
 import spread from '@/assets/features/spread.mp4'
 
@@ -107,6 +125,15 @@ export const CLIPS = {
     title: 'Carry',
     description: 'Shift-drag to carry what you hold, and the arms come along.',
   },
+  faceAnimation: {
+    type: 'video',
+    src: faceAnimation,
+    poster: faceAnimationPoster,
+    width: 650,
+    height: 558,
+    title: 'Face controls',
+    description: 'Drag the rings, bars and dots on a dynamic head to aim the eyes, shape the brows and open the jaw.',
+  },
   onionSkinWormhole: {
     type: 'video',
     src: onionSkinWormhole,
@@ -139,6 +166,60 @@ export const CLIPS = {
     title: 'Movement paths',
     description: 'Give the animation a movement path and the character travels along it.',
   },
+  scenesRig: {
+    type: 'video',
+    src: scenesRig,
+    poster: scenesRigPoster,
+    width: 1552,
+    height: 664,
+    title: 'Scenes',
+    description: 'Make a scene, add a second rig to it and pose the two together.',
+  },
+  scenesCamera: {
+    type: 'video',
+    src: scenesCamera,
+    poster: scenesCameraPoster,
+    width: 1552,
+    height: 664,
+    title: 'Scene camera',
+    description: 'Key the camera, frame the shot in the Camera View window and play it back through the lens.',
+  },
+  cameraPath: {
+    type: 'video',
+    src: cameraPath,
+    poster: cameraPathPoster,
+    width: 1600,
+    height: 560,
+    title: 'Camera path',
+    description: 'Click in the viewport to lay out a path for the camera, then drag its points and pick an ease.',
+  },
+  screenEffects: {
+    type: 'video',
+    src: screenEffects,
+    poster: screenEffectsPoster,
+    width: 1600,
+    height: 558,
+    title: 'Subtitles',
+    description: 'Add a subtitle on its own row, then pick its speaker, style and how it types in.',
+  },
+  sceneLook: {
+    type: 'video',
+    src: sceneLook,
+    poster: sceneLookPoster,
+    width: 1498,
+    height: 662,
+    title: 'Scene look',
+    description: 'Key the time of day on the sun arc and click presets like Golden hour.',
+  },
+  sound: {
+    type: 'video',
+    src: sound,
+    poster: soundPoster,
+    width: 1218,
+    height: 570,
+    title: 'Sound window',
+    description: 'Open a sound’s waveform, cut it into parts and drag fades onto their edges.',
+  },
   propRelease: {
     type: 'video',
     src: propRelease,
@@ -154,5 +235,23 @@ export const CLIPS = {
     ...WIDE,
     title: 'Ragdoll',
     description: 'Ragdoll the rig, then bake the fall to keys.',
+  },
+  physicsForces: {
+    type: 'video',
+    src: physicsForces,
+    poster: physicsForcesPoster,
+    width: 1498,
+    height: 662,
+    title: 'Hits and explosions',
+    description: 'Click a part to hit it, add an explosion with its strength and reach, then simulate.',
+  },
+  recordInPlay: {
+    type: 'video',
+    src: recordInPlay,
+    poster: recordInPlayPoster,
+    width: 1498,
+    height: 662,
+    title: 'Record in Play',
+    description: 'Pick a car, press F6 during Play to record the drive, and it comes back as a scene with its sounds.',
   },
 }

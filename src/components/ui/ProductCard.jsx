@@ -9,7 +9,7 @@ export function ProductCard({ media, status, statusTone, title, description, cla
       <div className="flex flex-1 flex-col p-6 sm:p-8">
         <StatusBadge tone={statusTone}>{status}</StatusBadge>
         <h3 className="mt-5 font-display text-2xl font-black uppercase font-stretch-semi-expanded">{title}</h3>
-        <p className="mt-2 max-w-lg leading-relaxed text-fg-muted">{description}</p>
+        {description && <p className="mt-2 max-w-lg leading-relaxed text-fg-muted">{description}</p>}
         {children}
       </div>
     </article>

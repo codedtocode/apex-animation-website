@@ -16,7 +16,7 @@ function BackLink() {
   return (
     <a
       href="#top"
-      className="inline-flex items-center gap-2 text-sm text-fg-muted transition hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg"
+      className="inline-flex items-center gap-2 text-base text-fg-muted transition hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg"
     >
       <ArrowLeft className="size-4" />
       Back to Apex Animator
@@ -27,30 +27,32 @@ function BackLink() {
 function CallRow({ entry: { call, description, example }, index, open, onToggle }) {
   return (
     <>
-      <tr className={`border-t border-line align-top transition-colors ${open ? 'bg-surface' : ''}`}>
+      <tr
+        className={`border-t border-line align-top transition-colors max-sm:flex max-sm:flex-col max-sm:first:border-t-0 ${open ? 'bg-surface' : ''}`}
+      >
         <td className="p-0">
           <button
             type="button"
             onClick={onToggle}
             aria-expanded={open}
             aria-controls={exampleId(index)}
-            className="flex w-full items-start gap-2 px-4 py-3 text-left font-mono text-[13px] [overflow-wrap:anywhere] text-[#cccccc] transition hover:bg-surface-raised/50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-fg"
+            className="flex w-full items-start gap-2 px-4 py-3 text-left font-mono text-[15px] [overflow-wrap:anywhere] text-[#cccccc] transition hover:bg-surface-raised/50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-fg"
           >
             <ChevronRight
-              className={`mt-0.5 size-4 shrink-0 text-fg-faint transition-transform ${open ? 'rotate-90' : ''}`}
+              className={`mt-1 size-4 shrink-0 text-fg-faint transition-transform ${open ? 'rotate-90' : ''}`}
             />
             <span>
               <LuaLine line={call} />
             </span>
           </button>
         </td>
-        <td className="px-4 py-3 leading-relaxed text-fg-muted">
+        <td className="px-4 py-3 leading-relaxed text-fg-muted max-sm:pt-0 max-sm:pl-10">
           <RichText text={description} />
         </td>
       </tr>
       {open && (
-        <tr id={exampleId(index)} className="bg-surface">
-          <td colSpan={2} className="px-4 pb-4">
+        <tr id={exampleId(index)} className="bg-surface max-sm:block">
+          <td colSpan={2} className="px-4 pb-4 max-sm:block">
             <CodeBlock script="Example" code={example} />
           </td>
         </tr>
@@ -71,8 +73,8 @@ function CallsTable() {
 
   return (
     <div className="overflow-hidden rounded-xl border border-line">
-      <table className="w-full text-left text-sm">
-        <thead className="bg-panel-bar text-fg">
+      <table className="w-full text-left text-base max-sm:block">
+        <thead className="bg-panel-bar text-fg max-sm:hidden">
           <tr>
             <th scope="col" className="w-[55%] px-4 py-3 font-semibold">
               Call
@@ -82,7 +84,7 @@ function CallsTable() {
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="max-sm:block">
           {API_CALLS.map((entry, index) => (
             <CallRow
               key={entry.call}
@@ -113,7 +115,7 @@ export function ApiPage() {
             <CodeBlock script="Setup" code={API_REQUIRE} className="mt-10" />
 
             <h3 className={`mt-14 ${SUBHEADING_STYLE}`}>Calls</h3>
-            <p className="mt-2 text-sm text-fg-faint">Click a call to see an example.</p>
+            <p className="mt-2 text-fg-faint">Click a call to see an example.</p>
             <div className="mt-5">
               <CallsTable />
             </div>

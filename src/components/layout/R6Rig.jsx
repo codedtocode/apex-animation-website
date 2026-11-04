@@ -35,7 +35,7 @@ const topShade = ({ hue, saturation, light, range }) =>
 
 const bottomShade = ({ hue, saturation, light }) => `hsl(${hue} ${Math.max(0, saturation - 4)}% ${light - 18}%)`
 
-function Box({ width, height, depth, turnDeg, highlight, skin: { tone, front, sides } }) {
+export function Box({ width, height, depth, turnDeg, highlight, skin: { tone, front, sides } }) {
   const outline = highlight && `inset 0 0 0 max(1.5px, ${studs(0.05)}) ${HIGHLIGHTS[highlight]}`
   const faces = [
     {
@@ -107,6 +107,7 @@ function Part({
   highlight,
   skin,
   className = '',
+  children,
   ...props
 }) {
   return (
@@ -122,6 +123,7 @@ function Part({
       {...props}
     >
       <Box width={width} height={height} depth={1} turnDeg={turnDeg} highlight={highlight} skin={skin} />
+      {children}
     </div>
   )
 }
@@ -267,6 +269,7 @@ export function R6Rig({
   skin = DUMMY_SKIN,
   headImage,
   parts = ALL_PARTS,
+  attachments = {},
 }) {
   const shows = (part) => parts.includes(part)
 
@@ -300,7 +303,9 @@ export function R6Rig({
             highlight={highlights[id]}
             skin={skin[kind]}
             {...getLimbProps?.(id)}
-          />
+          >
+            {attachments[id]}
+          </Part>
         ))}
       </div>
     </div>

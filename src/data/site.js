@@ -18,8 +18,8 @@ export const PLUGIN_DETAILS_URL = `https://apis.roproxy.com/toolbox-service/v1/i
 export const THEMES_MINIMUM_PRICE = '$5'
 
 export const STATS = {
-  downloads: '9K+',
-  ratingPercent: 98,
+  downloads: '10K+',
+  ratingPercent: 99,
 }
 
 export const API_HASH = '#api'

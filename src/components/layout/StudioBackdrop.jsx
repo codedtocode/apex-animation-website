@@ -1,5 +1,6 @@
 import { useCallback, useRef } from 'react'
 import { useEasedScroll } from '@/hooks/useEasedScroll'
+import { CampfireScene } from './CampfireScene'
 import { PosableDummy } from './PosableDummy'
 import { RunningDummies } from './RunningDummies'
 
@@ -42,6 +43,7 @@ export function StudioBackdrop() {
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-40 hidden will-change-transform min-[110rem]:block"
       >
+        <CampfireScene className="absolute bottom-[14%] left-[calc(25%-var(--container-stage)/4)] -translate-x-1/2" />
         <PosableDummy className="absolute bottom-[14%] left-[calc(75%+var(--container-stage)/4)] flex -translate-x-1/2" />
       </div>
     </>

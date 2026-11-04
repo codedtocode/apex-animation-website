@@ -73,9 +73,9 @@ function ShowcaseItem({ media, figure, onExpand }) {
         <ShowcaseMedia media={media} onExpand={onExpand} />
       </div>
       <figcaption className="mt-4">
-        <p className="font-mono text-[11px] font-bold tracking-wider text-apex-400 uppercase">{figureLabel(figure)}</p>
-        <h3 className="mt-1 font-display text-lg font-extrabold font-stretch-semi-expanded">{media.title}</h3>
-        <p className="mt-1 text-sm leading-relaxed text-fg-muted">{media.description}</p>
+        <p className="font-mono text-xs font-bold tracking-wider text-apex-400 uppercase">{figureLabel(figure)}</p>
+        <h3 className="mt-1 font-display text-xl font-extrabold font-stretch-semi-expanded">{media.title}</h3>
+        <p className="mt-1.5 leading-relaxed text-fg-muted">{media.description}</p>
       </figcaption>
     </figure>
   )

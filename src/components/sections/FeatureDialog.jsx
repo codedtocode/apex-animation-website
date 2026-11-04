@@ -29,6 +29,7 @@ function ClipViewer({ clips }) {
   useEffect(() => {
     if (clips.length < 2) return
     const stepWithArrowKeys = (event) => {
+      if (event.target instanceof HTMLInputElement) return
       const delta = CLIP_KEYS[event.key]
       if (delta) setView(stepClip(delta, clips.length))
     }
@@ -48,7 +49,7 @@ function ClipViewer({ clips }) {
           className="absolute inset-0 animate-page-in motion-reduce:animate-none"
           style={{ '--page-shift': `${direction * CLIP_SHIFT_PX}px` }}
         >
-          <AutoVideo media={clip} fill />
+          <AutoVideo media={clip} fill seekable />
         </div>
         {hasMany && (
           <>
@@ -70,8 +71,8 @@ function ClipViewer({ clips }) {
         )}
       </div>
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-line bg-panel-bar px-5 py-3">
-        <p aria-live="polite" className="min-w-0 text-sm leading-relaxed">
-          <span className="mr-2 font-mono text-[11px] font-bold tracking-wider text-apex-400 uppercase">
+        <p aria-live="polite" className="min-w-0 text-[15px] leading-relaxed">
+          <span className="mr-2 font-mono text-xs font-bold tracking-wider text-apex-400 uppercase">
             {hasMany ? `Clip ${index + 1}/${clips.length}` : 'Demo'}
           </span>
           <span className="font-semibold text-fg">{clip.title}.</span>{' '}
@@ -113,12 +114,10 @@ function FeatureDetails({ feature: { title, description, tag, icon: Icon, detail
       </div>
       {details.length > 0 && (
         <div>
-          <h3 className="font-mono text-[11px] font-bold tracking-wider text-fg-faint uppercase">
-            What&rsquo;s inside
-          </h3>
+          <h3 className="font-mono text-xs font-bold tracking-wider text-fg-faint uppercase">What&rsquo;s inside</h3>
           <ul className="mt-4 flex flex-col gap-3">
             {details.map((detail) => (
-              <li key={detail} className="flex gap-3 text-sm leading-relaxed text-fg-muted sm:text-[15px]">
+              <li key={detail} className="flex gap-3 text-[15px] leading-relaxed text-fg-muted sm:text-base">
                 <span aria-hidden="true" className="mt-[0.6em] size-1.5 shrink-0 rotate-45 bg-apex-500" />
                 {detail}
               </li>
@@ -190,9 +189,9 @@ export function FeatureDialog({ feature, onClose }) {
               feature.clips ? 'max-w-6xl' : 'max-w-2xl'
             }`}
           >
-            <div className="flex items-center justify-between gap-4 border-b border-line bg-panel-bar py-1.5 pr-1.5 pl-4 text-xs">
+            <div className="flex items-center justify-between gap-4 border-b border-line bg-panel-bar py-1.5 pr-1.5 pl-4 text-sm">
               <span className="flex min-w-0 items-center gap-2 truncate text-fg-faint">
-                <img src={mark} alt="" width="14" height="14" className="size-3.5 opacity-80" />
+                <img src={mark} alt="" width="16" height="16" className="size-4 opacity-80" />
                 Apex Animator
                 <span aria-hidden="true">·</span>
                 <span className="font-semibold text-fg">{feature.title}</span>

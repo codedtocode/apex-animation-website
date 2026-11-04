@@ -3,18 +3,22 @@ import { PluginPanel } from '@/components/ui/PluginPanel'
 import { ProductCard } from '@/components/ui/ProductCard'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import vfxIcon from '@images/apexemitteranimator-tile-1024.png'
+import vfxIconAnimated from '@images/apexemitteranimator-tile-animated.gif'
 
 function VfxIconStrip() {
   return (
     <div className="relative aspect-3/1 bg-surface-raised bg-grid">
-      <img
-        src={vfxIcon}
-        alt="Apex VFX Animator icon"
-        width="1024"
-        height="1024"
-        loading="lazy"
-        className="absolute inset-0 size-full object-contain p-[3%]"
-      />
+      <picture>
+        <source srcSet={vfxIcon} media="(prefers-reduced-motion: reduce)" />
+        <img
+          src={vfxIconAnimated}
+          alt="Apex VFX Animator icon"
+          width="1024"
+          height="1024"
+          loading="lazy"
+          className="absolute inset-0 size-full object-contain p-[3%]"
+        />
+      </picture>
     </div>
   )
 }
@@ -32,7 +36,7 @@ export function ComingSoon() {
             scene="04"
             eyebrow="What's next"
             title="The Apex family is growing."
-            description="More tools are on the way to make Roblox animation faster, prettier and more fun."
+            description="Enjoying Apex Animator? Apex VFX Animator brings the same care to visual effects, a complete VFX toolkit for Roblox Studio."
           />
           <ProductCard
             className="reveal"
@@ -40,7 +44,6 @@ export function ComingSoon() {
             status="In development"
             statusTone="blue"
             title="Apex VFX Animator"
-            description="A companion VFX plugin for animating particle emitters, designed to work hand in hand with Apex Animator."
           />
         </PluginPanel>
       </Container>

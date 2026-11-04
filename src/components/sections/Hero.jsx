@@ -22,7 +22,7 @@ const WAVING_ARM = 'rightArm'
 
 function FreeSticker() {
   return (
-    <span className="relative inline-block shrink-0 -rotate-2 rounded-[0.16em] border-[0.035em] border-line bg-apex-500 px-[0.2em] pt-[0.04em] pb-[0.02em] text-white shadow-[0.09em_0.09em_0_var(--color-line)]">
+    <span className="relative inline-block shrink-0 -rotate-2 rounded-[0.16em] bg-apex-500 px-[0.2em] pt-[0.04em] pb-[0.02em] text-white">
       for free
     </span>
   )
@@ -70,13 +70,16 @@ function LatestReleaseLink() {
   return (
     <ExternalLink
       href={LINKS.devforum}
-      className="group inline-flex items-center gap-2.5 self-start rounded-full border border-line bg-surface py-1.5 pr-3 pl-1.5 text-sm font-semibold shadow-hard-sm transition hover:-translate-0.5 hover:shadow-[5px_5px_0_var(--color-apex-500)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg"
+      className="group inline-flex items-center gap-3 self-start rounded-full border border-line bg-surface py-2 pr-4 pl-2 text-[15px] font-semibold shadow-hard-sm transition hover:-translate-0.5 hover:shadow-[5px_5px_0_var(--color-apex-500)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg sm:text-base"
     >
-      <span className="rounded-full bg-apex-500 px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider text-white uppercase">
+      <span className="rounded-full bg-apex-500 px-3 py-1 font-mono text-xs font-bold tracking-wider text-white uppercase sm:text-[13px]">
         {version}
       </span>
-      New version is out. See what&rsquo;s new
-      <ArrowUpRight className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-apex-500" />
+      <span>
+        <span className="whitespace-nowrap">New version is out.</span>{' '}
+        <span className="whitespace-nowrap">See what&rsquo;s new</span>
+      </span>
+      <ArrowUpRight className="size-5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-apex-500" />
     </ExternalLink>
   )
 }
