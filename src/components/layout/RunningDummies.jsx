@@ -2,6 +2,7 @@ import { studs } from '@/lib/r6Rig'
 import { R6Rig } from './R6Rig'
 
 const RUNNER_STUD = '2vh'
+const FEET_BELOW_HORIZON = '2vh'
 
 const RUNNERS = [
   { id: 'leader', expression: 'scared', crossDelay: '-0.7s', strideDelay: '-0.2s' },
@@ -10,7 +11,14 @@ const RUNNERS = [
 
 function Runner({ expression, crossDelay, strideDelay }) {
   return (
-    <div className="absolute bottom-0 left-0 animate-run-across" style={{ animationDelay: crossDelay }}>
+    <div
+      className="absolute left-0 scale-(--depth-scale) animate-run-across"
+      style={{
+        bottom: `calc(-1 * ${FEET_BELOW_HORIZON})`,
+        transformOrigin: `50% calc(100% + ${FEET_BELOW_HORIZON})`,
+        animationDelay: crossDelay,
+      }}
+    >
       <div
         className="flex animate-run-stride flex-col items-center"
         style={{ perspective: studs(32), animationDelay: strideDelay }}
