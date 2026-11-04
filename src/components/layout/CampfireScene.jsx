@@ -64,6 +64,8 @@ const MARSHMALLOW_SKIN = {
 const HEAD = { x: 2, y: 1.08, width: 2.5, height: 2.9, anchor: [0.5, 275 / 290], depthOffset: 1 }
 const STUMP = { x: 2, y: 3, width: 2.4, height: 1.7, anchor: [0.5, 40 / 170], depthOffset: -1.1 }
 const FIRE = { x: 0.5, y: GROUND_Y, z: 4.4, width: 4.4, height: 4, anchor: [0.5, 318 / 400] }
+const FIRE_VIEW = { width: 440, height: 400 }
+const FIRE_LAYER = 'absolute inset-0 size-full overflow-visible'
 
 const FLAME_COLORS = { outer: '#f2551d', mid: '#ff8f1f', inner: '#ffc23d', core: '#ffe9a3' }
 const BARK = { light: '#8a5330', dark: '#5f361d' }
@@ -94,6 +96,9 @@ const ellipsePoints = (cx, cy, rx, ry, count, offset = 0) =>
     const angle = ((index + offset) / count) * 2 * Math.PI
     return [cx + Math.cos(angle) * rx, cy + Math.sin(angle) * ry]
   })
+
+// The rounded base of a tongue sags this share of its width below the base line.
+const TONGUE_DIP = 0.07
 
 const tonguePath = (width, height, lean) => {
   const half = width / 2
@@ -177,20 +182,25 @@ const FLAME_TONGUES = [
 ]
 
 const FLAME_BITS = [
-  { x: -52, y: -150, size: 18, duration: 1.6, delay: -0.3, drift: '-14px' },
-  { x: 58, y: -140, size: 15, duration: 1.4, delay: -0.9, drift: '12px' },
-  { x: 12, y: -205, size: 13, duration: 1.8, delay: -1.2, drift: '6px' },
+  { x: -52, y: -150, size: 18, duration: 1.6, delay: -0.3, drift: -14 },
+  { x: 58, y: -140, size: 15, duration: 1.4, delay: -0.9, drift: 12 },
+  { x: 12, y: -205, size: 13, duration: 1.8, delay: -1.2, drift: 6 },
 ]
+const FLAME_BIT_RISE = -80
 
 const EMBERS = [
-  { x: -20, size: 7, duration: 2.8, delay: -0.4, drift: '-30px', color: '#ffcf5a' },
-  { x: 30, size: 6, duration: 3.4, delay: -1.6, drift: '24px', color: '#ff8a2a' },
-  { x: 6, size: 8, duration: 3.1, delay: -2.5, drift: '-12px', color: '#ffcf5a' },
-  { x: -48, size: 5, duration: 3.6, delay: -1.1, drift: '-40px', color: '#ff8a2a' },
-  { x: 52, size: 6, duration: 2.6, delay: -2.1, drift: '36px', color: '#ffcf5a' },
-  { x: -2, size: 5, duration: 3.9, delay: -3.2, drift: '18px', color: '#ff8a2a' },
+  { x: -20, size: 7, duration: 2.8, delay: -0.4, drift: -30, color: '#ffcf5a' },
+  { x: 30, size: 6, duration: 3.4, delay: -1.6, drift: 24, color: '#ff8a2a' },
+  { x: 6, size: 8, duration: 3.1, delay: -2.5, drift: -12, color: '#ffcf5a' },
+  { x: -48, size: 5, duration: 3.6, delay: -1.1, drift: -40, color: '#ff8a2a' },
+  { x: 52, size: 6, duration: 2.6, delay: -2.1, drift: 36, color: '#ffcf5a' },
+  { x: -2, size: 5, duration: 3.9, delay: -3.2, drift: 18, color: '#ff8a2a' },
 ]
+const EMBER_Y = -110
+const EMBER_RISE = -230
 
+const SMALL_FLAME_VIEW = { width: 100, height: 120 }
+const SMALL_FLAME_BASE = [50, 110]
 const SMALL_FLAME = [
   { width: 70, height: 100, lean: 0.1, color: 'outer', duration: 0.7, delay: -0.2 },
   { width: 48, height: 70, lean: -0.1, color: 'mid', duration: 0.6, delay: -0.4 },
@@ -218,14 +228,40 @@ const animated = (duration, delay, extra) => ({
   ...extra,
 })
 
-function Tongue({ width, height, lean, color, duration, delay }) {
+const percent = (value, total) => `${(value / total) * 100}%`
+const fireUnits = (units) => studs((units * FIRE.width) / FIRE_VIEW.width)
+
+// Places an HTML box over the region of a view's drawing that it covers.
+const boxIn = (view, x, y, width, height) => ({
+  left: percent(x, view.width),
+  top: percent(y, view.height),
+  width: percent(width, view.width),
+  height: percent(height, view.height),
+})
+
+// Flames and embers are HTML boxes rather than SVG shapes so their animations run on the
+// compositor instead of repainting the fire on the main thread every frame.
+function Tongue({ view, base: [baseX, baseY], tilt = 0, width, height, lean, color, duration, delay }) {
+  const half = width / 2
+  const dip = width * TONGUE_DIP
+
   return (
-    <path
-      d={tonguePath(width, height, lean)}
-      fill={FLAME_COLORS[color]}
-      className="origin-bottom animate-flicker [transform-box:fill-box] motion-reduce:animate-none"
-      style={animated(duration, delay)}
-    />
+    <div
+      className="absolute"
+      style={{
+        ...boxIn(view, baseX - half, baseY - height, width, height + dip),
+        transformOrigin: `50% ${percent(height, height + dip)}`,
+        rotate: tilt ? `${tilt}deg` : undefined,
+      }}
+    >
+      <svg
+        viewBox={`${-half} ${-height} ${width} ${height + dip}`}
+        className="size-full origin-bottom animate-flicker overflow-visible motion-reduce:animate-none"
+        style={animated(duration, delay)}
+      >
+        <path d={tonguePath(width, height, lean)} fill={FLAME_COLORS[color]} />
+      </svg>
+    </div>
   )
 }
 
@@ -263,34 +299,52 @@ function Log({ from: [x1, y1], to: [x2, y2], width, cap }) {
 
 function Flames() {
   return (
-    <g transform={`translate(${FLAME_BASE.x} ${FLAME_BASE.y})`}>
-      {FLAME_TONGUES.map(({ x, tilt, ...tongue }, index) => (
-        <g key={index} transform={`translate(${x} 0) rotate(${tilt})`}>
-          <Tongue {...tongue} />
-        </g>
+    <>
+      {FLAME_TONGUES.map(({ x, ...tongue }, index) => (
+        <Tongue key={index} view={FIRE_VIEW} base={[FLAME_BASE.x + x, FLAME_BASE.y]} {...tongue} />
       ))}
-      {FLAME_BITS.map(({ x, y, size, duration, delay, drift }) => (
-        <g key={x} transform={`translate(${x} ${y})`} className="motion-reduce:hidden">
-          <path
-            d={tonguePath(size, size * 1.6, 0)}
-            fill={FLAME_COLORS.mid}
-            className="origin-center animate-ember [transform-box:fill-box]"
-            style={animated(duration, delay, { '--drift': drift, '--rise': '-80px', '--spin': '0deg' })}
-          />
-        </g>
-      ))}
+      {FLAME_BITS.map(({ x, y, size, duration, delay, drift }) => {
+        const height = size * 1.6
+        const dip = size * TONGUE_DIP
+        return (
+          <div
+            key={x}
+            className="absolute origin-center animate-ember motion-reduce:hidden"
+            style={{
+              ...boxIn(FIRE_VIEW, FLAME_BASE.x + x - size / 2, FLAME_BASE.y + y - height, size, height + dip),
+              ...animated(duration, delay, {
+                '--drift': fireUnits(drift),
+                '--rise': fireUnits(FLAME_BIT_RISE),
+                '--spin': '0deg',
+              }),
+            }}
+          >
+            <svg viewBox={`${-size / 2} ${-height} ${size} ${height + dip}`} className="size-full overflow-visible">
+              <path d={tonguePath(size, height, 0)} fill={FLAME_COLORS.mid} />
+            </svg>
+          </div>
+        )
+      })}
       {EMBERS.map(({ x, size, duration, delay, drift, color }) => (
-        <g key={x} transform={`translate(${x} -110)`} className="motion-reduce:hidden">
-          <rect
-            width={size}
-            height={size}
-            fill={color}
-            className="origin-center animate-ember [transform-box:fill-box]"
-            style={animated(duration, delay, { '--drift': drift })}
-          />
-        </g>
+        <span
+          key={x}
+          className="absolute origin-center animate-ember motion-reduce:hidden"
+          style={{
+            ...boxIn(FIRE_VIEW, FLAME_BASE.x + x, FLAME_BASE.y + EMBER_Y, size, size),
+            backgroundColor: color,
+            ...animated(duration, delay, { '--drift': fireUnits(drift), '--rise': fireUnits(EMBER_RISE) }),
+          }}
+        />
       ))}
-    </g>
+    </>
+  )
+}
+
+function FireLayer({ className = '', children }) {
+  return (
+    <svg viewBox={`0 0 ${FIRE_VIEW.width} ${FIRE_VIEW.height}`} className={`${FIRE_LAYER} ${className}`}>
+      {children}
+    </svg>
   )
 }
 
@@ -300,50 +354,51 @@ function Campfire() {
   const frontStones = STONES.filter(({ front }) => front)
 
   return (
-    <svg viewBox="0 0 440 400" className="size-full overflow-visible">
-      <defs>
-        <radialGradient id={`${id}-ground`}>
-          <stop offset="0" stopColor="#ff7a28" stopOpacity="0.5" />
-          <stop offset="1" stopColor="#ff7a28" stopOpacity="0" />
-        </radialGradient>
-        <radialGradient id={`${id}-halo`}>
-          <stop offset="0" stopColor="#ff8a32" stopOpacity="0.3" />
-          <stop offset="1" stopColor="#ff8a32" stopOpacity="0" />
-        </radialGradient>
-        <radialGradient id={`${id}-light`}>
-          <stop offset="0" stopColor="#ffb060" stopOpacity="0.3" />
-          <stop offset="1" stopColor="#ffb060" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <g className="animate-glow motion-reduce:animate-none">
+    <div className="relative size-full">
+      <FireLayer className="animate-glow motion-reduce:animate-none">
+        <defs>
+          <radialGradient id={`${id}-ground`}>
+            <stop offset="0" stopColor="#ff7a28" stopOpacity="0.5" />
+            <stop offset="1" stopColor="#ff7a28" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id={`${id}-halo`}>
+            <stop offset="0" stopColor="#ff8a32" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#ff8a32" stopOpacity="0" />
+          </radialGradient>
+        </defs>
         <ellipse cx={RING.x} cy={RING.y + 4} rx="230" ry="78" fill={`url(#${id}-ground)`} />
         <circle cx={FLAME_BASE.x} cy="210" r="190" fill={`url(#${id}-halo)`} />
-      </g>
-      {backStones.map((stone) => (
-        <Rock key={stone.x} {...stone} palette={STONE_LIT} />
-      ))}
-      {BACK_LOGS.map((log) => (
-        <Log key={log.from} {...log} />
-      ))}
-      {COALS.map(({ points, color }) => (
-        <polygon key={points} points={points} fill={color} />
-      ))}
+      </FireLayer>
+      <FireLayer>
+        {backStones.map((stone) => (
+          <Rock key={stone.x} {...stone} palette={STONE_LIT} />
+        ))}
+        {BACK_LOGS.map((log) => (
+          <Log key={log.from} {...log} />
+        ))}
+        {COALS.map(({ points, color }) => (
+          <polygon key={points} points={points} fill={color} />
+        ))}
+      </FireLayer>
       <Flames />
-      {FRONT_LOGS.map((log) => (
-        <Log key={log.from} {...log} />
-      ))}
-      {frontStones.map((stone) => (
-        <Rock key={stone.x} {...stone} palette={STONE_SHADED} />
-      ))}
-      <ellipse
-        cx={FLAME_BASE.x}
-        cy="300"
-        rx="220"
-        ry="120"
-        fill={`url(#${id}-light)`}
-        className="animate-glow motion-reduce:animate-none"
-      />
-    </svg>
+      <FireLayer>
+        {FRONT_LOGS.map((log) => (
+          <Log key={log.from} {...log} />
+        ))}
+        {frontStones.map((stone) => (
+          <Rock key={stone.x} {...stone} palette={STONE_SHADED} />
+        ))}
+      </FireLayer>
+      <FireLayer className="animate-glow motion-reduce:animate-none">
+        <defs>
+          <radialGradient id={`${id}-light`}>
+            <stop offset="0" stopColor="#ffb060" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#ffb060" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <ellipse cx={FLAME_BASE.x} cy="300" rx="220" ry="120" fill={`url(#${id}-light)`} />
+      </FireLayer>
+    </div>
   )
 }
 
@@ -382,17 +437,14 @@ function Stump() {
 
 function SmallFlame({ lit }) {
   return (
-    <svg
-      viewBox="0 0 100 120"
-      className={`absolute origin-[50%_92%] overflow-visible transition-[scale] duration-300 ${lit ? 'scale-100' : 'scale-0'}`}
+    <div
+      className={`absolute origin-[50%_92%] transition-[scale] duration-300 ${lit ? 'scale-100' : 'scale-0'}`}
       style={{ width: studs(1), height: studs(1.2), left: 0, top: studs(MISHAP.height - 1.1) }}
     >
-      <g transform="translate(50 110)">
-        {SMALL_FLAME.map((tongue) => (
-          <Tongue key={tongue.color} {...tongue} />
-        ))}
-      </g>
-    </svg>
+      {SMALL_FLAME.map((tongue) => (
+        <Tongue key={tongue.color} view={SMALL_FLAME_VIEW} base={SMALL_FLAME_BASE} {...tongue} />
+      ))}
+    </div>
   )
 }
 

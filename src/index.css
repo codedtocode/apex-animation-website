@@ -1,17 +1,5 @@
 @import 'tailwindcss';
 
-@property --stride {
-  syntax: '<number>';
-  inherits: true;
-  initial-value: 0;
-}
-
-@property --bob {
-  syntax: '<number>';
-  inherits: true;
-  initial-value: 0;
-}
-
 @theme {
   --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
@@ -42,7 +30,9 @@
   --shadow-hard-red: 9px 9px 0 0 var(--color-apex-500);
 
   --animate-nudge: nudge 4s ease-in-out infinite;
-  --animate-run-stride: run-stride 0.56s ease-in-out infinite;
+  --animate-nudge-flash: nudge-flash 4s ease-in-out infinite;
+  --animate-limb-swing: limb-swing 0.56s ease-in-out infinite;
+  --animate-run-bob: run-bob 0.56s ease-in-out infinite;
   --animate-run-across: run-across 14s linear infinite;
   --animate-page-in: page-in 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
   --animate-wave: wave 3.4s ease-in-out infinite;
@@ -101,19 +91,25 @@
     }
   }
 
-  @keyframes run-stride {
+  @keyframes limb-swing {
     0%,
     100% {
-      --stride: 1;
-      --bob: -1;
+      rotate: x var(--swing);
+    }
+    50% {
+      rotate: x calc(-1 * var(--swing));
+    }
+  }
+
+  @keyframes run-bob {
+    0%,
+    50%,
+    100% {
+      translate: 0 calc(-1 * var(--bob-height));
     }
     25%,
     75% {
-      --bob: 0;
-    }
-    50% {
-      --stride: -1;
-      --bob: -1;
+      translate: 0 0;
     }
   }
 
@@ -151,7 +147,7 @@
     }
     to {
       opacity: 0;
-      translate: var(--drift, 0) var(--rise, -230px);
+      translate: var(--drift) var(--rise);
       scale: 0.3;
       rotate: var(--spin, 200deg);
     }
@@ -206,13 +202,9 @@
     74%,
     100% {
       transform: none;
-      background-color: var(--color-surface);
-      color: var(--color-fg);
     }
     77% {
       transform: scale(1.05) rotate(-3deg);
-      background-color: var(--color-discord);
-      color: white;
     }
     80% {
       transform: scale(1.05) rotate(3deg);
@@ -228,8 +220,18 @@
     }
     92% {
       transform: scale(1.02) rotate(0deg);
-      background-color: var(--color-discord);
-      color: white;
+    }
+  }
+
+  @keyframes nudge-flash {
+    0%,
+    74%,
+    100% {
+      opacity: 0;
+    }
+    77%,
+    92% {
+      opacity: 1;
     }
   }
 }
@@ -363,6 +365,11 @@
 .reveal:not(.is-visible) .draw-on {
   stroke-dashoffset: 1;
   transition: none;
+}
+
+/* Hidden sections keep still, so their animations do not cost a main-thread update every frame. */
+.reveal:not(.is-visible) * {
+  animation-play-state: paused;
 }
 
 .reveal {

@@ -9,20 +9,18 @@ const RUNNERS = [
   { id: 'chaser', expression: 'angry', crossDelay: '0s', strideDelay: '0s' },
 ]
 
-function Runner({ expression, crossDelay, strideDelay }) {
+function Runner({ expression, crossDelay, strideDelay, ref }) {
   return (
     <div
-      className="absolute left-0 scale-(--depth-scale) animate-run-across"
+      ref={ref}
+      className="absolute left-0 animate-run-across"
       style={{
         bottom: `calc(-1 * ${FEET_BELOW_HORIZON})`,
         transformOrigin: `50% calc(100% + ${FEET_BELOW_HORIZON})`,
         animationDelay: crossDelay,
       }}
     >
-      <div
-        className="flex animate-run-stride flex-col items-center"
-        style={{ perspective: studs(32), animationDelay: strideDelay }}
-      >
+      <div className="flex flex-col items-center" style={{ perspective: studs(32), '--stride-delay': strideDelay }}>
         <R6Rig turnDeg={72} tiltDeg={-4} armSwingDeg={70} legSwingDeg={55} leanDeg={-12} expression={expression} />
         <span
           className="-z-10 rounded-full bg-black/50 blur-[3px]"
@@ -33,11 +31,11 @@ function Runner({ expression, crossDelay, strideDelay }) {
   )
 }
 
-export function RunningDummies({ className = '' }) {
+export function RunningDummies({ className = '', runnerRef }) {
   return (
     <div className={`absolute inset-x-0 h-0 motion-reduce:hidden ${className}`} style={{ '--stud': RUNNER_STUD }}>
       {RUNNERS.map(({ id, ...runner }) => (
-        <Runner key={id} {...runner} />
+        <Runner key={id} ref={runnerRef} {...runner} />
       ))}
     </div>
   )

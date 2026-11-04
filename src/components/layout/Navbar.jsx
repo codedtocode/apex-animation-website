@@ -59,12 +59,18 @@ function DiscordNudgeButton() {
   return (
     <ExternalLink
       href={LINKS.discord}
-      className={`inline-flex h-10 items-center gap-2 rounded-lg border border-line bg-surface px-3 font-mono text-sm font-bold tracking-wide whitespace-nowrap uppercase transition-colors hover:animate-none hover:bg-discord hover:text-white focus-visible:animate-none focus-visible:bg-discord focus-visible:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg sm:px-4 ${
+      className={`group relative isolate inline-flex h-10 items-center gap-2 rounded-lg border border-line bg-surface px-3 font-mono text-sm font-bold tracking-wide whitespace-nowrap uppercase transition-colors hover:animate-none hover:bg-discord hover:text-white focus-visible:animate-none focus-visible:bg-discord focus-visible:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg sm:px-4 ${
         discordClicked
           ? ''
           : 'animate-nudge motion-reduce:animate-none motion-reduce:bg-discord motion-reduce:text-white'
       }`}
     >
+      {!discordClicked && (
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 animate-nudge-flash rounded-[inherit] bg-discord opacity-0 group-hover:animate-none group-focus-visible:animate-none motion-reduce:animate-none"
+        />
+      )}
       <DiscordIcon className="size-5" />
       <span className="sr-only sm:not-sr-only">Join the Discord community</span>
     </ExternalLink>

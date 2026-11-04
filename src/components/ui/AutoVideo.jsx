@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Pause, Play } from 'lucide-react'
 import { useInViewport } from '@/hooks/useInViewport'
+import { useScrollSettled } from '@/hooks/useScrollSettled'
 import { prefersReducedMotion } from '@/lib/motion'
 import { VideoSeekBar } from './VideoSeekBar'
 
@@ -28,13 +29,17 @@ export function AutoVideo({ media, fill = false, seekable = false }) {
   const isVisible = useInViewport(videoRef, { threshold: PLAY_THRESHOLD })
   const [paused, setPaused] = useState(prefersReducedMotion)
   const [scrubbing, setScrubbing] = useState(false)
+  const scrollSettled = useScrollSettled()
 
+  // Starting playback sets up a hardware decoder on the GPU process's main thread, which holds up
+  // frames for tens of milliseconds, so a clip waits for scrolling to settle before it starts.
+  // One that is already playing keeps going.
   useEffect(() => {
     if (!shouldLoad) return
     const video = videoRef.current
-    if (isVisible && !paused && !scrubbing) video.play().catch(ignoreAutoplayRejection)
-    else video.pause()
-  }, [shouldLoad, isVisible, paused, scrubbing])
+    if (!isVisible || paused || scrubbing) video.pause()
+    else if (scrollSettled || !video.paused) video.play().catch(ignoreAutoplayRejection)
+  }, [shouldLoad, isVisible, paused, scrubbing, scrollSettled])
 
   useEffect(() => {
     if (!scrubbing) return

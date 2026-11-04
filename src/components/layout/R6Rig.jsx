@@ -91,10 +91,8 @@ export function Box({ width, height, depth, turnDeg, highlight, skin: { tone, fr
   )
 }
 
-const partRotation = (angle, swingDeg) => {
-  if (angle !== undefined) return `x ${angle}deg`
-  return swingDeg ? `x calc(var(--stride) * ${swingDeg}deg)` : undefined
-}
+// Running limbs and the body bob keep time with the --stride-delay a runner sets.
+const STRIDE_SYNC = { animationDelay: 'var(--stride-delay)' }
 
 function Part({
   x,
@@ -110,15 +108,18 @@ function Part({
   children,
   ...props
 }) {
+  const swings = angle === undefined && swingDeg !== 0
+
   return (
     <div
-      className={`absolute origin-top transform-3d ${className}`}
+      className={`absolute origin-top transform-3d ${swings ? 'animate-limb-swing' : ''} ${className}`}
       style={{
         left: studs(x),
         top: studs(y),
         width: studs(width),
         height: studs(height),
-        rotate: partRotation(angle, swingDeg),
+        rotate: angle === undefined ? undefined : `x ${angle}deg`,
+        ...(swings && { '--swing': `${swingDeg}deg`, ...STRIDE_SYNC }),
       }}
       {...props}
     >
@@ -272,6 +273,7 @@ export function R6Rig({
   attachments = {},
 }) {
   const shows = (part) => parts.includes(part)
+  const runs = armSwingDeg !== 0 || legSwingDeg !== 0
 
   return (
     <div
@@ -279,9 +281,9 @@ export function R6Rig({
       style={{ width: studs(4), height: studs(5), transform: `rotateX(${tiltDeg}deg) rotateY(${turnDeg}deg)` }}
     >
       <div
-        className="absolute inset-0 origin-bottom transform-3d"
+        className={`absolute inset-0 origin-bottom transform-3d ${runs ? 'animate-run-bob' : ''}`}
         style={{
-          translate: `0 calc(var(--bob) * var(--stud) * ${BOB_STUDS})`,
+          ...(runs && { '--bob-height': studs(BOB_STUDS), ...STRIDE_SYNC }),
           transform: leanDeg ? `rotateX(${leanDeg}deg)` : undefined,
         }}
       >
