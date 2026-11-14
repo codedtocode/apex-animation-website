@@ -1,27 +1,22 @@
 import editorOverview from '@/assets/apex-animator-editor.png'
 import customRigIkPoster from '@/assets/demos/custom-rig-ik.jpg'
 import customRigIk from '@/assets/demos/custom-rig-ik.mp4'
-import faceControlsPoster from '@/assets/demos/face-controls.jpg'
-import faceControls from '@/assets/demos/face-controls.mp4'
-import faceRigKeysPoster from '@/assets/demos/face-rig-keys.jpg'
-import faceRigKeys from '@/assets/demos/face-rig-keys.mp4'
-import gripsPoster from '@/assets/demos/grips.jpg'
-import grips from '@/assets/demos/grips.mp4'
-import handPlantingPoster from '@/assets/demos/hand-planting.jpg'
-import handPlanting from '@/assets/demos/hand-planting.mp4'
-import ikFkSwitchPoster from '@/assets/demos/ik-fk-switch.jpg'
-import ikFkSwitch from '@/assets/demos/ik-fk-switch.mp4'
-import ikPosingPoster from '@/assets/demos/ik-posing.jpg'
-import ikPosing from '@/assets/demos/ik-posing.mp4'
-import ikTargetsPoster from '@/assets/demos/ik-targets.jpg'
-import ikTargets from '@/assets/demos/ik-targets.mp4'
-import motionTrailsPoster from '@/assets/demos/motion-trails.jpg'
-import motionTrails from '@/assets/demos/motion-trails.mp4'
-import r15IkPoster from '@/assets/demos/r15-ik.jpg'
-import r15Ik from '@/assets/demos/r15-ik.mp4'
-import orthoViews from '@images/apex1.png'
+import divineSlashPoster from '@/assets/demos/divine-slash.jpg'
+import divineSlash from '@/assets/demos/divine-slash.mp4'
+import catAttackPoster from '@/assets/demos/face-rig-keys.jpg'
+import catAttack from '@/assets/demos/face-rig-keys.mp4'
+import footballScenePoster from '@/assets/demos/football-scene.jpg'
+import footballScene from '@/assets/demos/football-scene.mp4'
+import mayflowersPoster from '@/assets/demos/mayflowers.jpg'
+import mayflowers from '@/assets/demos/mayflowers.mp4'
+import shrineCloseUpPoster from '@/assets/demos/shrine-close-up.jpg'
+import shrineCloseUp from '@/assets/demos/shrine-close-up.mp4'
+import swordComboPoster from '@/assets/demos/sword-combo.jpg'
+import swordCombo from '@/assets/demos/sword-combo.mp4'
+import takedownPoster from '@/assets/demos/takedown.jpg'
+import takedown from '@/assets/demos/takedown.mp4'
 
-const MEDIA = {
+const HERO = {
   editorOverview: {
     type: 'image',
     src: editorOverview,
@@ -39,103 +34,86 @@ const MEDIA = {
     title: 'Rig Anything',
     description: 'IK chains on fully custom characters. Arms, legs, twin tails, even a companion.',
   },
-  faceRigKeys: {
+}
+
+const COMMUNITY = {
+  takedown: {
     type: 'video',
-    src: faceRigKeys,
-    poster: faceRigKeysPoster,
+    src: takedown,
+    poster: takedownPoster,
+    width: 1442,
+    height: 772,
+    title: 'Takedown',
+    description: 'A two-rig grab where the attacker slams the victim to the floor.',
+    credit: 'solstised',
+  },
+  footballScene: {
+    type: 'video',
+    src: footballScene,
+    poster: footballScenePoster,
+    width: 1600,
+    height: 512,
+    title: 'Football scene',
+    description: 'Two characters and a ball in one scene, filmed through a keyed camera with tight close-ups.',
+    credit: 'kyro_sear',
+  },
+  swordCombo: {
+    type: 'video',
+    src: swordCombo,
+    poster: swordComboPoster,
+    width: 1280,
+    height: 564,
+    title: 'Sword combo',
+    description: 'An R6 combo with a glowing blade, from the first swing to the last.',
+    credit: 'Tornadohunter4676',
+  },
+  divineSlash: {
+    type: 'video',
+    src: divineSlash,
+    poster: divineSlashPoster,
+    width: 572,
+    height: 368,
+    title: 'Divine Slash',
+    description: 'Dusk dashes through with a sword slash, keyed at 120 fps.',
+    credit: 'FunwithDeyn',
+  },
+  shrineCloseUp: {
+    type: 'video',
+    src: shrineCloseUp,
+    poster: shrineCloseUpPoster,
+    width: 1138,
+    height: 576,
+    title: 'Shrine close-up',
+    description: 'The camera pushes in on an R6 dummy as it spreads its arms in front of a shrine.',
+    credit: 'EEEPPPAA72',
+  },
+  catAttack: {
+    type: 'video',
+    src: catAttack,
+    poster: catAttackPoster,
     width: 1396,
     height: 624,
-    title: 'Faces on any rig',
-    description: 'Key lids, brows, mouth corners and jaw on a custom face rig, right in the dope sheet.',
+    title: 'Cat attack',
+    description: 'A cat’s calm grin snaps into an angry yell, keyed on its lids, mouth corners and jaw.',
+    credit: 'codedtocode',
   },
-  faceControls: {
+  mayflowers: {
     type: 'video',
-    src: faceControls,
-    poster: faceControlsPoster,
-    width: 650,
-    height: 558,
-    title: 'Face controls',
-    description: 'Aim the eyes, shape each brow and drive the jaw straight on a dynamic head.',
-  },
-  ikFkSwitch: {
-    type: 'video',
-    src: ikFkSwitch,
-    poster: ikFkSwitchPoster,
-    width: 978,
-    height: 652,
-    title: 'IK / FK switching',
-    description: 'Flip a limb between its IK target and its own pose, at any frame.',
-  },
-  handPlanting: {
-    type: 'video',
-    src: handPlanting,
-    poster: handPlantingPoster,
-    width: 752,
-    height: 616,
-    title: 'Hand planting',
-    description: 'Place and turn a plant surface. The hand stays locked to it.',
-  },
-  ikTargets: {
-    type: 'video',
-    src: ikTargets,
-    poster: ikTargetsPoster,
-    width: 546,
-    height: 454,
-    title: 'Precise IK targets',
-    description: 'Slide a target along one axis with live distance readouts.',
-  },
-  grips: {
-    type: 'video',
-    src: grips,
-    poster: gripsPoster,
-    width: 1566,
-    height: 652,
-    title: 'Grips',
-    description: 'Grip one hand onto a sword and it follows along, while the other arm carries it.',
-  },
-  r15Ik: {
-    type: 'video',
-    src: r15Ik,
-    poster: r15IkPoster,
-    width: 1058,
-    height: 608,
-    title: 'IK on R15 rigs',
-    description: 'Pose arms and legs by their IK targets, then plant hands and feet in place.',
-  },
-  motionTrails: {
-    type: 'video',
-    src: motionTrails,
-    poster: motionTrailsPoster,
-    width: 880,
-    height: 480,
-    title: 'See your motion',
-    description: 'Watch a sword slash leave its trail, with ortho views docked alongside.',
-  },
-  ikPosing: {
-    type: 'video',
-    src: ikPosing,
-    poster: ikPosingPoster,
-    width: 1280,
-    height: 414,
-    title: 'Fast posing',
-    description: 'Drag IK targets across the screen to block out big, readable poses in seconds.',
-  },
-  orthoViews: {
-    type: 'image',
-    src: orthoViews,
-    width: 1322,
-    height: 562,
-    title: 'Ortho views',
-    description: 'Top, front, right and perspective views docked next to your timeline.',
+    src: mayflowers,
+    poster: mayflowersPoster,
+    width: 1088,
+    height: 536,
+    title: 'Mayflowers',
+    description: 'The camera glides through a sunset field of giant flowers and finds its character standing on one.',
+    credit: 'LaPlanetee',
   },
 }
 
-export const HERO_MEDIA = { editor: MEDIA.editorOverview, demo: MEDIA.customRigIk }
+export const HERO_MEDIA = { editor: HERO.editorOverview, demo: HERO.customRigIk }
 
 export const SHOWCASE_ROWS = [
-  [MEDIA.faceRigKeys, MEDIA.faceControls],
-  [MEDIA.ikFkSwitch, MEDIA.handPlanting, MEDIA.ikTargets],
-  [MEDIA.grips, MEDIA.r15Ik],
-  [MEDIA.ikPosing],
-  [MEDIA.motionTrails, MEDIA.orthoViews],
+  [COMMUNITY.takedown, COMMUNITY.divineSlash],
+  [COMMUNITY.footballScene],
+  [COMMUNITY.swordCombo, COMMUNITY.shrineCloseUp],
+  [COMMUNITY.catAttack, COMMUNITY.mayflowers],
 ]

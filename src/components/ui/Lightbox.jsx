@@ -44,7 +44,15 @@ export function Lightbox({ media, onClose }) {
         >
           <LightboxMedia media={media} />
           <figcaption className="mt-4 text-center text-sm text-fg-muted">
-            <span className="font-mono font-bold text-fg uppercase">{media.title}.</span> {media.description}
+            {media.credit ? (
+              <>
+                Made by <span className="font-semibold text-fg">@{media.credit}</span>
+              </>
+            ) : (
+              <>
+                <span className="font-mono font-bold text-fg uppercase">{media.title}.</span> {media.description}
+              </>
+            )}
           </figcaption>
           <button
             type="button"
