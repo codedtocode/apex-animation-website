@@ -1,0 +1,7 @@
+node_modules
+dist
+*.local
+.DS_Store
+
+/images/features gif/
+/images/showcase others/
