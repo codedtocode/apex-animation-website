@@ -15,7 +15,7 @@ function SupportCheckout() {
         <span className="font-display text-4xl leading-none font-black font-stretch-semi-expanded">
           {THEMES_MINIMUM_PRICE}
         </span>
-        <span className="text-sm text-fg-muted">minimum, pay more if you like</span>
+        <span className="text-sm text-fg-muted">solidarity price</span>
       </p>
       <ButtonLink href={LINKS.themes}>
         Support on itch.io
