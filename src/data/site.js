@@ -12,7 +12,6 @@ export const LINKS = {
 
 export const LATEST_VERSION = '1.8.11'
 
-// Roblox's own APIs send no CORS headers, so the browser reads the store description through RoProxy's mirror.
 export const PLUGIN_DETAILS_URL = `https://apis.roproxy.com/toolbox-service/v1/items/details?assetIds=${PLUGIN_ASSET_ID}`
 
 export const THEMES_MINIMUM_PRICE = '$5'

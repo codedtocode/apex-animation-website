@@ -43,7 +43,6 @@ const SLIDES = [
     height: 410,
     label: 'Theme picker',
     alt: 'The theme picker listing the built-in themes: Studio, Charcoal, Graphite, Daylight, Midnight and more',
-    // Taller than the banner, so it pans down to show every theme before moving on.
     pan: true,
     holdMs: 3200,
   },
@@ -66,7 +65,6 @@ export function ThemesBanner() {
   const [wasInViewport, setWasInViewport] = useState(inViewport)
   const playing = inViewport && !prefersReducedMotion()
 
-  // Scrolling away rewinds to the banner while it is off screen, so every visit starts from the first slide.
   if (inViewport !== wasInViewport) {
     setWasInViewport(inViewport)
     if (!inViewport) setSlides(FIRST_SLIDE)
@@ -77,7 +75,6 @@ export function ThemesBanner() {
       index === slides.current ? slides : { current: index, previous: slides.current, direction: nextDirection },
     )
 
-  // Restarts on every slide change, so a picked slide also gets its full turn.
   useEffect(() => {
     if (!playing) return
     const timer = setTimeout(
@@ -88,7 +85,6 @@ export function ThemesBanner() {
   }, [current, playing])
 
   useLayoutEffect(() => {
-    // The pan holds the bottom while the picker slides out, then rewinds once it is gone.
     if (!SLIDES[current].pan && !SLIDES[previous]?.pan) panRef.current?.cancel()
     if (previous === null || prefersReducedMotion()) return
 
@@ -131,7 +127,6 @@ export function ThemesBanner() {
           />
         ))}
       </div>
-      {/* On phones the banner is too small for the dots to clear the editor windows; autoplay covers it. */}
       <div className="absolute right-2 bottom-2 rounded-full bg-black/55 px-1 backdrop-blur-sm max-sm:hidden">
         <PagerDots
           count={SLIDES.length}

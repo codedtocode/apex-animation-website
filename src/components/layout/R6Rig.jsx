@@ -91,7 +91,6 @@ export function Box({ width, height, depth, turnDeg, highlight, skin: { tone, fr
   )
 }
 
-// Running limbs and the body bob keep time with the --stride-delay a runner sets.
 const STRIDE_SYNC = { animationDelay: 'var(--stride-delay)' }
 
 function Part({

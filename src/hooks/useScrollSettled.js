@@ -35,7 +35,6 @@ const subscribe = (listener) => {
 
 const getSettled = () => settled
 
-// True once the page has gone SETTLE_MS without scrolling. Every caller shares one listener.
 export function useScrollSettled() {
   return useSyncExternalStore(subscribe, getSettled, getSettled)
 }

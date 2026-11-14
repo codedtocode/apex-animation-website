@@ -31,9 +31,6 @@ export function AutoVideo({ media, fill = false, seekable = false }) {
   const [scrubbing, setScrubbing] = useState(false)
   const scrollSettled = useScrollSettled()
 
-  // Starting playback sets up a hardware decoder on the GPU process's main thread, which holds up
-  // frames for tens of milliseconds, so a clip waits for scrolling to settle before it starts.
-  // One that is already playing keeps going.
   useEffect(() => {
     if (!shouldLoad) return
     const video = videoRef.current
