@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { Check, Link2, X } from 'lucide-react'
 import { AutoVideo } from '@/components/ui/AutoVideo'
 import { PagerArrow, PagerDots } from '@/components/ui/Pager'
+import { useSwipe } from '@/hooks/useSwipe'
 import mark from '@images/apexanimator-mono-branco-512.png'
 import { FeatureTag } from './FeatureTag'
 
@@ -25,6 +26,7 @@ function ClipViewer({ clips }) {
 
   const step = (delta) => setView(stepClip(delta, clips.length))
   const showClip = (nextIndex) => setView({ index: nextIndex, direction: Math.sign(nextIndex - index) })
+  const swipe = useSwipe(step)
 
   useEffect(() => {
     if (clips.length < 2) return
@@ -41,7 +43,8 @@ function ClipViewer({ clips }) {
     <div className="border-b border-line">
       <div
         id={stageId}
-        className="relative aspect-[max(var(--clip-ratio),1)] max-h-[58vh] w-full overflow-hidden bg-canvas bg-grid text-fg sm:aspect-[max(var(--clip-ratio),16/9)]"
+        {...(hasMany && swipe)}
+        className="relative aspect-[max(var(--clip-ratio),1)] max-h-[58vh] w-full touch-pan-y overflow-hidden bg-canvas bg-grid text-fg sm:aspect-[max(var(--clip-ratio),16/9)]"
         style={{ '--clip-ratio': narrowestRatio(clips) }}
       >
         <div
@@ -58,14 +61,14 @@ function ClipViewer({ clips }) {
               label="Previous clip"
               controls={stageId}
               onStep={step}
-              className="absolute top-1/2 left-3 -translate-y-1/2 sm:left-4"
+              className="absolute top-1/2 left-4 -translate-y-1/2 max-sm:hidden"
             />
             <PagerArrow
               direction={1}
               label="Next clip"
               controls={stageId}
               onStep={step}
-              className="absolute top-1/2 right-3 -translate-y-1/2 sm:right-4"
+              className="absolute top-1/2 right-4 -translate-y-1/2 max-sm:hidden"
             />
           </>
         )}
@@ -79,13 +82,19 @@ function ClipViewer({ clips }) {
           <span className="text-fg-muted">{clip.description}</span>
         </p>
         {hasMany && (
-          <PagerDots
-            count={clips.length}
-            current={index}
-            label={(dot) => `Clip ${dot + 1} of ${clips.length}`}
-            controls={stageId}
-            onSelect={showClip}
-          />
+          <div className="flex items-center justify-between gap-4 max-sm:w-full">
+            <PagerDots
+              count={clips.length}
+              current={index}
+              label={(dot) => `Clip ${dot + 1} of ${clips.length}`}
+              controls={stageId}
+              onSelect={showClip}
+            />
+            <div className="flex gap-2 sm:hidden">
+              <PagerArrow direction={-1} label="Previous clip" controls={stageId} onStep={step} />
+              <PagerArrow direction={1} label="Next clip" controls={stageId} onStep={step} />
+            </div>
+          </div>
         )}
       </div>
     </div>
@@ -182,14 +191,14 @@ export function FeatureDialog({ feature, onClose }) {
       className="m-0 size-full max-h-none max-w-none overflow-y-auto overscroll-contain bg-transparent p-4 text-fg backdrop:animate-fade-in backdrop:bg-black/80 motion-reduce:backdrop:animate-none sm:p-8"
     >
       {feature && (
-        <div className="flex min-h-full items-center justify-center">
+        <div className="flex h-full items-center justify-center">
           <article
             ref={panelRef}
-            className={`w-full animate-dialog-in overflow-hidden rounded-2xl border border-line bg-panel motion-reduce:animate-none ${
+            className={`flex max-h-full w-full animate-dialog-in flex-col overflow-clip rounded-2xl border border-line bg-panel motion-reduce:animate-none ${
               feature.clips ? 'max-w-6xl' : 'max-w-2xl'
             }`}
           >
-            <div className="flex items-center justify-between gap-4 border-b border-line bg-panel-bar py-1.5 pr-1.5 pl-4 text-sm">
+            <div className="flex shrink-0 items-center justify-between gap-4 border-b border-line bg-panel-bar py-1.5 pr-1.5 pl-4 text-sm">
               <span className="flex min-w-0 items-center gap-2 truncate text-fg-faint">
                 <img src={mark} alt="" width="16" height="16" className="size-4 opacity-80" />
                 Apex Animator
@@ -209,8 +218,10 @@ export function FeatureDialog({ feature, onClose }) {
                 </button>
               </span>
             </div>
-            {feature.clips && <ClipViewer key={feature.title} clips={feature.clips} />}
-            <FeatureDetails feature={feature} titleId={titleId} />
+            <div className="min-h-0 overflow-y-auto overscroll-contain">
+              {feature.clips && <ClipViewer key={feature.title} clips={feature.clips} />}
+              <FeatureDetails feature={feature} titleId={titleId} />
+            </div>
           </article>
         </div>
       )}

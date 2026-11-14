@@ -4,6 +4,8 @@ import carryPoster from '@/assets/features/carry.jpg'
 import carry from '@/assets/features/carry.mp4'
 import curvePlotterPoster from '@/assets/features/curve-plotter.jpg'
 import curvePlotter from '@/assets/features/curve-plotter.mp4'
+import curveStylesPoster from '@/assets/features/curves-modifiers.jpg'
+import curveStyles from '@/assets/features/curves-modifiers.mp4'
 import dynamicRigSpacesPoster from '@/assets/features/dynamic-rig-spaces.jpg'
 import dynamicRigSpaces from '@/assets/features/dynamic-rig-spaces.mp4'
 import faceAnimationPoster from '@/assets/features/face-animation.jpg'
@@ -14,6 +16,14 @@ import gripPoster from '@/assets/features/grip.jpg'
 import grip from '@/assets/features/grip.mp4'
 import ikPoster from '@/assets/features/ik.jpg'
 import ik from '@/assets/features/ik.mp4'
+import curveStatePoster from '@/assets/features/markers-curve-state.jpg'
+import curveState from '@/assets/features/markers-curve-state.mp4'
+import spanStatePoster from '@/assets/features/markers-span-state.jpg'
+import spanState from '@/assets/features/markers-span-state.mp4'
+import steppedStatePoster from '@/assets/features/markers-stepped-state.jpg'
+import steppedState from '@/assets/features/markers-stepped-state.mp4'
+import markersPoster from '@/assets/features/markers.jpg'
+import markers from '@/assets/features/markers.mp4'
 import motionPathPoster from '@/assets/features/motion-path.jpg'
 import motionPath from '@/assets/features/motion-path.mp4'
 import movementPoster from '@/assets/features/movement.jpg'
@@ -28,6 +38,10 @@ import pinsPoster from '@/assets/features/pins.jpg'
 import pins from '@/assets/features/pins.mp4'
 import plantingPoster from '@/assets/features/planting.jpg'
 import planting from '@/assets/features/planting.mp4'
+import posesPoster from '@/assets/features/poses-library.jpg'
+import poses from '@/assets/features/poses-library.mp4'
+import previewBodiesPoster from '@/assets/features/preview-anywhere.jpg'
+import previewBodies from '@/assets/features/preview-anywhere.mp4'
 import propReleasePoster from '@/assets/features/prop-release.jpg'
 import propRelease from '@/assets/features/prop-release.mp4'
 import ragdollPoster from '@/assets/features/ragdoll.jpg'
@@ -46,6 +60,8 @@ import soundPoster from '@/assets/features/sound.jpg'
 import sound from '@/assets/features/sound.mp4'
 import spreadPoster from '@/assets/features/spread.jpg'
 import spread from '@/assets/features/spread.mp4'
+import takesPoster from '@/assets/features/takes.jpg'
+import takes from '@/assets/features/takes.mp4'
 
 const WIDE = { width: 1600, height: 550 }
 
@@ -109,6 +125,16 @@ export const CLIPS = {
     title: 'Spaces',
     description: 'Change what a joint follows partway through the animation, right from the Space row.',
   },
+  curveStyles: {
+    type: 'video',
+    src: curveStyles,
+    poster: curveStylesPoster,
+    width: 1600,
+    height: 638,
+    title: 'Easing styles',
+    description:
+      'Right-click a key, open Interpolation and pick a style like Expo or Bounce, with its easing direction.',
+  },
   grip: {
     type: 'video',
     src: grip,
@@ -158,6 +184,16 @@ export const CLIPS = {
     title: 'Curve plotter',
     description: 'Draw a path with the pen tool and shape it with its handles.',
   },
+  previewBodies: {
+    type: 'video',
+    src: previewBodies,
+    poster: previewBodiesPoster,
+    width: 1600,
+    height: 642,
+    title: 'Preview bodies',
+    description:
+      'Pick a body under View > Preview and the animation plays on a Tall, Short or Child body beside the rig.',
+  },
   movement: {
     type: 'video',
     src: movement,
@@ -192,6 +228,44 @@ export const CLIPS = {
     height: 560,
     title: 'Camera path',
     description: 'Click in the viewport to lay out a path for the camera, then drag its points and pick an ease.',
+  },
+  markers: {
+    type: 'video',
+    src: markers,
+    poster: markersPoster,
+    width: 898,
+    height: 500,
+    title: 'Markers',
+    description:
+      'Drag on a marker row to add one, then give it a name and a Parameter your game reads through GetMarkerReachedSignal.',
+  },
+  spanState: {
+    type: 'video',
+    src: spanState,
+    poster: spanStatePoster,
+    width: 872,
+    height: 482,
+    title: 'Span states',
+    description: 'Add a span state like Hitbox and drag out the windows where it’s on.',
+  },
+  steppedState: {
+    type: 'video',
+    src: steppedState,
+    poster: steppedStatePoster,
+    width: 868,
+    height: 464,
+    title: 'Stepped states',
+    description:
+      'Add a stepped state like Phase, then add steps at the playhead that hold a word, a number, or true or false.',
+  },
+  curveState: {
+    type: 'video',
+    src: curveState,
+    poster: curveStatePoster,
+    width: 880,
+    height: 550,
+    title: 'Curve states',
+    description: 'Add a curve state like Weight, key it and shape its curve in the graph editor.',
   },
   screenEffects: {
     type: 'video',
@@ -253,5 +327,24 @@ export const CLIPS = {
     height: 662,
     title: 'Record in Play',
     description: 'Pick a car, press F6 during Play to record the drive, and it comes back as a scene with its sounds.',
+  },
+  takes: {
+    type: 'video',
+    src: takes,
+    poster: takesPoster,
+    width: 1600,
+    height: 678,
+    title: 'Takes',
+    description: 'Add a take with + New take, animate it on its own, then Play all takes runs them back to back.',
+  },
+  poses: {
+    type: 'video',
+    src: poses,
+    poster: posesPoster,
+    width: 1600,
+    height: 640,
+    title: 'Poses',
+    description:
+      'Save the selected keys as a pose, then drag it from the Poses window onto the timeline to key it there.',
   },
 }

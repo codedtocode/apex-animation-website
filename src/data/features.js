@@ -117,6 +117,7 @@ export const FEATURES = [
       'Modifiers: Noise, Cycles, Stepped, Limits, Envelope and Generator. Each has influence, a time window and a bake rate, and can go on a whole Position or Rotation.',
       'Curves for props: numbers, sizes and colors.',
     ],
+    clips: [CLIPS.curveStyles],
   },
   {
     title: 'Grips',
@@ -202,6 +203,7 @@ export const FEATURES = [
       'Play in Studio tests before publishing, using temporary ids.',
       'How-it-plays badge: Native, Native + Enhanced, or Enhanced only.',
     ],
+    clips: [CLIPS.previewBodies],
   },
   {
     title: 'Rig Movement',
@@ -242,6 +244,7 @@ export const FEATURES = [
       'Markers with a Name and Parameter, on several rows.',
       'Span, stepped and curve states, with payload fields. Spans can also export as native markers.',
     ],
+    clips: [CLIPS.markers, CLIPS.spanState, CLIPS.steppedState, CLIPS.curveState],
   },
   {
     title: 'Team Create',
@@ -338,6 +341,7 @@ export const FEATURES = [
       '+ New take continues where the last take ends. Play all takes.',
       'Choose which rigs are in each take. Export all takes as one animation or each on its own.',
     ],
+    clips: [CLIPS.takes],
   },
   {
     title: 'Poses Library',
@@ -345,6 +349,7 @@ export const FEATURES = [
     icon: Library,
     description: 'Save keys as a pose and drag it onto the timeline or the rig. Point at a pose to see it play.',
     details: [],
+    clips: [CLIPS.poses],
   },
   {
     title: 'Reference Window',

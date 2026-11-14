@@ -6,10 +6,10 @@ const TAG_STYLES = {
   engine: 'bg-fg text-canvas',
 }
 
-export function FeatureTag({ tag }) {
+export function FeatureTag({ tag, className = '' }) {
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider uppercase ${TAG_STYLES[tag]}`}
+      className={`inline-flex shrink-0 items-center rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider uppercase ${TAG_STYLES[tag]} ${className}`}
     >
       {FEATURE_TAGS[tag]}
     </span>

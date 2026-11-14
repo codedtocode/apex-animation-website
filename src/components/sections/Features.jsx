@@ -6,6 +6,7 @@ import { PluginPanel } from '@/components/ui/PluginPanel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { HandNote, SketchArrow } from '@/components/ui/Sketch'
 import { FEATURE_TAGS, FEATURES } from '@/data/features'
+import { useSwipe } from '@/hooks/useSwipe'
 import { prefersReducedMotion } from '@/lib/motion'
 import { FeatureDialog } from './FeatureDialog'
 import { FeatureTag } from './FeatureTag'
@@ -113,26 +114,26 @@ function FeatureCard({ feature }) {
   const OpenIcon = clips ? Play : ArrowRight
 
   return (
-    <li className="group relative flex flex-col rounded-2xl border border-line bg-surface p-6 transition duration-200 hover:-translate-1 has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-fg motion-reduce:hover:translate-0">
+    <li className="group relative flex flex-col rounded-2xl border border-line bg-surface p-6 transition duration-200 hover:-translate-1 has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-fg motion-reduce:hover:translate-0 max-sm:aspect-square max-sm:rounded-xl max-sm:p-2.5">
       <div className="flex items-start justify-between gap-4">
-        <span className="grid size-12 place-items-center rounded-xl border border-line bg-surface-raised transition-colors group-hover:bg-apex-500 group-hover:text-white">
-          <Icon className="size-5.5" strokeWidth={2} />
+        <span className="grid size-12 place-items-center rounded-xl border border-line bg-surface-raised transition-colors group-hover:bg-apex-500 group-hover:text-white max-sm:size-8 max-sm:rounded-lg">
+          <Icon className="size-5.5 max-sm:size-4" strokeWidth={2} />
         </span>
-        <FeatureTag tag={tag} />
+        <FeatureTag tag={tag} className="max-sm:hidden" />
       </div>
-      <h3 className="mt-6 font-display text-xl font-extrabold font-stretch-semi-expanded">
+      <h3 className="mt-6 font-display text-xl font-extrabold font-stretch-semi-expanded max-sm:mt-auto max-sm:pt-2 max-sm:text-xs max-sm:leading-tight max-sm:wrap-break-word max-sm:hyphens-auto max-sm:font-stretch-normal">
         <a
           href={featureHref(feature)}
           aria-haspopup="dialog"
-          className="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none"
+          className="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none max-sm:after:rounded-xl"
         >
           {title}
         </a>
       </h3>
-      <p className="mt-2 leading-relaxed text-fg-muted">{description}</p>
+      <p className="mt-2 leading-relaxed text-fg-muted max-sm:hidden">{description}</p>
       <span
         aria-hidden="true"
-        className="mt-auto flex items-center gap-1.5 pt-5 font-mono text-xs font-bold tracking-wider text-fg-faint uppercase transition-colors group-hover:text-apex-400"
+        className="mt-auto flex items-center gap-1.5 pt-5 font-mono text-xs font-bold tracking-wider text-fg-faint uppercase transition-colors group-hover:text-apex-400 max-sm:hidden"
       >
         <OpenIcon className={`size-3.5 ${clips ? 'fill-current' : ''}`} strokeWidth={2.5} />
         {openLabel(clips)}
@@ -192,6 +193,9 @@ export function Features() {
   }
 
   const step = (delta) => showPage(page + delta)
+  const swipe = useSwipe((delta) => {
+    if (page + delta >= 0 && page + delta < pageCount) step(delta)
+  })
 
   return (
     <section id="features" className="py-8 sm:py-10">
@@ -223,10 +227,10 @@ export function Features() {
           <div ref={pagerRef} className="mt-14 scroll-mt-32">
             <div className="relative">
               <PreviewNote />
-              <div ref={listRef} id={FEATURE_LIST_ID}>
+              <div ref={listRef} id={FEATURE_LIST_ID} {...swipe} className="touch-pan-y">
                 <ul
                   key={`${activeFilter}-${page}`}
-                  className="grid animate-page-in gap-6 motion-reduce:animate-none sm:grid-cols-2 lg:grid-cols-3"
+                  className="grid animate-page-in grid-cols-3 gap-2.5 motion-reduce:animate-none sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
                   style={{ '--page-shift': `${direction * PAGE_SHIFT_PX}px` }}
                 >
                   {pages[page].map((feature) => (
