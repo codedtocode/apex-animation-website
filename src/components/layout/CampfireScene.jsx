@@ -16,7 +16,7 @@ const GROUND_Y = 4
 const SITTING_POSE = { leftArm: 35, rightLeg: 80, leftLeg: 86 }
 const BODY_PARTS = ['torso', ...LIMBS.map(({ id }) => id)]
 const ROASTING_ARM = 'rightArm'
-const ROASTING_ARM_MOTION = '[rotate:x_var(--roast-arm)]'
+const ROASTING_ARM_MOTION = '[rotate:x_calc(var(--roast-arm)-var(--arm-drop))]'
 const ARM_THICKNESS = 0.9
 const THIN_ARM = '[&>div:first-child]:[scale:var(--arm-thickness)_1_var(--arm-thickness)]'
 const ARM_CLASSES = {
@@ -26,17 +26,20 @@ const ARM_CLASSES = {
 
 const HAND_Y = 1.75
 const STICK_DEG = 53
+const ARM_DROP_DEG = 10
 const STICK = { thickness: 0.16, start: -0.4, length: 4 }
 const MARSHMALLOW = { size: 0.62, length: 0.5, at: 3.15 }
 const MISHAP = { width: 1, height: 1.2 }
 const UNDO_STICK = `rotateX(calc(-1 * var(--roast-arm) - ${STICK_DEG}deg)) ${FACE_CAMERA}`
 
-const ARM_RANGE = { min: 44, max: 82 }
-const HEAT = { full: 56, none: 68 }
+const ARM_RANGE = { min: 44, max: 70 }
+const HEAT = { full: 56, none: 66 }
 const SECONDS_TO_BURN = 9
 const PUT_OUT_MS = 900
 const SMOKE_MS = 1100
 const FLING_MS = 500
+const GASP_MS = 700
+const GOLDEN = { min: 0.25, max: 0.65 }
 const TOAST_STOPS = [
   [0, [222, 168, 82, 0]],
   [0.4, [222, 168, 82, 0.6]],
@@ -97,7 +100,6 @@ const ellipsePoints = (cx, cy, rx, ry, count, offset = 0) =>
     return [cx + Math.cos(angle) * rx, cy + Math.sin(angle) * ry]
   })
 
-// The rounded base of a tongue sags this share of its width below the base line.
 const TONGUE_DIP = 0.07
 
 const tonguePath = (width, height, lean) => {
@@ -231,7 +233,6 @@ const animated = (duration, delay, extra) => ({
 const percent = (value, total) => `${(value / total) * 100}%`
 const fireUnits = (units) => studs((units * FIRE.width) / FIRE_VIEW.width)
 
-// Places an HTML box over the region of a view's drawing that it covers.
 const boxIn = (view, x, y, width, height) => ({
   left: percent(x, view.width),
   top: percent(y, view.height),
@@ -239,8 +240,6 @@ const boxIn = (view, x, y, width, height) => ({
   height: percent(height, view.height),
 })
 
-// Flames and embers are HTML boxes rather than SVG shapes so their animations run on the
-// compositor instead of repainting the fire on the main thread every frame.
 function Tongue({ view, base: [baseX, baseY], tilt = 0, width, height, lean, color, duration, delay }) {
   const half = width / 2
   const dip = width * TONGUE_DIP
@@ -471,7 +470,7 @@ function RoastingStick({ phase, batch, marshmallowRef, dragProps }) {
   return (
     <div
       className="absolute transform-3d"
-      style={{ left: studs(STICK_X), top: studs(HAND_Y), rotate: `x ${STICK_DEG}deg` }}
+      style={{ left: studs(STICK_X), top: studs(HAND_Y), rotate: `x ${STICK_DEG + ARM_DROP_DEG}deg` }}
     >
       <div
         className="absolute transform-3d"
@@ -589,15 +588,31 @@ function useRoasting(sceneRef, marshmallowRef) {
   const [phase, setPhase] = useState('fresh')
   const [batch, setBatch] = useState(0)
   const [hasRoasted, setHasRoasted] = useState(false)
-  const roast = useRef({ angle: ARM_RANGE.max, toast: 0, phase: 'fresh', frame: 0, last: 0, timers: [], drag: null })
+  const [expression, setExpression] = useState('calm')
+  const roast = useRef({
+    angle: ARM_RANGE.max,
+    toast: 0,
+    phase: 'fresh',
+    frame: 0,
+    last: 0,
+    timers: [],
+    gaspTimer: 0,
+    drag: null,
+  })
 
   useEffect(() => {
     const state = roast.current
     return () => {
       cancelAnimationFrame(state.frame)
       state.timers.forEach(clearTimeout)
+      clearTimeout(state.gaspTimer)
     }
   }, [])
+
+  const gasp = () => {
+    setExpression('gasp')
+    roast.current.gaspTimer = setTimeout(() => setExpression('annoyed'), GASP_MS)
+  }
 
   const enter = (next) => {
     roast.current.phase = next
@@ -612,6 +627,7 @@ function useRoasting(sceneRef, marshmallowRef) {
     roast.current.toast = 0
     enter('fresh')
     setBatch((count) => count + 1)
+    setExpression('calm')
   }
 
   const putOut = () => {
@@ -633,14 +649,23 @@ function useRoasting(sceneRef, marshmallowRef) {
     }
     state.toast = Math.min(1, state.toast + (seconds * heat) / SECONDS_TO_BURN)
     marshmallowRef.current?.style.setProperty('--toast', toastColor(state.toast))
-    if (state.toast >= 1 && state.phase === 'fresh') enter('burning')
+    if (state.toast >= 1 && state.phase === 'fresh') {
+      enter('burning')
+      gasp()
+    }
     state.frame = requestAnimationFrame(toast)
   }
 
   const moveStick = (angle) => {
     const state = roast.current
     const heat = heatAt(angle)
+    const wasHeated = heatAt(state.angle) > 0
     state.angle = angle
+    if (state.phase === 'fresh') {
+      const golden = state.toast >= GOLDEN.min && state.toast <= GOLDEN.max
+      if (heat) setExpression('calm')
+      else if (wasHeated && golden) setExpression('smirk')
+    }
     sceneRef.current.style.setProperty('--roast-arm', `${angle}deg`)
     if (state.phase === 'burning') {
       state.timers.forEach(clearTimeout)
@@ -677,7 +702,7 @@ function useRoasting(sceneRef, marshmallowRef) {
     onPointerCancel: endDrag,
   }
 
-  return { phase, batch, hasRoasted, dragProps }
+  return { phase, batch, hasRoasted, expression, dragProps }
 }
 
 function Billboard({ x, y, z = 0, width, height, anchor: [anchorX, anchorY], depthOffset = 0, children }) {
@@ -703,7 +728,7 @@ const armProps = (id) => (ARM_CLASSES[id] ? { className: ARM_CLASSES[id] } : und
 export function CampfireScene({ className = '' }) {
   const sceneRef = useRef(null)
   const marshmallowRef = useRef(null)
-  const { phase, batch, hasRoasted, dragProps } = useRoasting(sceneRef, marshmallowRef)
+  const { phase, batch, hasRoasted, expression, dragProps } = useRoasting(sceneRef, marshmallowRef)
 
   return (
     <div
@@ -712,6 +737,7 @@ export function CampfireScene({ className = '' }) {
       style={{
         '--stud': STUD_SIZE,
         '--arm-thickness': ARM_THICKNESS,
+        '--arm-drop': `${ARM_DROP_DEG}deg`,
         '--roast-arm': `${ARM_RANGE.max}deg`,
         width: studs(SCENE.width),
         height: studs(SCENE.height),
@@ -747,7 +773,7 @@ export function CampfireScene({ className = '' }) {
             <Campfire />
           </Billboard>
           <Billboard {...HEAD}>
-            <TurnedDeveloperHead />
+            <TurnedDeveloperHead expression={expression} />
           </Billboard>
           <StickGizmo dragProps={dragProps} />
         </div>

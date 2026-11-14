@@ -18,27 +18,36 @@ const readCachedVersion = () => {
 const cacheVersion = (version) => {
   try {
     localStorage.setItem(STORAGE_KEY, version)
+    return true
   } catch {
-    // Storage can be blocked; the fetched version still shows for this visit.
+    return false
   }
 }
 
-async function fetchPluginVersion(signal) {
-  const response = await fetch(PLUGIN_DETAILS_URL, { signal })
+async function fetchPluginVersion() {
+  const response = await fetch(PLUGIN_DETAILS_URL)
   if (!response.ok) return null
   const { data } = await response.json()
   return data?.[0]?.asset?.description?.match(VERSION_PATTERN)?.[1] ?? null
+}
+
+let pendingFetch = null
+const fetchSharedVersion = () => {
+  pendingFetch ??= fetchPluginVersion().finally(() => {
+    pendingFetch = null
+  })
+  return pendingFetch
 }
 
 export function usePluginVersion() {
   const [version, setVersion] = useState(() => readCachedVersion() ?? LATEST_VERSION)
 
   useEffect(() => {
-    const controller = new AbortController()
+    let mounted = true
     const refresh = () => {
       if (document.hidden) return
-      fetchPluginVersion(controller.signal).then((latest) => {
-        if (!latest) return
+      fetchSharedVersion().then((latest) => {
+        if (!mounted || !latest) return
         setVersion(latest)
         cacheVersion(latest)
       }, ignoreFetchFailure)
@@ -47,8 +56,8 @@ export function usePluginVersion() {
     refresh()
     const timer = setInterval(refresh, REFRESH_MS)
     return () => {
+      mounted = false
       clearInterval(timer)
-      controller.abort()
     }
   }, [])
 

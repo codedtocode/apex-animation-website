@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Menu, PanelRight, X } from 'lucide-react'
+import { ArrowUpRight, Menu, PanelRight, X } from 'lucide-react'
 import mark from '@images/apexanimator-mono-branco-512.png'
 import { DiscordIcon } from '@/components/ui/BrandIcons'
 import { Container } from '@/components/ui/Container'
@@ -9,6 +9,7 @@ import { API_HASH, LINKS, NAV_ITEMS } from '@/data/site'
 import { useEscapeKey } from '@/hooks/useEscapeKey'
 import { useHashView } from '@/hooks/useHashView'
 import { useLinkClicked } from '@/hooks/useLinkClicked'
+import { usePluginVersion } from '@/hooks/usePluginVersion'
 
 const MOBILE_MENU_ID = 'mobile-menu'
 
@@ -77,6 +78,47 @@ function DiscordNudgeButton() {
   )
 }
 
+function ReleaseNote() {
+  const version = usePluginVersion()
+
+  return (
+    <ExternalLink
+      href={LINKS.devforum}
+      className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-line bg-surface py-1 pr-2.5 pl-1 text-xs font-semibold whitespace-nowrap transition-colors hover:bg-surface-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+    >
+      <span className="shrink-0 rounded-full bg-apex-500 px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider text-white">
+        {version}
+      </span>
+      <span className="truncate">
+        New<span className="hidden @min-[10.5rem]:inline"> version</span>
+        <span className="hidden @min-[12.5rem]:inline"> is out</span>
+      </span>
+      <ArrowUpRight className="size-3.5 shrink-0" strokeWidth={2.5} />
+    </ExternalLink>
+  )
+}
+
+function DownloadIcon({ className }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M9.9 3h4.2v6.5H17l-5 6.6-5-6.6h2.9z" />
+      <path d="M3.2 14.4h1.9v5h13.8v-5h1.9v6.7H3.2z" />
+    </svg>
+  )
+}
+
+function DownloadIconButton() {
+  return (
+    <ExternalLink
+      href={LINKS.store}
+      aria-label="Download Apex Animator"
+      className="inline-flex h-10 items-center rounded-lg border border-line bg-surface px-3 transition-colors hover:bg-surface-raised focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg lg:hidden"
+    >
+      <DownloadIcon className="size-5" />
+    </ExternalLink>
+  )
+}
+
 function MenuToggle({ open, onToggle }) {
   return (
     <button
@@ -124,18 +166,24 @@ export function Navbar() {
   useEscapeKey(closeMenu, menuOpen)
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-panel">
-      <TitleBar />
-      <div className="flex h-14 items-center gap-3 px-3 sm:px-4">
-        <MenuBar view={view} />
-        <div className="ml-auto flex items-center gap-2">
-          <DiscordNudgeButton />
-          <DownloadButton className="h-10 py-0! whitespace-nowrap shadow-none! hover:translate-0! hover:bg-apex-400 active:translate-0! max-lg:hidden" />
-          <MenuToggle open={menuOpen} onToggle={() => setMenuOpen((open) => !open)} />
+    <div className="sticky top-0 z-50 min-[88rem]:bg-backdrop min-[88rem]:pt-4">
+      <header className="border-b border-line bg-panel min-[88rem]:overflow-clip min-[88rem]:rounded-t-2xl min-[88rem]:border-x min-[88rem]:border-t">
+        <TitleBar />
+        <div className="flex h-14 items-center gap-3 px-3 sm:px-4">
+          <MenuBar view={view} />
+          <div className="@container min-w-0 flex-1 sm:hidden">
+            <ReleaseNote />
+          </div>
+          <div className="ml-auto flex items-center gap-2">
+            <DiscordNudgeButton />
+            <DownloadIconButton />
+            <DownloadButton className="h-10 py-0! whitespace-nowrap shadow-none! hover:translate-0! hover:bg-apex-400 active:translate-0! max-lg:hidden" />
+            <MenuToggle open={menuOpen} onToggle={() => setMenuOpen((open) => !open)} />
+          </div>
         </div>
-      </div>
 
-      {menuOpen && <MobileMenu view={view} onNavigate={closeMenu} />}
-    </header>
+        {menuOpen && <MobileMenu view={view} onNavigate={closeMenu} />}
+      </header>
+    </div>
   )
 }

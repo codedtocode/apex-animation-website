@@ -39,7 +39,7 @@ function FreeNote() {
 
 function Headline() {
   return (
-    <h1 className="font-display text-[clamp(2.1rem,10.4vw,3.6rem)] leading-[1.02] font-black tracking-tight uppercase font-stretch-semi-expanded sm:text-[min(calc((100vw-4rem)/12.4),6.1rem)]">
+    <h1 className="reveal font-display text-[clamp(2.1rem,10.4vw,3.6rem)] leading-[1.02] font-black tracking-tight uppercase font-stretch-semi-expanded sm:text-[min(calc((100vw-4rem)/12.4),6.1rem)]">
       <span className="block">Animate anything</span>{' '}
       <span className="block">
         in{' '}
@@ -70,9 +70,9 @@ function LatestReleaseLink() {
   return (
     <ExternalLink
       href={LINKS.devforum}
-      className="group inline-flex items-center gap-3 self-start rounded-full border border-line bg-surface py-2 pr-4 pl-2 text-[15px] font-semibold shadow-hard-sm transition hover:-translate-0.5 hover:shadow-[5px_5px_0_var(--color-apex-500)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg sm:text-base"
+      className="group inline-flex items-center gap-3 self-start rounded-full border border-line bg-surface py-2 pr-4 pl-2 text-base font-semibold shadow-hard-sm transition hover:-translate-0.5 hover:shadow-[5px_5px_0_var(--color-apex-500)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg max-sm:hidden"
     >
-      <span className="rounded-full bg-apex-500 px-3 py-1 font-mono text-xs font-bold tracking-wider text-white uppercase sm:text-[13px]">
+      <span className="rounded-full bg-apex-500 px-3 py-1 font-mono text-[13px] font-bold tracking-wider text-white uppercase">
         {version}
       </span>
       <span>
@@ -198,10 +198,10 @@ function EditorPreview() {
 
   return (
     <div className="relative mt-16 sm:mt-20 lg:mb-28">
-      <figure className="relative lg:w-[80%]">
+      <figure className="reveal relative lg:w-[80%]">
         <EditorWindow media={editor} />
       </figure>
-      <figure className="relative z-10 -mt-8 ml-auto w-[92%] sm:-mt-16 sm:w-[72%] lg:absolute lg:right-0 lg:-bottom-24 lg:mt-0 lg:w-[56%]">
+      <figure className="reveal relative z-10 -mt-8 ml-auto w-[92%] sm:-mt-16 sm:w-[72%] lg:absolute lg:right-0 lg:-bottom-24 lg:mt-0 lg:w-[56%]">
         <LiveCaptureWindow media={demo} />
       </figure>
       <PreviewNotes />
@@ -216,19 +216,21 @@ export function Hero() {
         <Headline />
 
         <div className="mt-8 flex flex-col gap-8 sm:mt-10 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
-          <div className="flex max-w-xl flex-col gap-6">
+          <div className="reveal flex max-w-xl flex-col gap-6">
             <p className="text-lg leading-relaxed text-fg-muted sm:text-xl">
               Apex Animator is a free animation plugin with physics, live recording, dynamic rig parenting, face
               animation, IK/FK and much more. Free forever.
             </p>
             <LatestReleaseLink />
           </div>
-          <div className="relative max-lg:mt-18 sm:max-lg:mt-24">
+          <div className="reveal relative max-lg:mt-18 sm:max-lg:mt-24">
             <WavingDeveloper />
             <Stats />
           </div>
         </div>
-        <DownloadButton className="mt-8 w-full sm:w-auto lg:hidden" />
+        <div className="reveal mt-8 lg:hidden">
+          <DownloadButton className="w-full sm:w-auto" />
+        </div>
 
         <EditorPreview />
       </Container>

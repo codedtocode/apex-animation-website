@@ -53,10 +53,12 @@ export default function App() {
     <div className="overflow-x-clip">
       <StudioBackdrop />
       <SkipLink />
-      <div className="mx-auto max-w-stage overflow-clip bg-canvas min-[88rem]:my-4 min-[88rem]:rounded-2xl min-[88rem]:border min-[88rem]:border-line">
+      <div className="mx-auto max-w-stage min-[88rem]:mb-4">
         <Navbar />
-        <main id="main">{view === 'api' ? <ApiPage /> : <HomeSections />}</main>
-        <Footer />
+        <div className="overflow-clip bg-canvas min-[88rem]:rounded-b-2xl min-[88rem]:border-x min-[88rem]:border-b min-[88rem]:border-line">
+          <main id="main">{view === 'api' ? <ApiPage /> : <HomeSections />}</main>
+          <Footer />
+        </div>
       </div>
     </div>
   )
